@@ -77,7 +77,7 @@ const resetForm = () => {
     resetForm();
     props.history.push("/sliders");
   };
-  
+ 
   console.log(state, photo);
   return (
       <CRow>
