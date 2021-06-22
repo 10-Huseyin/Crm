@@ -1,8 +1,8 @@
 import {
   GET_SLIDERS,
-  ADD_NEW_SLIDERS,
-  DELETE_SLIDERS,
-  EDIT_SLIDERS,
+  ADD_NEW_SLIDER,
+  DELETE_SLIDER,
+  EDIT_SLIDER,
   TOGGLE_VISIBLE
 } from "./actionTypes";
 
@@ -22,7 +22,7 @@ export function getSlider() {
 }
 
 export const postData = (data) => ({
-  type: ADD_NEW_SLIDERS,
+  type: ADD_NEW_SLIDER,
   payload: data,
 });
 export function addNewSlider(state) {
@@ -36,7 +36,7 @@ export function addNewSlider(state) {
 }
 
 export const removeData = (data) => ({
-  type: DELETE_SLIDERS,
+  type: DELETE_SLIDER,
   payload: data,
 });
 export function deleteSlider(id) {
@@ -48,7 +48,7 @@ export function deleteSlider(id) {
 }
 
 export const editData = (data) => ({
-  type: EDIT_SLIDERS,
+  type: EDIT_SLIDER,
   payload: data,
 });
 export function editSliderFunk(state, id) {

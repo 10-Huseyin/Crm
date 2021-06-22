@@ -12,7 +12,7 @@ import {
   CSwitch,
   CPagination
 } from '@coreui/react'
-import { getUsers } from 'src/actions/userAction'
+import { getExperts } from 'src/actions/expertAction'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {
@@ -36,52 +36,55 @@ const getActive = status => {
   }
 }
 
-const Users = () => {
+const Experts = () => {
   const history = useHistory()
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
 
-  const message = useSelector(state => state.message)
-  const usersData = useSelector(state => state.users.userList)
+  const expertsData = useSelector(state => state.experts.expertList)
   const dispatch = useDispatch()
-  //console.log(message)
+  console.log(expertsData)
 
   const perPage = 10;
-  const pageNum = Math.ceil(usersData.length / perPage);
+  const pageNum = Math.ceil(expertsData.length / perPage);
   //console.log(pageNum)
 
   const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/users?page=${newPage}`)
+    currentPage !== newPage && history.push(`/experts?page=${newPage}`)
   }
 
   useEffect(() => {
-    dispatch(getUsers())
+    dispatch(getExperts())
     
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
   return (
+    <>
+    <CButton type="button"
+    onClick={() => history.push(`/experts/add`)}
+    block color="primary">Add Expert</CButton>
     <CRow>
-      <CCol xl={9}>
+       <CCol xl={9}>
         <CCard>
           <CCardHeader>
-            Users
+            Experts
             <small className="text-muted"> example</small>
           </CCardHeader>
           <CCardBody>
           <CDataTable
-            items={usersData}
+            items={expertsData.dataList}
             fields={[
               { key: 'firstname', _classes: 'font-weight-bold' },
-              "lastname", "email", "isActive", 'role'
+              "lastname",  'expertise', "isActive",
             ]}
             hover
             striped
             itemsPerPage={perPage}
             activePage={page}
             clickableRows
-            onRowClick={(item) => history.push(`/users/${item._id}`)}
+            onRowClick={(item) => history.push(`/experts/${item._id}`)}
             scopedSlots = {{
               "isActive":
                 (item)=>(
@@ -104,9 +107,10 @@ const Users = () => {
         }
           </CCardBody>
         </CCard>
-      </CCol>
+      </CCol> 
     </CRow>
+    </>
   )
 }
 
-export default Users
+export default Experts

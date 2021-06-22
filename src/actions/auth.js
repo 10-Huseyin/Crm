@@ -5,24 +5,28 @@ import {
     LOGIN_FAIL,
     LOGOUT,
     SET_MESSAGE,
+    CLEAR_MESSAGE
   } from "./type";
   
   import AuthService from "../services/auth.service";
   
   export const register = (firstname, lastname, email, password) => (dispatch) => {
-    console.log(firstname, lastname, email, password)
+    //console.log(firstname, lastname, email, password)
     return AuthService.register(firstname, lastname, email, password).then(
       (response) => {
-        console.log(response)
+        //console.log(response)
         dispatch({
           type: REGISTER_SUCCESS,
         });
-  
         dispatch({
           type: SET_MESSAGE,
           payload: response.data.message,
         });
-  
+        setTimeout(() => {
+          dispatch({
+            type: CLEAR_MESSAGE,
+          });
+        }, 3000);
         return Promise.resolve();
       },
       (error) => {
@@ -41,7 +45,11 @@ import {
           type: SET_MESSAGE,
           payload: message,
         });
-  
+        setTimeout(() => {
+          dispatch({
+            type: CLEAR_MESSAGE,
+          });
+        }, 3000);
         return Promise.reject();
       }
     );
@@ -74,7 +82,11 @@ import {
           type: SET_MESSAGE,
           payload: message,
         });
-  
+        setTimeout(() => {
+          dispatch({
+            type: CLEAR_MESSAGE,
+          });
+        }, 3000);
         return Promise.reject();
       }
     );

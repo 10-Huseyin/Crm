@@ -2,19 +2,17 @@ import React, {useState, useEffect} from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CRow, CForm, CFormGroup, CLabel, CInput, CSelect, CSwitch, CCardFooter, CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { useDispatch, useSelector } from "react-redux";
-import { editUserData, deleteUser, getUsers } from "../../actions/userAction";
+import { editExpertData, deleteExpert } from "../../actions/expertAction";
 
 
-const User = (props) => {
+const Expert = (props) => {
 
   const dispatch = useDispatch()
   
-  const message = useSelector(state => state.message)
-//console.log(message)
-  const usersData = useSelector(state => state.users.userList)
-  const user = usersData.find( user => user._id.toString() === props.match.params.id)
-  const [state, setState] = useState(user)
-
+  const expertsData = useSelector(state => state.experts.expertList)
+  const expert = expertsData.dataList.find( expert => expert._id.toString() === props.match.params.id)
+  const [state, setState] = useState(expert)
+  
   const handleInput = (e) => {
     setState({...state, [e.target.name] : e.target.value})
   }
@@ -24,34 +22,22 @@ const User = (props) => {
   }
 
 const resetForm = () => {
-  setState(user)
+  setState(expert)
 }
 
   const handleSubmit = (event) => {
     console.log("handlesubmit")
     event.preventDefault();
-    dispatch(editUserData(state, state._id))
-    
-      resetForm();
-      dispatch(getUsers())
-      setTimeout(() => {
-        props.history.push("/users");
-      }, 3000);
-  
-    
-    ;
+    dispatch(editExpertData(state, state._id));
+    resetForm();
+    props.history.push("/experts");
   };
 
-  const deleteUserData = (event) => {
+  const deleteExpertData = (event) => {
     event.preventDefault();
-    dispatch(deleteUser(state._id))
-    
-      resetForm();
-      dispatch(getUsers())
-      setTimeout(() => {
-        props.history.push("/users");
-      }, 3000);
-    
+    dispatch(deleteExpert(state._id));
+    resetForm();
+    props.history.push("/experts");
   };
 
 
@@ -62,44 +48,36 @@ const resetForm = () => {
         <CCol lg={9}>
           <CCard>
             <CCardHeader>
-              User Details
+              Expert Details
             </CCardHeader>
             <CCardBody>
             {state ? 
               <CForm onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel htmlFor="userfirstname-input">First Name</CLabel>
+                    <CLabel htmlFor="expertfirstname-input">First Name</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.firstname} id="userfirstname-input" name="firstname" placeholder="First Name" />
+                    <CInput onChange={handleInput} value={state.firstname} id="expertfirstname-input" name="firstname" placeholder="First Name" />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel htmlFor="userlastname-input">Last Name</CLabel>
+                    <CLabel htmlFor="expertlastname-input">Last Name</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.lastname} id="userlastname-input" name="lastname" placeholder="Last Name" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="useremail-input">Email </CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.email} type="email" id="useremail-input" name="email" placeholder="Enter Email" />
+                    <CInput onChange={handleInput} value={state.lastname} id="expertlastname-input" name="lastname" placeholder="Last Name" />
                   </CCol>
                 </CFormGroup>
                 
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel htmlFor="role-select">User Role</CLabel>
+                    <CLabel htmlFor="expertise-select">Expertise</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CSelect onChange={handleInput} custom name="role" id="role-select">
-                      <option value={state.role}>{state.role}</option>
-                      <option value="user">user</option>
+                    <CSelect onChange={handleInput} custom name="expertise" id="expertise-select">
+                      <option value={state.expertise}>{state.expertise}</option>
+                      <option value="expert">expert</option>
                       <option value="staff">staff</option>
                       <option value="admin">admin</option>
                     </CSelect>
@@ -108,7 +86,7 @@ const resetForm = () => {
                 
                 <CFormGroup row>
                   <CCol tag="label" sm="3" className="col-form-label">
-                    User is Active
+                    Expert is Active
                   </CCol>
                   <CCol sm="9">
                     <CSwitch
@@ -125,11 +103,11 @@ const resetForm = () => {
               <CRow>
 
             <CCol >
-              <CButton type="submit" size="md" color="primary"><CIcon name="cil-scrubber" /> Update User </CButton>
+              <CButton type="submit" size="md" color="primary"><CIcon name="cil-scrubber" /> Update Expert </CButton>
               <CButton onClick={resetForm} type="reset" color="info"><CIcon name="cil-ban" /> Reset Form </CButton>
             </CCol>
             <CCol >
-              <CButton onClick={deleteUserData} type="button" block color="danger">Delete User</CButton>
+              <CButton onClick={deleteExpertData} type="button" block color="danger">Delete Expert</CButton>
             </CCol>
               </CRow>
             </CCardFooter>
@@ -138,12 +116,10 @@ const resetForm = () => {
               <span><CIcon className="text-muted" name="cil-ban" /> Not found</span>
             }
             </CCardBody>
-            {message ? <span>{message.message}</span> : ""}
           </CCard>
         </CCol>
       </CRow>
-      
   )
 }
 
-export default User
+export default Expert
