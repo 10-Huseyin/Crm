@@ -86,7 +86,7 @@ import {
   export function editUserData(state, id) {
     //console.log(state,id);
     return (dispatch) => {
-      axios
+      return axios
         .put(`${API_BASE}/${id}`, state)
           .then((response) => {
             dispatch({
