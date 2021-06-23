@@ -14,19 +14,20 @@ import {
   CPagination
 } from '@coreui/react'
 
-import slidersData from './SlidersData'
+//import slidersData from './SlidersData'
 import { getSlider } from 'src/actions/sliderAction';
 
-const getBadge = status => {
-  switch (status) {
-    case 'Active': return 'success'
-    case 'Inactive': return 'secondary'
-    case 'Pending': return 'warning'
-    case 'Banned': return 'danger'
-    default: return 'primary'
-  }
-}
-const fields = ['name','registered', 'role', 'status']
+// const getBadge = status => {
+//   switch (status) {
+//     case 'Active': return 'success'
+//     case 'Inactive': return 'secondary'
+//     case 'Pending': return 'warning'
+//     case 'Banned': return 'danger'
+//     default: return 'primary'
+//   }
+// }
+
+const fields = ['name','subtitle', 'order', 'buttonText','url']
 
 const Sliders = () => {
   const history = useHistory()
@@ -62,10 +63,10 @@ console.log(sliderList)
           </CCardHeader>
           <CCardBody>
           <CDataTable
-            items={slidersData}
+            items={sliderList}
             fields={[
-              { key: 'name', _classes: 'font-weight-bold' },
-              'registered', 'role', 'status'
+              { key: 'title', _classes: 'font-weight-bold' },
+              'subtitle', 'order', 'buttonText','url'
             ]}
             hover
             striped
@@ -73,16 +74,16 @@ console.log(sliderList)
             activePage={page}
             clickableRows
             onRowClick={(item) => history.push(`/sliders/${item.id}`)}
-            scopedSlots = {{
-              'status':
-                (item)=>(
-                  <td>
-                    <CBadge color={getBadge(item.status)}>
-                      {item.status}
-                    </CBadge>
-                  </td>
-                )
-            }}
+            // scopedSlots = {{
+            //   'status':
+            //     (item)=>(
+            //       <td>
+            //         <CBadge color={getBadge(item.status)}>
+            //           {item.status}
+            //         </CBadge>
+            //       </td>
+            //     )
+            // }}
           />
           <CPagination
             activePage={page}
@@ -95,7 +96,7 @@ console.log(sliderList)
         </CCard>
       </CCol>
     </CRow>
-    <CRow>
+    {/* <CRow>
     <CCol>
       <CCard>
         <CCardHeader>
@@ -103,7 +104,7 @@ console.log(sliderList)
         </CCardHeader>
         <CCardBody>
         <CDataTable
-          items={slidersData}
+          items={sliderList}
           fields={fields}
           dark
           hover
@@ -112,21 +113,21 @@ console.log(sliderList)
           size="sm"
           itemsPerPage={10}
           pagination
-          scopedSlots = {{
-            'status':
-              (item)=>(
-                <td>
-                  <CBadge color={getBadge(item.status)}>
-                    {item.status}
-                  </CBadge>
-                </td>
-              )
-          }}
+          // scopedSlots = {{
+          //   'status':
+          //     (item)=>(
+          //       <td>
+          //         <CBadge color={getBadge(item.status)}>
+          //           {item.status}
+          //         </CBadge>
+          //       </td>
+          //     )
+          // }}
         />
         </CCardBody>
       </CCard>
     </CCol>
-  </CRow>
+  </CRow> */}
 </>
   )
 }
