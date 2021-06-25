@@ -44,7 +44,7 @@ const ExpertAdd = React.lazy(() => import('../components/experts/ExpertAdd'));
 const Sliders = React.lazy(() => import('../components/sliders/Sliders'));
 const Slider = React.lazy(() => import('../components/sliders/Slider'));
 const SliderAdd = React.lazy(() => import('../components/sliders/SliderAdd'));
-
+const SliderEdit = React.lazy(() => import('../components/sliders/SliderEdit'));
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
@@ -92,7 +92,8 @@ const routes = [
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/sliders', exact: true,  name: 'Sliders', component: Sliders },
   { path: '/sliders/add', exact: true,  name: 'Slider Add', component: SliderAdd },
-  { path: '/sliders/:id', exact: true, name: 'Slider Details', component: Slider }
+  // { path: '/sliders/:id', exact: true, name: 'Slider Details', component: Slider },
+  { path: '/sliders/:id', exact: true, name: 'Slider Edit', component: SliderEdit }
 ];
 
 export default routes;
