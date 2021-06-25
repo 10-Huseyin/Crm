@@ -10,7 +10,7 @@ const Expert = (props) => {
   const dispatch = useDispatch()
   
   const expertsData = useSelector(state => state.experts.expertList)
-  const expert = expertsData.dataList.find( expert => expert._id.toString() === props.match.params.id)
+  const expert = expertsData.find( expert => expert._id.toString() === props.match.params.id)
   const [state, setState] = useState(expert)
   
   const handleInput = (e) => {

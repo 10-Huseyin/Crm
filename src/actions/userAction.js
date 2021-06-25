@@ -5,7 +5,7 @@ import {
     EDIT_USER,
     TOGGLE_VISIBLE
   } from "./actionTypes";
-  import {SET_MESSAGE, CLEAR_MESSAGE} from "./type";
+  import { setMessage, setError } from "./message";
   
   import axios from "axios";
   //import { API_BASE } from "../Helpers/env";
@@ -31,7 +31,8 @@ import {
     return (dispatch) => {
       axios
         .post(`${API_BASE}`, state)
-        .then((result) => {console.log(result);dispatch(postData(result.data))})
+        .then((response)=>{setMessage(response.data.message,dispatch)},
+        (error)=> {setError(error, dispatch)})
         .catch((error) => console.log(error));
     };
   }
@@ -43,39 +44,11 @@ import {
 
   export function deleteUser(id) {
     return (dispatch) => {
-      axios
+      return axios
         .delete(`${API_BASE}/${id}`, {})
-        .then((response) => {
-          dispatch({
-            type: SET_MESSAGE,
-            payload: response.data.message,
-          });
-          setTimeout(() => {
-            dispatch({
-              type: CLEAR_MESSAGE,
-            });
-          }, 3000);
-          return Promise.resolve();
-        },
-        (error) => {
-          const message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          dispatch({
-            type: SET_MESSAGE,
-            payload: message,
-          });
-          setTimeout(() => {
-            dispatch({
-              type: CLEAR_MESSAGE,
-            });
-          }, 3000);    
-          return Promise.reject();
-        }
-        );
+        .then((response)=>{setMessage(response.data.message,dispatch)},
+        (error)=> {setError(error, dispatch)})
+        .catch((error) => console.log(error));
     };
   }
   
@@ -88,37 +61,9 @@ import {
     return (dispatch) => {
       return axios
         .put(`${API_BASE}/${id}`, state)
-          .then((response) => {
-            dispatch({
-              type: SET_MESSAGE,
-              payload: response.data.message,
-            });
-            setTimeout(() => {
-              dispatch({
-                type: CLEAR_MESSAGE,
-              });
-            }, 3000);
-            return Promise.resolve();
-          },
-          (error) => {
-            const message =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-            dispatch({
-              type: SET_MESSAGE,
-              payload: message,
-            });
-            setTimeout(() => {
-              dispatch({
-                type: CLEAR_MESSAGE,
-              });
-            }, 3000);    
-            return Promise.reject();
-          }
-          );
+        .then((response)=>{setMessage(response.data.message,dispatch)},
+        (error)=> {setError(error, dispatch)})
+        .catch((error) => console.log(error));
     };
   }
   export function toggleVisible(id) {

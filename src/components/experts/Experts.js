@@ -70,11 +70,11 @@ const Experts = () => {
         <CCard>
           <CCardHeader>
             Experts
-            <small className="text-muted"> example</small>
+            <small className="text-muted"> Table</small>
           </CCardHeader>
           <CCardBody>
           <CDataTable
-            items={expertsData.dataList}
+            items={expertsData}
             fields={[
               { key: 'firstname', _classes: 'font-weight-bold' },
               "lastname",  'expertise', "isActive",

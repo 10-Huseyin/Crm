@@ -5,8 +5,8 @@ import {
     EDIT_EXPERT,
     TOGGLE_VISIBLE
   } from "./actionTypes";
-  
   import axios from "axios";
+  import { setMessage, setError } from "./message";
   //import { API_BASE } from "../Helpers/env";
   
   const API_BASE = "https://crmapp-server.herokuapp.com/experts"
@@ -20,17 +20,19 @@ import {
       axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data)));
     };
   }
-  
+
   export const postData = (data) => ({
     type: ADD_NEW_EXPERT,
     payload: data,
   });
+
   export function addNewExpert(state) {
     console.log("add new expert => ",state);
     return (dispatch) => {
-      axios
+      return axios
         .post(`${API_BASE}`, state)
-        .then((result) => {console.log(result);dispatch(postData(result.data))})
+        .then((response)=>{setMessage(response.data.message,dispatch)},
+        (error)=> {setError(error, dispatch)})
         .catch((error) => console.log(error));
     };
   }
@@ -41,9 +43,11 @@ import {
   });
   export function deleteExpert(id) {
     return (dispatch) => {
-      axios
+      return axios
         .delete(`${API_BASE}/${id}`, {})
-        .then((result) => dispatch(removeData(result.data)));
+        .then((response)=>{setMessage(response.data.message,dispatch)},
+        (error)=> {setError(error, dispatch)})
+        .catch((error) => console.log(error));
     };
   }
   
@@ -54,14 +58,10 @@ import {
   export function editExpertData(state, id) {
     console.log(state,id);
     return (dispatch) => {
-      axios
+      return axios
         .put(`${API_BASE}/${id}`, state)
-        .then((result) =>{
-          console.log(result.data)
-          dispatch(editData(result.data)
-          )}
-          )
-              // .then((res) => console.log(res))
+        .then((response)=>{setMessage(response.data.message,dispatch)},
+        (error)=> {setError(error, dispatch)})
         .catch((error) => console.log(error));
     };
   }
