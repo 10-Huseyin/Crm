@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import axios from "axios";
 import {
   CButton,
@@ -21,7 +21,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { DocsLink } from 'src/reusable'
 import { useDispatch, useSelector } from "react-redux";
-import { addNewSlider } from "../../actions/sliderAction";
+import { getSlider,deleteSlider,editSliderFunk } from "../../actions/sliderAction";
  
 
 
@@ -39,6 +39,8 @@ const initialState = {
 };
 
 const BasicForms = (props) => {
+
+
   const [state, setState] = useState({
     title: "",
     subtitle: "",
@@ -60,12 +62,15 @@ const BasicForms = (props) => {
 
 
   console.log(sliderList)
+   
+    
+  
+  useEffect(() => {
+    const willEditSlider=sliderList.find((i) => i._id.toString() === props.match.params.id)
 
-    const willEditSlider=sliderList.find((i) => i._id === props.match.params.id)
-
-  console.log(willEditSlider);
-  // setState(willEditSlider)
-
+    console.log(willEditSlider);
+    setState(willEditSlider)
+  }, [])
   const getPhoto = (e) => {
     console.log(e.target.files[0]);
     setPhoto(e.target.files[0]);
@@ -92,15 +97,37 @@ const BasicForms = (props) => {
   const resetForm = () => {
     setState(initialState)
     setPhoto({})
-    setMessage("")
+
   }
 
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   dispatch(editSliderFunk(state,state._id));
+  //   resetForm();
+  //   props.history.push("/sliders");
+  // };
   const handleSubmit = (event) => {
-    console.log("handlesubmit")
+   
     event.preventDefault();
-    dispatch(addNewSlider(state));
-    resetForm();
-    props.history.push("/sliders");
+    dispatch(editSliderFunk(state, state._id)).then(()=>{
+      resetForm()
+      dispatch(getSlider())
+      setTimeout(() => {
+        props.history.push("/sliders");
+      }, 1000);
+      });
+  };
+
+  const deleteSliderData = (event) => {
+    event.preventDefault();
+    // dispatch(deleteUser(state._id))
+    
+    //   resetForm();
+    //   dispatch(getUsers())
+      setTimeout(() => {
+        props.history.push("/sliders");
+      }, 2000);
+    
   };
 
   console.log(state, photo);
@@ -150,7 +177,7 @@ const BasicForms = (props) => {
                   <CLabel htmlFor="order">Order Number</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput onChange={handleInput} type="number" id="order" name="order" placeholder="0" required />
+                  <CInput onChange={handleInput} type="number" id="order" name="order" placeholder="0" required value={state.order}/>
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
@@ -158,7 +185,7 @@ const BasicForms = (props) => {
                   <CLabel htmlFor="isVideo">Media Type : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CSelect onChange={handleInput} custom name="isVideo" id="isVideo" required>
+                  <CSelect onChange={handleInput} custom name="isVideo" id="isVideo" value={state.isVideo} required>
                     <option value="0">Please select</option>
                     <option value={false}>Photo</option>
                     <option value={true}>Video</option>
@@ -193,7 +220,7 @@ const BasicForms = (props) => {
                   <CLabel>Add Slider Photo</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInputFile onChange={getPhoto} custom id="custom-file-input" />
+                  <CInputFile onChange={getPhoto} custom id="custom-file-input"  />
                   <CLabel htmlFor="custom-file-input" variant="custom-file">
                     {photo ? photo.name : "Choose file..."}
                   </CLabel>
@@ -202,8 +229,16 @@ const BasicForms = (props) => {
                 </CCol>
               </CFormGroup>
               <CCardFooter>
-                <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
-                <CButton onClick={resetForm} type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
+              <CRow>
+
+<CCol >
+  <CButton type="submit" size="md" color="primary"><CIcon name="cil-scrubber" /> Update Slider </CButton>
+  <CButton onClick={resetForm} type="reset" color="info"><CIcon name="cil-ban" /> Reset Form </CButton>
+</CCol>
+<CCol >
+  <CButton onClick={deleteSliderData} type="button" block color="danger">Delete Slider</CButton>
+</CCol>
+  </CRow>
               </CCardFooter>
             </CForm>
           </CCardBody>
