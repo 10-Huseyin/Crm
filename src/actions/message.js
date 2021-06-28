@@ -1,4 +1,4 @@
-import { SET_MESSAGE, CLEAR_MESSAGE } from "./type";
+import { SET_MESSAGE, CLEAR_MESSAGE, SET_ERROR, CLEAR_ERROR } from "./type";
 
 // export const setMessage = (message) => ({
 //   type: SET_MESSAGE,
@@ -21,6 +21,7 @@ export const setMessage = (message, dispatch) => {
   }, 3000);
   return Promise.resolve();
 }
+
 export const setError = (error, dispatch) => {
   const message =
     (error.response &&
@@ -29,12 +30,12 @@ export const setError = (error, dispatch) => {
     error.message ||
     error.toString();
   dispatch({
-    type: SET_MESSAGE,
+    type: SET_ERROR,
     payload: message,
   });
   setTimeout(() => {
     dispatch({
-      type: CLEAR_MESSAGE,
+      type: CLEAR_ERROR,
     });
   }, 3000);    
   return Promise.reject();

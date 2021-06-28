@@ -22,6 +22,7 @@ import {
   CModalTitle,
   CModalBody,
   CModalFooter,
+  CAlert,
   CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
@@ -44,6 +45,7 @@ const initialState = {
 };
 
 const ExpertAdd = (props) => {
+  const [modal, setModal] = useState(true)
   const [state, setState] = useState(initialState)
   const [photo, setPhoto] = useState({});
   const [uploadMessage, setUploadMessage] = useState("");
@@ -75,11 +77,18 @@ const ExpertAdd = (props) => {
   }
 
   const resetForm = () => {
-    setState(initialState)
     setPhoto({})
     setUploadMessage("")
     setSocial({ title: "", link: "" })
-
+    setState({
+      firstname: "",
+      lastname: "",
+      expertise: "",
+      isActive: true,
+      isDeleted: false,
+      mediaId: "",
+      socialMediaId: [],
+    })
   }
   console.log(props)
 
@@ -90,6 +99,7 @@ const ExpertAdd = (props) => {
     resetForm();
     dispatch(getExperts())
     setTimeout(() => {
+      setModal(false)
       props.history.push("/experts");
     }, 3000);
   };
@@ -169,11 +179,11 @@ const ExpertAdd = (props) => {
                 </CCol>
                 <CCol md="9" onChange={handleInput} required>
                   <CFormGroup variant="custom-radio" inline>
-                    <CInputRadio custom id="expertvisible" name="isActive" value="visible" defaultChecked />
+                    <CInputRadio custom id="expertvisible" name="isActive" value="true" defaultChecked />
                     <CLabel variant="custom-checkbox" htmlFor="expertvisible">Active</CLabel>
                   </CFormGroup>
                   <CFormGroup variant="custom-radio" inline>
-                    <CInputRadio custom id="expert-non-visible" name="isActive" value="non-visible" />
+                    <CInputRadio custom id="expert-non-visible" name="isActive" value="false" />
                     <CLabel variant="custom-checkbox" htmlFor="expert-non-visible">Non-Active</CLabel>
                   </CFormGroup>
                 </CCol>
@@ -238,24 +248,40 @@ const ExpertAdd = (props) => {
               </CFormGroup>
                   <CCardFooter>
                 <CRow>
-
                 <CCol md="4">
                   <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
                   <CButton onClick={resetForm} type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
                 </CCol>
-                {message &&
-                  <CCol md="4">
-                  <CModal className="show d-block position-static" alignment="center" >
-                    <CModalBody>
-                      {message}
-                    </CModalBody>
-                  </CModal>
-                  </CCol>
-                }
                 </CRow>
-
               </CCardFooter>
             </CForm>
+
+          {
+            message &&
+            <CModal 
+            show={modal} 
+            alignment="center"
+            onClose={setModal}
+            >
+              <CModalHeader closeButton>
+                <CModalTitle>Add Expert</CModalTitle>
+              </CModalHeader>
+              <CModalBody>
+              <CAlert color="success">
+                {message}
+              </CAlert>
+                Redirecting experts page!
+              </CModalBody>
+              <CModalFooter>
+                <CButton 
+                  color="secondary" 
+                  onClick={() => setModal(false)}
+                >Cancel</CButton>
+              </CModalFooter>
+            </CModal>
+                }
+
+
           </CCardBody>
         </CCard>
       </CCol>
