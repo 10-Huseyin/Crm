@@ -28,7 +28,7 @@ export const postData = (data) => ({
 export function addNewSlider(state) {
   console.log("add new slider => ",state);
   return (dispatch) => {
-    axios
+   return axios
       .post(`${API_BASE}`, state)
       .then((result) => {console.log(result);dispatch(postData(result.data))})
       .catch((error) => console.log(error));
@@ -54,7 +54,7 @@ export const editData = (data) => ({
 export function editSliderFunk(state, id) {
   console.log(state,id);
   return (dispatch) => {
-    axios
+    return axios 
       .put(`${API_BASE}/${id}`, state)
       .then((result) =>{
         console.log(result.data)
