@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CRow, CForm, CFormGroup, CLabel, CInput, CSelect, CSwitch, CCardFooter, CButton, CModal, CModalHeader, CModalTitle, CModalFooter, CModalBody, CAlert} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { useDispatch, useSelector } from "react-redux";
-import { editExpertData, deleteExpert, getExperts } from "../../actions/expertAction";
+import { editExpertData, deleteExpert } from "../../actions/expertAction";
 
 
 const Expert = (props) => {
@@ -32,30 +32,23 @@ const Expert = (props) => {
     console.log("handlesubmit")
     event.preventDefault();
     dispatch(editExpertData(state, state._id));
-    resetForm();
-    dispatch(getExperts())
-    setTimeout(() => {
-      setModal(false)
-      props.history.push("/experts");
-    }, 3000);
+    getDefaults()
+
   };
 
   const deleteExpertData = (event) => {
     event.preventDefault();
     dispatch(deleteExpert(state._id))
-    .then(()=>{
-      getDefaults()
-    })
+    getDefaults()
+    
   };
 
   const getDefaults = () => {
-    console.log(message)
     resetForm();
-    dispatch(getExperts())
     setTimeout(() => {
       setModal(false)
       props.history.push("/experts");
-    }, 3000);
+    }, 2000);
   }
 
   console.log("message ==> ", message)

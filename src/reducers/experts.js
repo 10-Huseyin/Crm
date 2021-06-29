@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
     case ADD_NEW_EXPERT:
       return { ...state, expertList: [...state.expertList, action.payload] };
     case DELETE_EXPERT:
-      return { ...state, expertList: action.payload };
+      return { ...state, expertList: state.expertList.filter((item)=>item._id !== action.payload.data._id) };
     case EDIT_EXPERT:
       return { ...state, expertList: [...state.expertList, action.payload] };
     case TOGGLE_VISIBLE:

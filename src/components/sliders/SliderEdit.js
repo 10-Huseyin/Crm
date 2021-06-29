@@ -109,13 +109,12 @@ const BasicForms = (props) => {
   const handleSubmit = (event) => {
    
     event.preventDefault();
-    dispatch(editSliderFunk(state, state._id)).then(()=>{
+    dispatch(editSliderFunk(state, state._id))
       resetForm()
       dispatch(getSlider())
       setTimeout(() => {
         props.history.push("/sliders");
-      }, 1000);
-      });
+      }, 1000)
   };
 
   const deleteSliderData = (event) => {

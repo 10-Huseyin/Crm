@@ -31,7 +31,11 @@ import {
     return (dispatch) => {
       return axios
         .post(`${API_BASE}`, state)
-        .then((response)=>{console.log(response);  setMessage(response.data.message,dispatch)},
+        .then((response)=>{
+          console.log(response);
+          setMessage(response.data.message,dispatch)
+
+        },
         (error)=> {setError(error, dispatch)})
         .catch((error) => console.log(error));
     };
@@ -47,7 +51,8 @@ import {
         .delete(`${API_BASE}/${id}`, {})
         .then((response)=>{
           console.log(response)
-          let msg = response.data.message ? response.data.message : "Expert deleted succesfully"
+          //removeData(response.data)
+          let msg = response.data.message ? response.data.message : "Expert is deleted succesfully"
           setMessage(msg,dispatch)},
         (error)=> {setError(error, dispatch)})
         .catch((error) => console.log(error));
@@ -64,6 +69,7 @@ import {
       return axios
         .put(`${API_BASE}/${id}`, state)
         .then((response)=>{
+          console.log(response)
           let msg = response.data.message ? response.data.message : "Expert updated succesfully"
           setMessage(msg,dispatch)},
         (error)=> {setError(error, dispatch)})

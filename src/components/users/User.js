@@ -31,17 +31,11 @@ const resetForm = () => {
     console.log("handlesubmit")
     event.preventDefault();
     dispatch(editUserData(state, state._id))
-    .then(()=>{
-
       resetForm();
       dispatch(getUsers())
       setTimeout(() => {
         props.history.push("/users");
       }, 3000);
-      
-    })
-    
-    ;
   };
 
   const deleteUserData = (event) => {
