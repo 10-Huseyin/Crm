@@ -25,7 +25,7 @@ const ButtonDropdowns = React.lazy(() => import('../components/buttons/button-dr
 const ButtonGroups = React.lazy(() => import('../components/buttons/button-groups/ButtonGroups'));
 const Buttons = React.lazy(() => import('../components/buttons/buttons/Buttons'));
 const Charts = React.lazy(() => import('../components/charts/Charts'));
-const Stats = React.lazy(() => import('../components/charts/Stats'));
+//const Stats = React.lazy(() => import('../components/charts/Stats'));
 const Dashboard = React.lazy(() => import('../components/dashboard/Dashboard'));
 const CoreUIIcons = React.lazy(() => import('../components/icons/coreui-icons/CoreUIIcons'));
 const Flags = React.lazy(() => import('../components/icons/flags/Flags'));
@@ -45,6 +45,7 @@ const Sliders = React.lazy(() => import('../components/sliders/Sliders'));
 const Slider = React.lazy(() => import('../components/sliders/Slider'));
 const SliderAdd = React.lazy(() => import('../components/sliders/SliderAdd'));
 const SliderEdit = React.lazy(() => import('../components/sliders/SliderEdit'));
+const CompanyIntroduction = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntroductions'));
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
@@ -74,7 +75,7 @@ const routes = [
   { path: '/buttons/button-groups', name: 'Button Groups', component: ButtonGroups },
   { path: '/buttons/brand-buttons', name: 'Brand Buttons', component: BrandButtons },
   { path: '/charts', name: 'Charts', component: Charts },
-  { path: '/stats', name: 'Stats', component: Stats },
+  // { path: '/stats', name: 'Stats', component: Stats },
   { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
   { path: '/icons/flags', name: 'Flags', component: Flags },
@@ -93,7 +94,8 @@ const routes = [
   { path: '/sliders', exact: true,  name: 'Sliders', component: Sliders },
   { path: '/sliders/add', exact: true,  name: 'Slider Add', component: SliderAdd },
   // { path: '/sliders/:id', exact: true, name: 'Slider Details', component: Slider },
-  { path: '/sliders/:id', exact: true, name: 'Slider Edit', component: SliderEdit }
+  { path: '/sliders/:id', exact: true, name: 'Slider Edit', component: SliderEdit },
+  { path: '/companyintroduction', exact: true,  name: 'Company Introduction', component: CompanyIntroduction},
 ];
 
 export default routes;
