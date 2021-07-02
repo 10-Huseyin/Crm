@@ -14,7 +14,7 @@ import {
   CPagination,
 } from "@coreui/react";
 
-import { getSlider } from "src/actions/sliderAction";
+import { getSlider } from "src/actions/slider.action";
 
 const Sliders = () => {
   const history = useHistory();

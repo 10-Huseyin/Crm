@@ -12,7 +12,7 @@ import {
   CSwitch,
   CPagination
 } from '@coreui/react'
-import { getExperts } from 'src/actions/expertAction'
+import { getExperts } from 'src/actions/expert.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {

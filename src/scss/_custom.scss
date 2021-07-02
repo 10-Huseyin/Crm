@@ -1,1 +1,52 @@
 // Here you can add other styles
+
+.profile-img-card {
+  width: 100px;
+  height: 100px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+  }
+
+  .c-avatar-register {
+    margin: 10px auto;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border-radius: 50em;
+    width: 120px;
+    height: 120px;
+    font-size: 14.4px;
+  }
+
+  .c-avatar-add {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;  
+  }
+
+  .c-avatar-input {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+  }
+  
+  .c-avatar-label {
+    cursor: pointer;
+  }

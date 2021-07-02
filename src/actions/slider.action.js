@@ -17,7 +17,7 @@ export const getData = (data) => ({
 });
 export function getSlider() {
   return (dispatch) => {
-    axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data)));
+    axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data.response)));
   };
 }
 

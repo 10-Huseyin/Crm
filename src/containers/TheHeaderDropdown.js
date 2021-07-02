@@ -11,7 +11,7 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { logout } from 'src/actions/auth';
+import { logout } from 'src/actions/auth.action';
 
 const TheHeaderDropdown = () => {
   const history = useHistory()

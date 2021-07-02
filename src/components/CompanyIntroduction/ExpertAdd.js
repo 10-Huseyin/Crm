@@ -30,7 +30,7 @@ import { cifAU } from '@coreui/icons';
 import '@coreui/icons/css/all.css';
 
 import { useDispatch, useSelector } from "react-redux";
-import { addNewExpert, getExperts } from "../../actions/expertAction";
+import { addNewExpert, getExperts } from "../../actions/expert.action";
 
 const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 

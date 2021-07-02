@@ -5,7 +5,7 @@ import {
     EDIT_USER,
     TOGGLE_VISIBLE
   } from "./actionTypes";
-  import { setMessage, setError } from "./message";
+  import { setMessage, setError } from "./message.action";
   
   import axios from "axios";
   //import { API_BASE } from "../Helpers/env";
@@ -18,7 +18,7 @@ import {
   });
   export function getUsers() {
     return (dispatch) => {
-      axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data)));
+      axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data.response)));
     };
   }
   

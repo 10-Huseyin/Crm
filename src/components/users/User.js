@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CRow, CForm, CFormGroup, CLabel, CInput, CSelect, CSwitch, CCardFooter, CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { useDispatch, useSelector } from "react-redux";
-import { editUserData, deleteUser, getUsers } from "../../actions/userAction";
+import { editUserData, deleteUser, getUsers } from "../../actions/user.action";
 
 
 const User = (props) => {

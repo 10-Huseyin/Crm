@@ -6,7 +6,7 @@ import {
   TOGGLE_VISIBLE
 } from "./actionTypes";
 import axios from "axios";
-import { setMessage, setError } from "./message";
+import { setMessage, setError } from "./message.action";
 //import { API_BASE } from "../Helpers/env";
 
 const API_BASE = "https://crmapp-server.herokuapp.com/companyintroduction"
@@ -17,7 +17,7 @@ export const getData = (data) => ({
 });
 export function getCompanyIntro() {
   return (dispatch) => {
-    axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data)));
+    axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data.response)));
   };
 }
 

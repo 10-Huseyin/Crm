@@ -50,7 +50,7 @@ class App extends Component {
               :
               <>
               <Route exact path="/" name="Login Page" component={Login} />
-              <Redirect path="/" />
+              <Redirect to="/" />
               </>
             }
             {/* <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>}/> */}

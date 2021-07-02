@@ -12,7 +12,7 @@ import {
   CSwitch,
   CPagination
 } from '@coreui/react'
-import { getCompanyIntro } from 'src/actions/companyIntroAction'
+import { getCompanyIntro } from 'src/actions/company.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {

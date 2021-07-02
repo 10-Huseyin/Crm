@@ -26,11 +26,10 @@ import {
   CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
-import { cifAU } from '@coreui/icons';
 import '@coreui/icons/css/all.css';
 
 import { useDispatch, useSelector } from "react-redux";
-import { addNewExpert, getExperts } from "../../actions/expertAction";
+import { addNewExpert, getExperts } from "../../actions/expert.action";
 
 const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 
@@ -62,6 +61,7 @@ const ExpertAdd = (props) => {
     const fd = new FormData();
 
     fd.append("image", photo, photo.name);
+    console.log(fd)
     axios.post(
       "https://api.imgbb.com/1/upload?expiration=600&key=a4a61c5615a8ba139a774ff21a6d5373",
       fd

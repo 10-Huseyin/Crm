@@ -21,7 +21,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { DocsLink } from 'src/reusable'
 import { useDispatch, useSelector } from "react-redux";
-import { getSlider,deleteSlider,editSliderFunk } from "../../actions/sliderAction";
+import { getSlider,deleteSlider,editSliderFunk } from "../../actions/slider.action";
  
 
 

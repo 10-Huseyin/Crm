@@ -89,7 +89,7 @@ const CNavbars = () => {
           CNavbar brand
         </CCardHeader>
         <CCardBody>
-          <CNavbar color="faded" light>
+          <CNavbar color="faded" light >
             <CNavbarBrand>
               <CImg
                 src="https://placekitten.com/g/30/30"
@@ -107,7 +107,7 @@ const CNavbars = () => {
           CNavbar text
         </CCardHeader>
         <CCardBody>
-          <CNavbar toggleable="sm" light color="light">
+          <CNavbar toggleable="sm" light color="light" >
             <CToggler
               inNavbar
               onClick={()=>{ setNavbarText(!navbarText)}}

@@ -21,7 +21,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { DocsLink } from 'src/reusable'
 import { useDispatch, useSelector } from "react-redux";
-import { addNewSlider } from "../../actions/sliderAction";
+import { addNewSlider } from "../../actions/slider.action";
 
 const initialState = {
   title: "",

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CRow, CForm, CFormGroup, CLabel, CInput, CSelect, CSwitch, CCardFooter, CButton, CModal, CModalHeader, CModalTitle, CModalFooter, CModalBody, CAlert} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { useDispatch, useSelector } from "react-redux";
-import { editExpertData, deleteExpert, getExperts } from "../../actions/expertAction";
+import { editExpertData, deleteExpert, getExperts } from "../../actions/expert.action";
 
 
 const Expert = (props) => {

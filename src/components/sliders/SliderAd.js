@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addNewSlider } from "../../actions/sliderAction";
+import { addNewSlider } from "../../actions/slider.action";
 import { bindActionCreators } from "redux";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
