@@ -20,13 +20,22 @@ const Sliders = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { sliderList } = useSelector((state) => state.slider);
+
+  const { pagenationInfo } = useSelector((state) => state.slider);
+  console.log("pagenationInfo:",pagenationInfo);
+
   const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
+  console.log(queryPage);
+  
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1);
+  console.log(currentPage);
+
   const [page, setPage] = useState(currentPage);
+
   //const [sliders, setSliders] = useState([]);
 
   const pageChange = (newPage) => {
-    currentPage !== newPage && history.push(`/sliders?page=${newPage}`);
+    currentPage !== newPage && history.push(`/sliders/?limit=3&page=${newPage}`);
   };
 
   useEffect(() => {
@@ -35,6 +44,7 @@ const Sliders = () => {
   }, [currentPage, page]);
 
   console.log(sliderList);
+ 
   return (
     <>
       <CButton
@@ -63,7 +73,7 @@ const Sliders = () => {
                 ]}
                 hover
                 striped
-                itemsPerPage={5}
+                // itemsPerPage={5}
                 activePage={page}
                 clickableRows
                 onRowClick={(item) => history.push(`/sliders/${item._id}`)}
@@ -71,7 +81,7 @@ const Sliders = () => {
               <CPagination
                 activePage={page}
                 onActivePageChange={pageChange}
-                pages={5}
+                pages={pagenationInfo.pages}
                 doubleArrows={false}
                 align="center"
               />

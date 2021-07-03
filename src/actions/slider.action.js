@@ -9,15 +9,18 @@ import {
 import axios from "axios";
 //import { API_BASE } from "../Helpers/env";
 
-const API_BASE = "https://crmapp-server.herokuapp.com/slider"
+const API_BASE = "https://crmapp-server.herokuapp.com/slider/?limit=3&page=1"
 
 export const getData = (data) => ({
   type: GET_SLIDERS,
   payload: data,
 });
+
 export function getSlider() {
   return (dispatch) => {
-    axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data.response)));
+    return axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data),
+  
+    ));
   };
 }
 

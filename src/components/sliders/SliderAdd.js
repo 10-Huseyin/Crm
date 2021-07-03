@@ -32,7 +32,8 @@ const initialState = {
   isActive: true,
   isDelete: false,
   mediaId: "",
-  isVideo: ""
+  isVideo: "",
+  alt:"",
 };
 
 const BasicForms = (props) => {
@@ -43,7 +44,8 @@ const BasicForms = (props) => {
 
   const getPhoto = (e) => {
     console.log(e.target.files[0]);
-    setPhoto(e.target.files[0]);
+    setPhoto(e.target.files[0])
+
   };
 
   const uploadPhoto = () => {
@@ -62,6 +64,7 @@ const BasicForms = (props) => {
 
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
+
   }
 
   const resetForm = () => {
@@ -166,13 +169,29 @@ const BasicForms = (props) => {
                 <CCol md="2">
                   <CLabel>Add Slider Photo</CLabel>
                 </CCol>
-                <CCol xs="12" md="9">
+                {/* <CCol xs="12" md="9">
                   <CInputFile onChange={getPhoto} custom id="custom-file-input" />
                   <CLabel htmlFor="custom-file-input" variant="custom-file">
                     {photo ? photo.name : "Choose file..."}
                   </CLabel>
                   <CButton onClick={uploadPhoto} type="button" size="sm" color="secondary"><CIcon name="cil-save" /> Upload Photo</CButton>
                   <span className="ml-2" >{message}</span>
+                </CCol> */}
+                <CCol xs="12" md="9">
+                  <CInputFile onChange={handleInput} value={state.mediaId} custom id="custom-file-input" name="mediaId" />
+                  <CLabel htmlFor="custom-file-input" variant="custom-file">
+                    {photo ? photo.name : "Choose file..."}
+                  </CLabel>
+                  <span className="ml-2" >{message}</span>
+                </CCol>
+              </CFormGroup>
+
+              <CFormGroup row>
+                <CCol md="2">
+                  <CLabel htmlFor="url-input">Add Photo SubInfo:</CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  <CInput onChange={handleInput} value={state.alt} id="sub-info" name="alt" placeholder="Sub Info" />
                 </CCol>
               </CFormGroup>
               <CCardFooter>
