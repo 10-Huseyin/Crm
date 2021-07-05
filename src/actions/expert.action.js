@@ -6,7 +6,7 @@ import {
     TOGGLE_VISIBLE
   } from "./actionTypes";
   import axios from "axios";
-  import { setMessage, setError } from "./message.action";
+  import { setMessage, setError, setPagination } from "./message.action";
   //import { API_BASE } from "../Helpers/env";
   
   const API_BASE = "https://crmapp-server.herokuapp.com/experts"
@@ -15,9 +15,13 @@ import {
     type: GET_EXPERTS,
     payload: data,
   });
-  export function getExperts() {
+  export function getExperts(limit, page) {
+    console.log(limit, page)
     return (dispatch) => {
-      axios.get(`${API_BASE}?limit=10`).then((result) => {console.log(result); dispatch(getData(result.data.response))});
+      axios.get(`${API_BASE}?limit=${limit}&page=${page}`).then((result) => {
+        console.log(result);
+        dispatch(setPagination({page:result.data.pages, total:result.data.total}));
+        dispatch(getData(result.data.response))});
     };
   }
 

@@ -9,7 +9,6 @@ import {
   CDataTable,
   CRow,
   CButton,
-  CSwitch,
   CPagination
 } from '@coreui/react'
 import { getExperts } from 'src/actions/expert.action'
@@ -42,20 +41,21 @@ const Experts = () => {
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
 
+  const paginationData = useSelector(state => state.pagination)
   const expertsData = useSelector(state => state.experts.expertList)
   const dispatch = useDispatch()
-  console.log(expertsData)
 
   const perPage = 10;
-  const pageNum = Math.ceil(expertsData.length / perPage);
+  const pageNum = paginationData ? paginationData.page : 1;
   //console.log(pageNum)
 
   const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/experts?page=${newPage}`)
+    currentPage !== newPage && history.push(`/experts?page=${newPage}`);
+    dispatch(getExperts(perPage,newPage))
   }
 
   useEffect(() => {
-    dispatch(getExperts())
+    dispatch(getExperts(perPage,page))
     
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
@@ -73,6 +73,7 @@ const Experts = () => {
             <small className="text-muted"> Table</small>
           </CCardHeader>
           <CCardBody>
+            {console.log(expertsData)}
           <CDataTable
             items={expertsData}
             fields={[
@@ -81,8 +82,8 @@ const Experts = () => {
             ]}
             hover
             striped
-            itemsPerPage={perPage}
-            activePage={page}
+            //itemsPerPage={perPage}
+            //activePage={page}
             clickableRows
             onRowClick={(item) => history.push(`/experts/${item._id}`)}
             scopedSlots = {{
@@ -94,11 +95,11 @@ const Experts = () => {
                     </CBadge>
                   </td>
                 )
-            }}
-          />
-          {
+              }}
+              />
+          { 
             pageNum > 1 &&
-          <CPagination
+            <CPagination
           align="center"
           activePage={page}
           pages={pageNum}
@@ -106,6 +107,7 @@ const Experts = () => {
           />
         }
           </CCardBody>
+        {console.log(page)}
         </CCard>
       </CCol> 
     </CRow>

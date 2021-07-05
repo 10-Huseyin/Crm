@@ -5,7 +5,7 @@ import {
     EDIT_USER,
     TOGGLE_VISIBLE
   } from "./actionTypes";
-  import { setMessage, setError } from "./message.action";
+  import { setMessage, setError, setPagination } from "./message.action";
   
   import axios from "axios";
   //import { API_BASE } from "../Helpers/env";
@@ -16,9 +16,13 @@ import {
     type: GET_USERS,
     payload: data,
   });
-  export function getUsers() {
+  export function getUsers(limit, page) {
     return (dispatch) => {
-      axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data.response)));
+      axios.get(`${API_BASE}?limit=${limit}&page=${page}`).then((result) => {
+        console.log(result)
+        dispatch(setPagination({page:result.data.pages, total:result.data.total}));
+        dispatch(getData(result.data.response))
+      });
     };
   }
   

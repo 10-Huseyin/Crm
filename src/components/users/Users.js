@@ -8,8 +8,6 @@ import {
   CCol,
   CDataTable,
   CRow,
-  CButton,
-  CSwitch,
   CPagination
 } from '@coreui/react'
 import { getUsers } from 'src/actions/user.action'
@@ -42,21 +40,22 @@ const Users = () => {
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
 
-  const message = useSelector(state => state.message)
+  const paginationData = useSelector(state => state.pagination)
   const usersData = useSelector(state => state.users.userList)
   const dispatch = useDispatch()
   //console.log(message)
 
   const perPage = 10;
-  const pageNum = Math.ceil(usersData.length / perPage);
+  const pageNum = paginationData ? paginationData.page : 1;
   //console.log(pageNum)
 
   const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/users?page=${newPage}`)
+    currentPage !== newPage && history.push(`/users?page=${newPage}`);
+    dispatch(getUsers(perPage,newPage))
   }
 
   useEffect(() => {
-    dispatch(getUsers())
+    dispatch(getUsers(perPage,page))
     
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
@@ -78,8 +77,8 @@ const Users = () => {
             ]}
             hover
             striped
-            itemsPerPage={perPage}
-            activePage={page}
+            //itemsPerPage={perPage}
+            //activePage={page}
             clickableRows
             onRowClick={(item) => history.push(`/users/${item._id}`)}
             scopedSlots = {{

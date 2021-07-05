@@ -1,4 +1,4 @@
-import { SET_MESSAGE, CLEAR_MESSAGE, SET_ERROR, CLEAR_ERROR } from "./actionTypes";
+import { SET_MESSAGE, CLEAR_MESSAGE, SET_ERROR, CLEAR_ERROR, SET_PAGINATION } from "./actionTypes";
 
 // export const setMessage = (message) => ({
 //   type: SET_MESSAGE,
@@ -40,3 +40,12 @@ export const setError = (error, dispatch) => {
   }, 3000);    
   return Promise.reject();
 }
+
+
+
+export const setPagination = (pagination) => ({
+    type: SET_PAGINATION,
+    payload: pagination,
+  });
+  
+  

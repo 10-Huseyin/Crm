@@ -6,6 +6,7 @@ import sidebar from "./sidebar.reducer";
 import slider from "./slider.reducer";
 import users from "./users.reducer";
 import experts from "./experts.reducer";
+import pagination from "./pagination.reducer";
 import companyIntro from "./company.reducer";
 
 export default combineReducers({
@@ -17,5 +18,5 @@ export default combineReducers({
   users,
   experts,
   companyIntro,
-
+  pagination
 });
