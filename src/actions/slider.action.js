@@ -5,7 +5,7 @@ import {
   EDIT_SLIDER,
   TOGGLE_VISIBLE
 } from "./actionTypes";
-
+import { setMessage, setError } from "./message.action";
 import axios from "axios";
 //import { API_BASE } from "../Helpers/env";
 
@@ -38,15 +38,21 @@ export function addNewSlider(state) {
   };
 }
 
-export const removeData = (data) => ({
-  type: DELETE_SLIDER,
-  payload: data,
-});
+// export const removeData = (data) => ({
+//   type: DELETE_SLIDER,
+//   payload: data,
+// });
 export function deleteSlider(id) {
   return (dispatch) => {
-    axios
+    return axios
       .delete(`${API_BASE}/${id}`, {})
-      .then((result) => dispatch(removeData(result.data)));
+      .then((response)=>{
+        console.log(response)
+        //removeData(response.data)
+        let msg = response.data.message ? response.data.message : "Slider is deleted succesfully"
+        setMessage(msg,dispatch)},
+      (error)=> {setError(error, dispatch)})
+      .catch((error) => console.log(error));
   };
 }
 
@@ -54,11 +60,11 @@ export const editData = (data) => ({
   type: EDIT_SLIDER,
   payload: data,
 });
-export function editSliderFunk(state, id) {
-  console.log(state,id);
+export function editSliderFunk(fd, id) {
+  console.log(fd,id);
   return (dispatch) => {
     return axios 
-      .put(`${API_BASE}/${id}`, state)
+      .put(`${API_BASE}/${id}`, fd)
       .then((result) =>{
         console.log(result.data)
         dispatch(editData(result.data)

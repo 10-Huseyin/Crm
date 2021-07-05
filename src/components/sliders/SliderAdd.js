@@ -23,6 +23,7 @@ import { DocsLink } from 'src/reusable'
 import { useDispatch, useSelector } from "react-redux";
 import { addNewSlider } from "../../actions/slider.action";
 
+
 const initialState = {
   title: "",
   subtitle: "",
@@ -38,29 +39,35 @@ const initialState = {
 
 const BasicForms = (props) => {
   const [state, setState] = useState(initialState)
-  const [photo, setPhoto] = useState({});
+  //const [photo, setPhoto] = useState({});
   const [message, setMessage] = useState("")
   const dispatch = useDispatch();
 
-  const getPhoto = (e) => {
-    console.log(e.target.files[0]);
-    setPhoto(e.target.files[0])
+  const onChangePhoto = (e) => {
+    e.preventDefault();
+    setState({...state, mediaId : e.target.files[0]})
+  }
+  
 
-  };
+  // const getPhoto = (e) => {
+  //   console.log(e.target.files[0]);
+  //   setPhoto(e.target.files[0])
 
-  const uploadPhoto = () => {
-    const fd = new FormData();
+  // };
 
-    fd.append("image", photo, photo.name);
-    axios.post(
-      "https://api.imgbb.com/1/upload?expiration=600&key=a4a61c5615a8ba139a774ff21a6d5373",
-      fd
-    ).then((res) => {
-      console.log(res.data.data.display_url);
-      setState({ ...state, mediaId: res.data.data.display_url });
-      setMessage("Media uploaded succesfully!")
-    }).catch(err => setMessage("Some error occured, try again!"))
-  };
+  // const uploadPhoto = () => {
+  //   const fd = new FormData();
+
+  //   fd.append("image", photo, photo.name);
+  //   axios.post(
+  //     "https://api.imgbb.com/1/upload?expiration=600&key=a4a61c5615a8ba139a774ff21a6d5373",
+  //     fd
+  //   ).then((res) => {
+  //     console.log(res.data.data.display_url);
+  //     setState({ ...state, mediaId: res.data.data.display_url });
+  //     setMessage("Media uploaded succesfully!")
+  //   }).catch(err => setMessage("Some error occured, try again!"))
+  // };
 
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
@@ -69,19 +76,38 @@ const BasicForms = (props) => {
 
   const resetForm = () => {
     setState(initialState)
-    setPhoto({})
+    // setPhoto({})
     setMessage("")
   }
 
   const handleSubmit = (event) => {
     console.log("handlesubmit")
     event.preventDefault();
-    dispatch(addNewSlider(state));
-    resetForm();
-    props.history.push("/sliders");
+    const fd = new FormData();
+    if(state.mediaId.name){
+      fd.set("mediaId", state.mediaId, state.mediaId.name);
+    }
+    fd.set("title", state.title);
+    fd.set("subtitle", state.subtitle);
+    fd.set("url", state.url);
+    fd.set("buttonText", state.buttonText);
+    fd.set("order", state.order);
+    fd.set("isActive", state.isActive);
+    fd.set("isDelete", state.isDelete);
+    fd.set("mediaId", state.mediaId);
+    fd.set("isVideo", state.isVideo);
+    fd.set("alt", state.alt);
+    dispatch(addNewSlider(fd))
+        .then((res)=>{
+          if(res===200){
+            resetForm();
+            props.history.push("/sliders");
+          }
+        })
+ 
   };
 
-  console.log(state, photo);
+
   return (
     <CRow>
       <CCol xs="12" md="12">
@@ -178,11 +204,14 @@ const BasicForms = (props) => {
                   <span className="ml-2" >{message}</span>
                 </CCol> */}
                 <CCol xs="12" md="9">
-                  <CInputFile onChange={handleInput} value={state.mediaId} custom id="custom-file-input" name="mediaId" />
+                  <CInputFile 
+                  onChange={onChangePhoto} 
+                  // value={state.mediaId} 
+                  custom id="custom-file-input" name="mediaId" />
                   <CLabel htmlFor="custom-file-input" variant="custom-file">
-                    {photo ? photo.name : "Choose file..."}
+                    {state.mediaId ? state.mediaId.title : "Choose file..."}
                   </CLabel>
-                  <span className="ml-2" >{message}</span>
+                  {/* <span className="ml-2" >{message}</span> */}
                 </CCol>
               </CFormGroup>
 
