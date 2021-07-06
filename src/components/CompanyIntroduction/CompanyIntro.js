@@ -101,7 +101,7 @@ const CompanyIntro = (props) => {
                   <CLabel htmlFor="shortDescription">Short Description:</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput onChange={handleInput} type="text" id="shortDescription" name="shortDescription" placeholder="Short Description" required />
+                  <CInput onChange={handleInput} type="text" id="shortDescription" name="shortDescription " placeholder="Short Description" required />
                 </CCol>
               </CFormGroup>
 
