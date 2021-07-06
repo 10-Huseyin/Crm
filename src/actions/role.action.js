@@ -1,23 +1,20 @@
 import {
-  GET_USERS,
-  ADD_NEW_USER,
-  DELETE_USER,
-  EDIT_USER,
   GET_ROLES,
+  ADD_NEW_ROLE,
+  DELETE_ROLE,
+  EDIT_ROLE,
   TOGGLE_VISIBLE
 } from "./actionTypes";
 import axios from "axios";
 import { setMessage, setError, setPagination } from "./message.action";
-//import { API_BASE } from "../Helpers/env";
 
-const API_BASE = "https://crmapp-server.herokuapp.com/users"
-const ROLE_BASE = "https://crmapp-server.herokuapp.com/roles"
+const API_BASE = "https://crmapp-server.herokuapp.com/roles"
 
 export const getData = (data) => ({
-  type: GET_USERS,
+  type: GET_ROLES,
   payload: data,
 });
-export function getUsers(limit, page) {
+export function getRoles(limit, page) {
   //console.log(limit, page)
   return (dispatch) => {
     return axios.get(`${API_BASE}?limit=${limit}&page=${page}`)
@@ -36,18 +33,18 @@ export function getUsers(limit, page) {
 }
 
 export const postData = (data) => ({
-  type: ADD_NEW_USER,
+  type: ADD_NEW_ROLE,
   payload: data,
 });
 
-export function addNewUser(state) {
-  console.log("add new user => ",state);
+export function addNewRole(state) {
+  console.log("add new role => ",state);
   return (dispatch) => {
     return axios
       .post(`${API_BASE}`, state)
       .then((response)=>{
         console.log(response)
-        let msg = response.data.status === 200 ? (response.data.message || "User is added succesfully") : "User could not added!"
+        let msg = response.data.status === 200 ? (response.data.message || "Role is added succesfully") : "Role could not added!"
         setMessage(msg,dispatch)
         return response.data.status
       },
@@ -60,16 +57,16 @@ export function addNewUser(state) {
 }
 
 export const removeData = (data) => ({
-  type: DELETE_USER,
+  type: DELETE_ROLE,
   payload: data,
 });
-export function deleteUser(id) {
+export function deleteRole(id) {
   return (dispatch) => {
     return axios
       .delete(`${API_BASE}/${id}`, {})
       .then((response)=>{
         console.log(response)
-        let msg = response.data.status === 200 ? (response.data.message || "User is deleted succesfully") : "User is not deleted!"
+        let msg = response.data.status === 200 ? (response.data.message || "Role is deleted succesfully") : "Role is not deleted!"
         setMessage(msg,dispatch)
         return response.data.status
       }
@@ -83,17 +80,17 @@ export function deleteUser(id) {
 }
 
 export const editData = (data) => ({
-  type: EDIT_USER,
+  type: EDIT_ROLE,
   payload: data,
 });
-export function editUserData(state, id) {
+export function editRoleData(state, id) {
   console.log(state,id);
   return (dispatch) => {
     return axios
       .put(`${API_BASE}/${id}`, state)
       .then((response)=>{
         console.log(response)
-        let msg = response.data.status === 200 ? (response.data.message || "User is updated succesfully") : "User could not updated!"
+        let msg = response.data.status === 200 ? (response.data.message || "Role is updated succesfully") : "Role could not updated!"
         setMessage(msg,dispatch)
       },
         (error)=> {
@@ -113,25 +110,4 @@ export function toggleVisible(id) {
         .then(res=>console.log(res))
     })
   }
-}
-
-
-export const getRoleData = (data) => ({
-  type: GET_ROLES,
-  payload: data,
-});
-export function getRoles() {
-  return (dispatch) => {
-    return axios.get(`${ROLE_BASE}`)
-    .then((result) => {
-      //console.log(result);
-      dispatch(getRoleData(result.data.response))
-      return result.data.status;
-    },
-    (error)=> {
-      setError(error, dispatch)
-    return error
-  })
-    .catch((error) => error);
-  };
 }

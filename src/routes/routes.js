@@ -37,7 +37,11 @@ const Colors = React.lazy(() => import('../components/theme/colors/Colors'));
 const Typography = React.lazy(() => import('../components/theme/typography/Typography'));
 const Widgets = React.lazy(() => import('../components/widgets/Widgets'));
 const Users = React.lazy(() => import('../components/users/Users'));
-const User = React.lazy(() => import('../components/users/User'));
+const UserDetail = React.lazy(() => import('../components/users/UserDetail'));
+const Roles = React.lazy(() => import('../components/roles/Roles'));
+const RoleDetail = React.lazy(() => import('../components/roles/RoleDetail'));
+const SocialMedias = React.lazy(() => import('../components/socialMedias/socialMedia'));
+const SocialMediaDetail = React.lazy(() => import('../components/socialMedias/socialMediaDetail'));
 const Experts = React.lazy(() => import('../components/experts/Experts'));
 //const ExpertAdd = React.lazy(() => import('../components/experts/ExpertAdd_eski'));
 const ExpertDetail = React.lazy(() => import('../components/experts/ExpertDetail'));
@@ -90,7 +94,14 @@ const routes = [
   { path: '/experts/add', exact: true,  name: 'Expert Add', component: ExpertDetail },
   { path: '/experts/:id', exact: true, name: 'Expert Details', component: ExpertDetail },
   { path: '/users', exact: true,  name: 'Users', component: Users },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/users/add', exact: true, name: 'User Add', component: UserDetail },
+  { path: '/users/:id', exact: true, name: 'User Details', component: UserDetail },
+  { path: '/roles', exact: true,  name: 'Roles', component: Roles },
+  { path: '/roles/add', exact: true, name: 'Role Add', component: RoleDetail },
+  { path: '/roles/:id', exact: true, name: 'Role Details', component: RoleDetail },
+  { path: '/socialMedias', exact: true,  name: 'SocialMedias', component: SocialMedias },
+  { path: '/socialMedias/add', exact: true, name: 'SocialMedia Add', component: SocialMediaDetail },
+  { path: '/socialMedias/:id', exact: true, name: 'SocialMedia Details', component: SocialMediaDetail },
   { path: '/sliders', exact: true,  name: 'Sliders', component: Sliders },
   { path: '/sliders/add', exact: true,  name: 'Slider Add', component: SliderAdd },
   // { path: '/sliders/:id', exact: true, name: 'Slider Details', component: Slider },

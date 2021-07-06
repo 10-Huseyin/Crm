@@ -20,7 +20,7 @@ import {
     return (dispatch) => {
       return axios.get(`${API_BASE}?limit=${limit}&page=${page}`)
       .then((result) => {
-        console.log(result);
+        //console.log(result);
         dispatch(setPagination({page:result.data.pages, total:result.data.total}));
         dispatch(getData(result.data.response))
         return result.data.status;

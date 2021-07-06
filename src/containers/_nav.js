@@ -37,8 +37,20 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Roles',
+    to: '/roles',
+    icon: 'cil-people'
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Experts',
     to: '/experts',
+    icon: 'cil-people'
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Social Media',
+    to: '/socialMedias',
     icon: 'cil-people'
   },
   {

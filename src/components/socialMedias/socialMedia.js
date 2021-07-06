@@ -12,8 +12,7 @@ import {
   CPagination,
   CAlert
 } from '@coreui/react'
-import { getUsers } from 'src/actions/user.action'
-import { getRoles } from 'src/actions/role.action'
+import { getSocialMedias } from 'src/actions/socialMedia.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {
@@ -37,14 +36,14 @@ const getActive = status => {
   }
 }
 
-const Users = () => {
+const SocialMedias = () => {
   const history = useHistory()
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
   const [errorMsg, seterrorMsg] = useState("")
   const paginationData = useSelector(state => state.pagination)
-  const usersData = useSelector(state => state.users.userList)
+  const socialMediasData = useSelector(state => state.socialMedias.socialMediasList)
   const dispatch = useDispatch()
 
   const perPage = 10;
@@ -52,13 +51,12 @@ const Users = () => {
   //console.log(pageNum)
  
   const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/users?page=${newPage}`);
-    dispatch(getUsers(perPage,newPage))
+    currentPage !== newPage && history.push(`/socialMedias?page=${newPage}`);
+    dispatch(getSocialMedias(perPage,newPage))
   }
 
   useEffect(() => {
-    dispatch(getRoles())
-    dispatch(getUsers(perPage,page))
+    dispatch(getSocialMedias(perPage,page))
     .then(res=>{
       if (res !== 200) {
         seterrorMsg("An error occured when data is triggered!")
@@ -74,17 +72,17 @@ const Users = () => {
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
-  //console.log(errorMsg)
+  console.log(socialMediasData)
   return (
     <>
     <CButton type="button"
-    onClick={() => history.push(`/users/add`)}
-    block color="primary">Add User</CButton>
+    onClick={() => history.push(`/socialMedias/add`)}
+    block color="primary">Add SocialMedia</CButton>
     <CRow>
        <CCol xl={9}>
         <CCard>
           <CCardHeader>
-            Users
+            SocialMedias
             <small className="text-muted"> Table</small>
           </CCardHeader>
     {errorMsg && <CAlert color="warning">
@@ -92,17 +90,17 @@ const Users = () => {
               </CAlert>}
           <CCardBody>
           <CDataTable
-            items={usersData}
+            items={socialMediasData}
             fields={[
-              { key: 'firstname', _classes: 'font-weight-bold' },
-              "lastname",  'email', "isActive",
+              { key: 'title', _classes: 'font-weight-bold' },
+              "link", "isActive",
             ]}
             hover
             striped
             //itemsPerPage={perPage}
             //activePage={page}
             clickableRows
-            onRowClick={(item) => history.push(`/users/${item._id}`)}
+            onRowClick={(item) => history.push(`/socialMedias/${item._id}`)}
             scopedSlots = {{
               "isActive":
                 (item)=>(
@@ -131,4 +129,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default SocialMedias

@@ -1,23 +1,19 @@
 import {
-  GET_USERS,
-  ADD_NEW_USER,
-  DELETE_USER,
-  EDIT_USER,
-  GET_ROLES,
-  TOGGLE_VISIBLE
+  GET_SOCIALMEDIAS,
+  ADD_NEW_SOCIALMEDIA,
+  DELETE_SOCIALMEDIA,
+  EDIT_SOCIALMEDIA,
 } from "./actionTypes";
 import axios from "axios";
 import { setMessage, setError, setPagination } from "./message.action";
-//import { API_BASE } from "../Helpers/env";
 
-const API_BASE = "https://crmapp-server.herokuapp.com/users"
-const ROLE_BASE = "https://crmapp-server.herokuapp.com/roles"
+const API_BASE = "https://crmapp-server.herokuapp.com/socialMedia"
 
 export const getData = (data) => ({
-  type: GET_USERS,
+  type: GET_SOCIALMEDIAS,
   payload: data,
 });
-export function getUsers(limit, page) {
+export function getSocialMedias(limit, page) {
   //console.log(limit, page)
   return (dispatch) => {
     return axios.get(`${API_BASE}?limit=${limit}&page=${page}`)
@@ -36,18 +32,18 @@ export function getUsers(limit, page) {
 }
 
 export const postData = (data) => ({
-  type: ADD_NEW_USER,
+  type: ADD_NEW_SOCIALMEDIA,
   payload: data,
 });
 
-export function addNewUser(state) {
-  console.log("add new user => ",state);
+export function addNewSocialMedia(state) {
+  console.log("add new socialMedia => ",state);
   return (dispatch) => {
     return axios
       .post(`${API_BASE}`, state)
       .then((response)=>{
         console.log(response)
-        let msg = response.data.status === 200 ? (response.data.message || "User is added succesfully") : "User could not added!"
+        let msg = response.data.status === 200 ? (response.data.message || "SocialMedia is added succesfully") : "SocialMedia could not added!"
         setMessage(msg,dispatch)
         return response.data.status
       },
@@ -60,16 +56,16 @@ export function addNewUser(state) {
 }
 
 export const removeData = (data) => ({
-  type: DELETE_USER,
+  type: DELETE_SOCIALMEDIA,
   payload: data,
 });
-export function deleteUser(id) {
+export function deleteSocialMedia(id) {
   return (dispatch) => {
     return axios
       .delete(`${API_BASE}/${id}`, {})
       .then((response)=>{
         console.log(response)
-        let msg = response.data.status === 200 ? (response.data.message || "User is deleted succesfully") : "User is not deleted!"
+        let msg = response.data.status === 200 ? (response.data.message || "SocialMedia is deleted succesfully") : "SocialMedia is not deleted!"
         setMessage(msg,dispatch)
         return response.data.status
       }
@@ -83,17 +79,17 @@ export function deleteUser(id) {
 }
 
 export const editData = (data) => ({
-  type: EDIT_USER,
+  type: EDIT_SOCIALMEDIA,
   payload: data,
 });
-export function editUserData(state, id) {
+export function editSocialMediaData(state, id) {
   console.log(state,id);
   return (dispatch) => {
     return axios
       .put(`${API_BASE}/${id}`, state)
       .then((response)=>{
         console.log(response)
-        let msg = response.data.status === 200 ? (response.data.message || "User is updated succesfully") : "User could not updated!"
+        let msg = response.data.status === 200 ? (response.data.message || "SocialMedia is updated succesfully") : "SocialMedia could not updated!"
         setMessage(msg,dispatch)
       },
         (error)=> {
@@ -101,37 +97,5 @@ export function editUserData(state, id) {
         return error
       })
         .catch((error) => error);
-  };
-}
-
-export function toggleVisible(id) {
-
-  return (dispatch) => {
-    dispatch({
-        type:TOGGLE_VISIBLE,
-        payload:axios.put(`${API_BASE}/${id}`,{})
-        .then(res=>console.log(res))
-    })
-  }
-}
-
-
-export const getRoleData = (data) => ({
-  type: GET_ROLES,
-  payload: data,
-});
-export function getRoles() {
-  return (dispatch) => {
-    return axios.get(`${ROLE_BASE}`)
-    .then((result) => {
-      //console.log(result);
-      dispatch(getRoleData(result.data.response))
-      return result.data.status;
-    },
-    (error)=> {
-      setError(error, dispatch)
-    return error
-  })
-    .catch((error) => error);
   };
 }
