@@ -74,7 +74,7 @@ const Sliders = () => {
                 hover
                 striped
                 // itemsPerPage={5}
-                activePage={page}
+                //activePage={page}
                 clickableRows
                 onRowClick={(item) => history.push(`/sliders/${item._id}`)}
               />

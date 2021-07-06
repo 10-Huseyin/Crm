@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
     case ADD_NEW_COMPANY_INTRO:
       return { ...state, companyIntroList: [...state.expertList, action.payload] };
     case DELETE_COMPANY_INTRO:
-      return { ...state, companyIntroList: action.payload };
+      return { ...state, companyIntroList: state.companyIntroList.filter((item)=>item._id !== action.payload.data._id)};
     case EDIT_COMPANY_INTRO:
       return { ...state, companyIntroList: [...state.expertList, action.payload] };
     case TOGGLE_VISIBLE:

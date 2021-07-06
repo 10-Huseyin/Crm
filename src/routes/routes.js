@@ -45,7 +45,14 @@ const Sliders = React.lazy(() => import('../components/sliders/Sliders'));
 const Slider = React.lazy(() => import('../components/sliders/Slider'));
 const SliderAdd = React.lazy(() => import('../components/sliders/SliderAdd'));
 const SliderEdit = React.lazy(() => import('../components/sliders/SliderEdit'));
-const CompanyIntroduction = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntroductions'));
+const CompanyIntros = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntros'));
+const CompanyIntroAdd = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntroAdd'));
+
+const CompanyIntro = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntro'));
+
+
+
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
@@ -95,7 +102,9 @@ const routes = [
   { path: '/sliders/add', exact: true,  name: 'Slider Add', component: SliderAdd },
   // { path: '/sliders/:id', exact: true, name: 'Slider Details', component: Slider },
   { path: '/sliders/:id', exact: true, name: 'Slider Edit', component: SliderEdit },
-  { path: '/companyintroduction', exact: true,  name: 'Company Introduction', component: CompanyIntroduction},
+  { path: '/companyintroduction', exact: true,  name: 'Company Introduction', component: CompanyIntros},
+  { path: '/companyintroduction/add', exact: true,  name: 'Company Introduction', component: CompanyIntroAdd},
+  { path: '/companyintroduction/:id', exact: true,  name: 'CompanyIntro', component: CompanyIntro},
 ];
 
 export default routes;

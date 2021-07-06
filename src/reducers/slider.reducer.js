@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
     case ADD_NEW_SLIDER:
       return { ...state, sliderList: [...state.sliderList, action.payload] };
     case DELETE_SLIDER:
-      return { ...state, sliderList: action.payload };
+      return { ...state, sliderList: state.sliderList.filter((item)=>item._id !== action.payload.data._id)};
     case EDIT_SLIDER:
       return { ...state, sliderList: [...state.sliderList, action.payload] };
     case TOGGLE_VISIBLE:

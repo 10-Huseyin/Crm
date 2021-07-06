@@ -38,17 +38,17 @@ export function addNewSlider(state) {
   };
 }
 
-// export const removeData = (data) => ({
-//   type: DELETE_SLIDER,
-//   payload: data,
-// });
+export const removeData = (data) => ({
+  type: DELETE_SLIDER,
+  payload: data,
+});
 export function deleteSlider(id) {
   return (dispatch) => {
     return axios
       .delete(`${API_BASE}/${id}`, {})
       .then((response)=>{
-        console.log(response)
-        //removeData(response.data)
+        
+        removeData(response.data)
         let msg = response.data.message ? response.data.message : "Slider is deleted succesfully"
         setMessage(msg,dispatch)},
       (error)=> {setError(error, dispatch)})
