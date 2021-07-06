@@ -177,7 +177,7 @@ const UserDetail = (props) => {
                   <CLabel>Add New Photo</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInputFile onChange={onChangePhoto} custom id="custom-file-input" required/>
+                  <CInputFile onChange={onChangePhoto} custom id="custom-file-input" required={props.match.params.id? false : true}/>
                   <CLabel htmlFor="custom-file-input" variant="custom-file">
                     {state.alt ? state.alt : "Choose file..."}
                   </CLabel>
@@ -204,7 +204,7 @@ const UserDetail = (props) => {
                 <CCol xs="12" md="9">
                   <CSelect custom name="roleId" id="select" onChange={handleInput}>
                       <option value={state.roleId? state.roleId.name : ""}>{state.roleId? state.roleId.name : "Please select"}</option>
-                      {roles.roles.map(item=><option key={item._id} value={item._id}>{item.name}</option>)}
+                      {roles.rolesList.map(item=><option key={item._id} value={item._id}>{item.name}</option>)}
                     </CSelect>
                 </CCol>
                     

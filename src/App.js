@@ -37,7 +37,7 @@ class App extends Component {
 
   render() {
     //console.log(this.props.auth)
-    console.log(this.props)
+    //console.log(this.props)
 
     const {isLoggedIn} = this.props.auth
     return (

@@ -42,6 +42,8 @@ const Roles = React.lazy(() => import('../components/roles/Roles'));
 const RoleDetail = React.lazy(() => import('../components/roles/RoleDetail'));
 const SocialMedias = React.lazy(() => import('../components/socialMedias/socialMedia'));
 const SocialMediaDetail = React.lazy(() => import('../components/socialMedias/socialMediaDetail'));
+const Medias = React.lazy(() => import('../components/medias/Media'));
+const MediaDetail = React.lazy(() => import('../components/medias/MediaDetail'));
 const Experts = React.lazy(() => import('../components/experts/Experts'));
 //const ExpertAdd = React.lazy(() => import('../components/experts/ExpertAdd_eski'));
 const ExpertDetail = React.lazy(() => import('../components/experts/ExpertDetail'));
@@ -109,6 +111,9 @@ const routes = [
   { path: '/socialMedias', exact: true,  name: 'SocialMedias', component: SocialMedias },
   { path: '/socialMedias/add', exact: true, name: 'SocialMedia Add', component: SocialMediaDetail },
   { path: '/socialMedias/:id', exact: true, name: 'SocialMedia Details', component: SocialMediaDetail },
+  { path: '/medias', exact: true,  name: 'Medias', component: Medias },
+  { path: '/medias/add', exact: true, name: 'Media Add', component: MediaDetail },
+  { path: '/medias/:id', exact: true, name: 'Media Details', component: MediaDetail },
   { path: '/sliders', exact: true,  name: 'Sliders', component: Sliders },
   { path: '/sliders/add', exact: true,  name: 'Slider Add', component: SliderAdd },
   // { path: '/sliders/:id', exact: true, name: 'Slider Details', component: Slider },

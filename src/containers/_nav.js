@@ -1,6 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 //import { CIcon } from '@coreui/icons-react';
+import { freeSet } from '@coreui/icons'
 
 const _nav =  [
   {
@@ -39,19 +40,25 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'Roles',
     to: '/roles',
-    icon: 'cil-people'
+    icon: <CIcon content={freeSet.cilFingerprint} customClasses="c-sidebar-nav-icon"/>
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Experts',
     to: '/experts',
-    icon: 'cil-people'
+    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
   },
-  {
+  { 
     _tag: 'CSidebarNavItem',
     name: 'Social Media',
     to: '/socialMedias',
-    icon: 'cil-people'
+    icon: <CIcon content={freeSet.cilBraille} customClasses="c-sidebar-nav-icon"/>
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Medias',
+    to: '/medias',
+    icon: <CIcon content={freeSet.cilCast} customClasses="c-sidebar-nav-icon"/>
   },
   {
     _tag: 'CSidebarNavItem',

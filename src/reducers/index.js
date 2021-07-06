@@ -7,6 +7,7 @@ import slider from "./slider.reducer";
 import users from "./users.reducer";
 import roles from "./roles.reducer";
 import socialMedias from "./socialMedia.reducer";
+import medias from "./media.reducer";
 import experts from "./experts.reducer";
 import pagination from "./pagination.reducer";
 import companyIntro from "./company.reducer";
@@ -22,5 +23,6 @@ export default combineReducers({
   companyIntro,
   pagination,
   roles,
-  socialMedias
+  socialMedias,
+  medias,
 });

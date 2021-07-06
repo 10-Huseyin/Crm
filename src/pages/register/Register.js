@@ -110,7 +110,7 @@ console.log(store)
                         />
                       <span className="c-avatar-add">
                         <CInputFile onChange={onChangePhoto} id="file-input" name="file-input" className="c-avatar-input"/>
-                        <CLabel htmlFor="file-input" className="c-avatar-label"><CIcon content={freeSet.cilCamera} /></CLabel>
+                        <CLabel htmlFor="file-input" className="c-avatar-label"><CIcon  content={freeSet.cilCamera} /></CLabel>
                       </span>
                     </div>
                   <CInputGroup className={"mb-3" + (successful && !state.firstname ? " has-error" : "")}>
