@@ -15,7 +15,7 @@ import {
   
   export default function (state = initialState, action) {
     const { type, payload } = action;
-    console.log(state)  
+    //console.log(state)  
     switch (type) {
       case REGISTER_SUCCESS:
         return {

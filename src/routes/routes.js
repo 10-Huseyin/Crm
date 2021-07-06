@@ -39,8 +39,8 @@ const Widgets = React.lazy(() => import('../components/widgets/Widgets'));
 const Users = React.lazy(() => import('../components/users/Users'));
 const User = React.lazy(() => import('../components/users/User'));
 const Experts = React.lazy(() => import('../components/experts/Experts'));
-const Expert = React.lazy(() => import('../components/experts/Expert'));
-const ExpertAdd = React.lazy(() => import('../components/experts/ExpertAdd'));
+//const ExpertAdd = React.lazy(() => import('../components/experts/ExpertAdd_eski'));
+const ExpertDetail = React.lazy(() => import('../components/experts/ExpertDetail'));
 const Sliders = React.lazy(() => import('../components/sliders/Sliders'));
 const Slider = React.lazy(() => import('../components/sliders/Slider'));
 const SliderAdd = React.lazy(() => import('../components/sliders/SliderAdd'));
@@ -94,8 +94,8 @@ const routes = [
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/experts', exact: true,  name: 'Experts', component: Experts },
-  { path: '/experts/add', exact: true,  name: 'Expert Add', component: ExpertAdd },
-  { path: '/experts/:id', exact: true, name: 'Expert Details', component: Expert },
+  { path: '/experts/add', exact: true,  name: 'Expert Add', component: ExpertDetail },
+  { path: '/experts/:id', exact: true, name: 'Expert Details', component: ExpertDetail },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/sliders', exact: true,  name: 'Sliders', component: Sliders },

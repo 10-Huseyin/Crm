@@ -10,7 +10,7 @@ export default function (state = initialState, action) {
       return  payload ;
 
     case CLEAR_MESSAGE:
-      return  "" ;
+      return  null ;
 
     default:
       return state;

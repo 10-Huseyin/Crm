@@ -200,7 +200,7 @@ console.log(store)
         {
               (store.error || store.message) && typeof store.message === "string" &&
               <CModal
-                show={modal}
+                show={modal} 
                 alignment="center"
                 onClose={setModal}
               >

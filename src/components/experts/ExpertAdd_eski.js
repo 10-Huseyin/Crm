@@ -39,45 +39,30 @@ const initialState = {
   expertise: "",
   isActive: true,
   isDeleted: false,
-  mediaId: "",
+  mediaId: {},
+  alt:"",
   socialMediaId: [],
 };
 
 const ExpertAdd = (props) => {
   const [modal, setModal] = useState(true)
   const [state, setState] = useState(initialState)
-  const [photo, setPhoto] = useState({});
   const [uploadMessage, setUploadMessage] = useState("");
   const [social, setSocial] = useState({ title: "", link: "" })
   const dispatch = useDispatch();
   const message = useSelector(state => state.message)
 
-  const getPhoto = (e) => {
-    console.log(e.target.files[0]);
-    setPhoto(e.target.files[0]);
+  const onChangePhoto = (e) => {
+    console.log(e.target.files);
+    setState({...state, alt : e.target.files[0].name, mediaId : e.target.files[0]});
+    setUploadMessage("Media selected succesfully!")
   };
-
-  const uploadPhoto = () => {
-    const fd = new FormData();
-
-    fd.append("image", photo, photo.name);
-    console.log(fd)
-    axios.post(
-      "https://api.imgbb.com/1/upload?expiration=600&key=a4a61c5615a8ba139a774ff21a6d5373",
-      fd
-    ).then((res) => {
-      console.log(res.data.data.display_url);
-      setState({ ...state, mediaId: res.data.data.display_url });
-      setUploadMessage("Media uploaded succesfully!")
-    }).catch(err => setUploadMessage("Some error occured, try again!"))
-  };
-
+  
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
 
   const resetForm = () => {
-    setPhoto({})
     setUploadMessage("")
     setSocial({ title: "", link: "" })
     setState({
@@ -86,22 +71,42 @@ const ExpertAdd = (props) => {
       expertise: "",
       isActive: true,
       isDeleted: false,
-      mediaId: "",
+      mediaId: {},
+      alt:"",
       socialMediaId: [],
     })
   }
-  console.log(props)
 
   const handleSubmit = (event) => {
-    console.log("handlesubmit")
     event.preventDefault();
-    dispatch(addNewExpert(state));
-    resetForm();
-    dispatch(getExperts())
-    setTimeout(() => {
-      setModal(false)
-      props.history.push("/experts");
-    }, 3000);
+    const fd = new FormData();
+    if(state.mediaId.name){
+      fd.set("mediaId", state.mediaId, state.mediaId.name);
+    }
+    fd.set("firstname", state.firstname);
+    fd.set("lastname", state.lastname);
+    fd.set("expertise", state.expertise);
+    fd.set("isActive", state.isActive);
+    fd.set("isDeleted", state.isDeleted);
+    fd.set("alt", state.alt);
+    fd.set("socialMediaId", state.socialMediaId);
+    console.log(fd.getAll('mediaId'))
+
+    dispatch(addNewExpert(fd))
+    .then(res=>{
+      console.log(res)
+      // res.data.status === 200 ?
+      // setTimeout(() => {
+      //   resetForm()
+      //   setModal(false)
+      //   props.history.push("/experts");
+      // }, 2000)
+      // :
+      // setTimeout(() => {
+      //   setModal(false)
+      // }, 2000);
+    });
+    
   };
 
   const selectSocial = (e) => {
@@ -132,7 +137,6 @@ const ExpertAdd = (props) => {
     setState({ ...state, socialMediaId: temp_socialMedia })
     setSocial({ title: "", link: "" })
   }
-
 
   const deleteSocial = (title) => {
     let temp_socialMedia = state.socialMediaId.filter((item) => item.title !== title)
@@ -193,11 +197,10 @@ const ExpertAdd = (props) => {
                   <CLabel>Add Photo</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInputFile onChange={getPhoto} custom id="custom-file-input" />
+                  <CInputFile onChange={onChangePhoto} custom id="custom-file-input" />
                   <CLabel htmlFor="custom-file-input" variant="custom-file">
-                    {photo ? photo.name : "Choose file..."}
+                    {state.alt ? state.alt : "Choose file..."}
                   </CLabel>
-                  <CButton onClick={uploadPhoto} type="button" size="sm" color="secondary"><CIcon name="cil-save" /> Upload Photo</CButton>
                   <span className="ml-2">{uploadMessage}</span>
                 </CCol>
               </CFormGroup>

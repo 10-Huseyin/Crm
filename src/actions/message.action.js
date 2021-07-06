@@ -29,6 +29,7 @@ export const setError = (error, dispatch) => {
       error.response.data.message) ||
     error.message ||
     error.toString();
+    //console.log(message)
   dispatch({
     type: SET_ERROR,
     payload: message,
@@ -38,7 +39,7 @@ export const setError = (error, dispatch) => {
       type: CLEAR_ERROR,
     });
   }, 3000);    
-  return Promise.reject();
+  //return Promise.reject();
 }
 
 
