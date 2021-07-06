@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log(action);
+  //console.log(action);
   switch (action.type) {
     case GET_SLIDERS:
       return { ...state, sliderList: action.payload.response,pagenationInfo:action.payload };

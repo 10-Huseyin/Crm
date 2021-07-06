@@ -16,7 +16,7 @@ import {
     payload: data,
   });
   export function getExperts(limit, page) {
-    console.log(limit, page)
+    //console.log(limit, page)
     return (dispatch) => {
       axios.get(`${API_BASE}?limit=${limit}&page=${page}`).then((result) => {
         console.log(result);
@@ -36,12 +36,16 @@ import {
       return axios
         .post(`${API_BASE}`, state)
         .then((response)=>{
-          console.log(response);
-          setMessage(response.data.message,dispatch)
-
+          console.log(response)
+          let msg = response.data.status === 200 ? (response.data.message || "Expert is added succesfully") : "Expert could not added!"
+          setMessage(msg,dispatch)
+          return response;
         },
-        (error)=> {setError(error, dispatch)})
-        .catch((error) => console.log(error));
+        (error)=> {
+          setError(error, dispatch)
+        return error
+      })
+        .catch((error) => error);
     };
   }
   
@@ -55,9 +59,11 @@ import {
         .delete(`${API_BASE}/${id}`, {})
         .then((response)=>{
           console.log(response)
-          //removeData(response.data)
-          let msg = response.data.message ? response.data.message : "Expert is deleted succesfully"
-          setMessage(msg,dispatch)},
+          let msg = response.data.status === 200 ? (response.data.message || "Expert is deleted succesfully") : "Expert is not deleted!"
+          setMessage(msg,dispatch)
+          return response
+        }
+          ,
         (error)=> {setError(error, dispatch)})
         .catch((error) => console.log(error));
     };

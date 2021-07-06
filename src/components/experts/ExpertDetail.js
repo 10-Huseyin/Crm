@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import {
   CButton,
@@ -15,7 +15,7 @@ import {
   CInputGroupText,
   CInput,
   CInputFile,
-  CInputRadio,
+  CSwitch,
   CLabel,
   CModal,
   CModalHeader,
@@ -23,13 +23,14 @@ import {
   CModalBody,
   CModalFooter,
   CAlert,
-  CRow
+  CRow,
+  CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
 import '@coreui/icons/css/all.css';
 
 import { useDispatch, useSelector } from "react-redux";
-import { addNewExpert, getExperts } from "../../actions/expert.action";
+import { addNewExpert, editExpertData, deleteExpert } from "../../actions/expert.action";
 
 const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 
@@ -39,70 +40,41 @@ const initialState = {
   expertise: "",
   isActive: true,
   isDeleted: false,
-  mediaId: "",
+  mediaId: {},
+  alt:"",
   socialMediaId: [],
 };
 
-const ExpertAdd = (props) => {
+const ExpertDetail = (props) => {
   const [modal, setModal] = useState(true)
-  const [state, setState] = useState(initialState)
-  const [photo, setPhoto] = useState({});
-  const [uploadMessage, setUploadMessage] = useState("");
-  const [social, setSocial] = useState({ title: "", link: "" })
   const dispatch = useDispatch();
   const message = useSelector(state => state.message)
+  const error = useSelector(state => state.error)
+  const expertsData = useSelector(state => state.experts.expertList)
+  
+  const expert = expertsData && props.match.params.id ? expertsData.find(expert => expert._id.toString() === props.match.params.id) : initialState;
+  const [state, setState] = useState(expert)
 
-  const getPhoto = (e) => {
-    console.log(e.target.files[0]);
-    setPhoto(e.target.files[0]);
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [social, setSocial] = useState({ title: "", link: "" })
+
+
+
+  const onChangePhoto = (e) => {
+    console.log(e.target.files);
+    setState({...state, alt : e.target.files[0].name, mediaId : e.target.files[0]});
+    setUploadMessage("Media selected succesfully!")
   };
-
-  const uploadPhoto = () => {
-    const fd = new FormData();
-
-    fd.append("image", photo, photo.name);
-    console.log(fd)
-    axios.post(
-      "https://api.imgbb.com/1/upload?expiration=600&key=a4a61c5615a8ba139a774ff21a6d5373",
-      fd
-    ).then((res) => {
-      console.log(res.data.data.display_url);
-      setState({ ...state, mediaId: res.data.data.display_url });
-      setUploadMessage("Media uploaded succesfully!")
-    }).catch(err => setUploadMessage("Some error occured, try again!"))
-  };
-
+  
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
-
-  const resetForm = () => {
-    setPhoto({})
-    setUploadMessage("")
-    setSocial({ title: "", link: "" })
-    setState({
-      firstname: "",
-      lastname: "",
-      expertise: "",
-      isActive: true,
-      isDeleted: false,
-      mediaId: "",
-      socialMediaId: [],
-    })
+  const handleSwitch = (e) => {
+    setState({...state, [e.target.name] : e.target.checked})
   }
-  console.log(props)
-
-  const handleSubmit = (event) => {
-    console.log("handlesubmit")
-    event.preventDefault();
-    dispatch(addNewExpert(state));
-    resetForm();
-    dispatch(getExperts())
-    setTimeout(() => {
-      setModal(false)
-      props.history.push("/experts");
-    }, 3000);
-  };
+  const resetForm = () => {
+    setState(expert)
+  }
 
   const selectSocial = (e) => {
     //console.log(e.currentTarget)
@@ -133,10 +105,67 @@ const ExpertAdd = (props) => {
     setSocial({ title: "", link: "" })
   }
 
-
   const deleteSocial = (title) => {
     let temp_socialMedia = state.socialMediaId.filter((item) => item.title !== title)
     setState({ ...state, socialMediaId: temp_socialMedia })
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const fd = new FormData();
+    if(state.mediaId.name){
+      fd.set("mediaId", state.mediaId, state.mediaId.name);
+    }
+    fd.set("firstname", state.firstname);
+    fd.set("lastname", state.lastname);
+    fd.set("expertise", state.expertise);
+    fd.set("isActive", state.isActive);
+    fd.set("isDeleted", state.isDeleted);
+    fd.set("alt", state.alt);
+    fd.append("socialMediaId", JSON.stringify(state.socialMediaId))
+ 
+
+    props.match.params.id ? 
+    dispatch(editExpertData(fd, props.match.params.id ))
+    .then(res=>{
+      console.log(res)
+      getDefaults()
+    })
+    :
+    dispatch(addNewExpert(fd))
+    .then(res=>{
+      console.log(res)
+      // res.data.status === 200 ?
+      // setTimeout(() => {
+      //   resetForm()
+      //   setModal(false)
+      //   props.history.push("/experts");
+      // }, 2000)
+      // :
+      // setTimeout(() => {
+      //   setModal(false)
+      // }, 2000);
+    });  
+  };
+
+  const deleteExpertData = (event) => {
+    event.preventDefault();
+    dispatch(deleteExpert(state._id))
+      .then(res => {
+        res.data.status === 200 ?
+          getDefaults()
+          :
+          setTimeout(() => {
+            setModal(false)
+          }, 2000);
+      });
+  };
+  const getDefaults = () => {
+    resetForm();
+    setTimeout(() => {
+      setModal(false)
+      props.history.push("/experts");
+    }, 2000);
   }
 
   console.log(state, social, message);
@@ -145,16 +174,18 @@ const ExpertAdd = (props) => {
       <CCol xs="12" md="12">
         <CCard>
           <CCardHeader>
-            ADD EXPERT FORM
+            {props.match.params.id ? "EXPERT DETAIL FORM" : "ADD NEW EXPERT"}
           </CCardHeader>
           <CCardBody>
+            {
+              state &&
             <CForm onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
               <CFormGroup row>
                 <CCol md="2">
                   <CLabel htmlFor="expertfirstname">First Name</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput onChange={handleInput} value={state.firstname} id="expertfirstname" name="firstname" placeholder="Expert First Name" required />
+                  <CInput onChange={handleInput} defaultValue={state.firstname} id="expertfirstname" name="firstname" placeholder="Expert First Name" required />
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
@@ -162,7 +193,7 @@ const ExpertAdd = (props) => {
                   <CLabel htmlFor="subtitle">Last Name </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput onChange={handleInput} value={state.lastname} id="expertlastname" name="lastname" placeholder="Expert Last Name" required />
+                  <CInput onChange={handleInput} defaultValue={state.lastname} id="expertlastname" name="lastname" placeholder="Expert Last Name" required />
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
@@ -170,40 +201,51 @@ const ExpertAdd = (props) => {
                   <CLabel htmlFor="expertise">Expertise </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput onChange={handleInput} value={state.expertise} id="expertise" name="expertise" placeholder="Expertise" required />
+                  <CInput onChange={handleInput} defaultValue={state.expertise} id="expertise" name="expertise" placeholder="Expertise" required />
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
                 <CCol md="2">
-                  <CLabel>Status  </CLabel>
+                  <CLabel>Status</CLabel>
                 </CCol>
-                <CCol md="9" onChange={handleInput} required>
-                  <CFormGroup variant="custom-radio" inline>
-                    <CInputRadio custom id="expertvisible" name="isActive" value="true" defaultChecked />
-                    <CLabel variant="custom-checkbox" htmlFor="expertvisible">Active</CLabel>
-                  </CFormGroup>
-                  <CFormGroup variant="custom-radio" inline>
-                    <CInputRadio custom id="expert-non-visible" name="isActive" value="false" />
-                    <CLabel variant="custom-checkbox" htmlFor="expert-non-visible">Non-Active</CLabel>
-                  </CFormGroup>
-                </CCol>
+                <CCol sm="9">
+                    <CSwitch
+                    onClick={handleSwitch}
+                    name="isActive"
+                      className="mr-1"
+                      color="success"
+                      variant="opposite"
+                      defaultChecked = {state.isActive}
+                    />
+                  </CCol>
               </CFormGroup>
               <CFormGroup row>
                 <CCol md="2">
-                  <CLabel>Add Photo</CLabel>
+                  <CLabel>Add New Photo</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInputFile onChange={getPhoto} custom id="custom-file-input" />
+                  <CInputFile onChange={onChangePhoto} custom id="custom-file-input" />
                   <CLabel htmlFor="custom-file-input" variant="custom-file">
-                    {photo ? photo.name : "Choose file..."}
+                    {state.alt ? state.alt : "Choose file..."}
                   </CLabel>
-                  <CButton onClick={uploadPhoto} type="button" size="sm" color="secondary"><CIcon name="cil-save" /> Upload Photo</CButton>
                   <span className="ml-2">{uploadMessage}</span>
+                </CCol>
+              </CFormGroup>
+              <CFormGroup row>
+                <CCol md="2">
+                  <CLabel>Selected Photo</CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                <CImg
+                        src={state.mediaId.name ? URL.createObjectURL(state.mediaId) :state.mediaId.url}
+                        className="c-expert-img"
+                        alt="expert-img"
+                        />
                 </CCol>
               </CFormGroup>
               <CFormGroup row >
                 <CCol md="2">
-                  <CLabel htmlFor="expertfirstname">Select Social Media Select</CLabel>
+                  <CLabel >Select Social Media</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
                   <p>
@@ -248,16 +290,21 @@ const ExpertAdd = (props) => {
               </CFormGroup>
                   <CCardFooter>
                 <CRow>
-                <CCol md="4">
+                <CCol>
                   <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
                   <CButton onClick={resetForm} type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
                 </CCol>
+                {props.match.params.id &&
+                <CCol >
+                      <CButton onClick={deleteExpertData} type="button" block color="danger">Delete Expert</CButton>
+                    </CCol>
+}
                 </CRow>
               </CCardFooter>
             </CForm>
-
+            }
           {
-            message &&
+            (error || message) && typeof message === "string" &&
             <CModal 
             show={modal} 
             alignment="center"
@@ -289,4 +336,4 @@ const ExpertAdd = (props) => {
   )
 }
 
-export default ExpertAdd
+export default ExpertDetail

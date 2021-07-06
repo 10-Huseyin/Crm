@@ -50,7 +50,9 @@ import {
     return (dispatch) => {
       return axios
         .delete(`${API_BASE}/${id}`, {})
-        .then((response)=>{setMessage(response.data.message,dispatch)},
+        .then((response)=>{
+          console.log(response)
+          setMessage(response.data.message,dispatch)},
         (error)=> {setError(error, dispatch)})
         .catch((error) => console.log(error));
     };

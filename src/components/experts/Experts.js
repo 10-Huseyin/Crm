@@ -73,7 +73,6 @@ const Experts = () => {
             <small className="text-muted"> Table</small>
           </CCardHeader>
           <CCardBody>
-            {console.log(expertsData)}
           <CDataTable
             items={expertsData}
             fields={[
@@ -107,7 +106,6 @@ const Experts = () => {
           />
         }
           </CCardBody>
-        {console.log(page)}
         </CCard>
       </CCol> 
     </CRow>
