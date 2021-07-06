@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import axios from "axios";
 import {
   CButton,
   CCard,
@@ -19,8 +18,8 @@ import {
   CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { DocsLink } from 'src/reusable'
-import { useDispatch, useSelector } from "react-redux";
+
+import { useDispatch} from "react-redux";
 import { addNewSlider } from "../../actions/slider.action";
 
 

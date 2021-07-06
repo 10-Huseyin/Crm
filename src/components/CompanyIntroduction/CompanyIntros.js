@@ -9,7 +9,6 @@ import {
   CDataTable,
   CRow,
   CButton,
-  CSwitch,
   CPagination
 } from '@coreui/react'
 import { getCompanyIntro } from 'src/actions/company.action'
@@ -36,26 +35,27 @@ const getActive = status => {
   }
 }
 
-const CompanyIntroductions = () => {
+const CompanyIntros = () => {
   const history = useHistory()
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
-
+  const paginationData = useSelector(state => state.pagination)
   const companyIntrosData = useSelector(state => state.companyIntro.companyIntroList)
   const dispatch = useDispatch()
   console.log(companyIntrosData)
 
   const perPage = 10;
-  const pageNum = Math.ceil(companyIntrosData.length / perPage);
-  //console.log(pageNum)
+  const pageNum =  paginationData ? paginationData.page : 1;
+ 
 
   const pageChange = newPage => {
     currentPage !== newPage && history.push(`/companyintroduction?page=${newPage}`)
+    dispatch(getCompanyIntro(perPage,newPage))
   }
 
   useEffect(() => {
-    dispatch(getCompanyIntro())
+    dispatch(getCompanyIntro(perPage,page))
     
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
@@ -81,8 +81,8 @@ const CompanyIntroductions = () => {
             ]}
             hover
             striped
-            itemsPerPage={perPage}
-            activePage={page}
+            // itemsPerPage={perPage}
+            // activePage={page}
             clickableRows
             onRowClick={(item) => history.push(`/companyintroduction/${item._id}`)}
             scopedSlots = {{
@@ -106,6 +106,7 @@ const CompanyIntroductions = () => {
           />
         }
           </CCardBody>
+          {console.log(page)}
         </CCard>
       </CCol> 
     </CRow>
@@ -113,4 +114,4 @@ const CompanyIntroductions = () => {
   )
 }
 
-export default CompanyIntroductions
+export default CompanyIntros
