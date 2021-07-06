@@ -9,7 +9,8 @@ import {
   CDataTable,
   CRow,
   CButton,
-  CPagination
+  CPagination,
+  CAlert
 } from '@coreui/react'
 import { getExperts } from 'src/actions/expert.action'
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +41,7 @@ const Experts = () => {
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
-
+  const [errorMsg, seterrorMsg] = useState("")
   const paginationData = useSelector(state => state.pagination)
   const expertsData = useSelector(state => state.experts.expertList)
   const dispatch = useDispatch()
@@ -48,7 +49,7 @@ const Experts = () => {
   const perPage = 10;
   const pageNum = paginationData ? paginationData.page : 1;
   //console.log(pageNum)
-
+ 
   const pageChange = newPage => {
     currentPage !== newPage && history.push(`/experts?page=${newPage}`);
     dispatch(getExperts(perPage,newPage))
@@ -56,10 +57,22 @@ const Experts = () => {
 
   useEffect(() => {
     dispatch(getExperts(perPage,page))
+    .then(res=>{
+      if (res !== 200) {
+        seterrorMsg("An error occured when data is triggered!")
+      } else if (res === 200){
+        seterrorMsg("");
+      }
+
+      setTimeout(() => {
+        seterrorMsg("");
+      }, 3000);
+    })
     
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
+  //console.log(errorMsg)
   return (
     <>
     <CButton type="button"
@@ -72,6 +85,9 @@ const Experts = () => {
             Experts
             <small className="text-muted"> Table</small>
           </CCardHeader>
+    {errorMsg && <CAlert color="warning">
+                {errorMsg}
+              </CAlert>}
           <CCardBody>
           <CDataTable
             items={expertsData}

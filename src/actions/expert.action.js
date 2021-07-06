@@ -18,10 +18,18 @@ import {
   export function getExperts(limit, page) {
     //console.log(limit, page)
     return (dispatch) => {
-      axios.get(`${API_BASE}?limit=${limit}&page=${page}`).then((result) => {
+      return axios.get(`${API_BASE}?limit=${limit}&page=${page}`)
+      .then((result) => {
         console.log(result);
         dispatch(setPagination({page:result.data.pages, total:result.data.total}));
-        dispatch(getData(result.data.response))});
+        dispatch(getData(result.data.response))
+        return result.data.status;
+      },
+      (error)=> {
+        setError(error, dispatch)
+      return error
+    })
+      .catch((error) => error);
     };
   }
 
@@ -39,7 +47,7 @@ import {
           console.log(response)
           let msg = response.data.status === 200 ? (response.data.message || "Expert is added succesfully") : "Expert could not added!"
           setMessage(msg,dispatch)
-          return response;
+          return response.data.status
         },
         (error)=> {
           setError(error, dispatch)
@@ -61,11 +69,14 @@ import {
           console.log(response)
           let msg = response.data.status === 200 ? (response.data.message || "Expert is deleted succesfully") : "Expert is not deleted!"
           setMessage(msg,dispatch)
-          return response
+          return response.data.status
         }
           ,
-        (error)=> {setError(error, dispatch)})
-        .catch((error) => console.log(error));
+          (error)=> {
+            setError(error, dispatch)
+          return error
+        })
+          .catch((error) => error);
     };
   }
   
@@ -80,12 +91,17 @@ import {
         .put(`${API_BASE}/${id}`, state)
         .then((response)=>{
           console.log(response)
-          let msg = response.data.message ? response.data.message : "Expert updated succesfully"
-          setMessage(msg,dispatch)},
-        (error)=> {setError(error, dispatch)})
-        .catch((error) => console.log(error));
+          let msg = response.data.status === 200 ? (response.data.message || "Expert is updated succesfully") : "Expert could not updated!"
+          setMessage(msg,dispatch)
+        },
+          (error)=> {
+            setError(error, dispatch)
+          return error
+        })
+          .catch((error) => error);
     };
   }
+  
   export function toggleVisible(id) {
   
     return (dispatch) => {

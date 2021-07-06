@@ -22,6 +22,7 @@ import {
         console.log(result)
         dispatch(setPagination({page:result.data.pages, total:result.data.total}));
         dispatch(getData(result.data.response))
+        return result;
       });
     };
   }

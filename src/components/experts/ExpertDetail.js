@@ -128,37 +128,27 @@ const ExpertDetail = (props) => {
     props.match.params.id ? 
     dispatch(editExpertData(fd, props.match.params.id ))
     .then(res=>{
-      console.log(res)
-      getDefaults()
-    })
+      if (res === 200) {
+        getDefaults()
+      } 
+      })
     :
     dispatch(addNewExpert(fd))
     .then(res=>{
-      console.log(res)
-      // res.data.status === 200 ?
-      // setTimeout(() => {
-      //   resetForm()
-      //   setModal(false)
-      //   props.history.push("/experts");
-      // }, 2000)
-      // :
-      // setTimeout(() => {
-      //   setModal(false)
-      // }, 2000);
-    });  
+      if (res === 200) {
+        getDefaults()
+      } 
+      })
   };
 
   const deleteExpertData = (event) => {
     event.preventDefault();
     dispatch(deleteExpert(state._id))
-      .then(res => {
-        res.data.status === 200 ?
-          getDefaults()
-          :
-          setTimeout(() => {
-            setModal(false)
-          }, 2000);
-      });
+    .then(res=>{
+      if (res === 200) {
+        getDefaults()
+      } 
+      })
   };
   const getDefaults = () => {
     resetForm();
@@ -168,7 +158,7 @@ const ExpertDetail = (props) => {
     }, 2000);
   }
 
-  console.log(state, social, message);
+  console.log(state, social, message, error);
   return (
     <CRow>
       <CCol xs="12" md="12">
@@ -224,7 +214,7 @@ const ExpertDetail = (props) => {
                   <CLabel>Add New Photo</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInputFile onChange={onChangePhoto} custom id="custom-file-input" />
+                  <CInputFile onChange={onChangePhoto} custom id="custom-file-input" required/>
                   <CLabel htmlFor="custom-file-input" variant="custom-file">
                     {state.alt ? state.alt : "Choose file..."}
                   </CLabel>
@@ -304,7 +294,7 @@ const ExpertDetail = (props) => {
             </CForm>
             }
           {
-            (error || message) && typeof message === "string" &&
+            (error || message) &&
             <CModal 
             show={modal} 
             alignment="center"
@@ -314,10 +304,10 @@ const ExpertDetail = (props) => {
                 <CModalTitle>Add Expert</CModalTitle>
               </CModalHeader>
               <CModalBody>
-              <CAlert color="success">
-                {message}
-              </CAlert>
-                Redirecting experts page!
+              <CAlert color={error?"danger":"success"}>
+                    {error?error:message}
+                  </CAlert>
+                  {message? "Redirecting experts page!" : ""}
               </CModalBody>
               <CModalFooter>
                 <CButton 
