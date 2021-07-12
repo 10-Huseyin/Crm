@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCard,
@@ -8,9 +8,7 @@ import {
   CCol,
   CForm,
   CFormGroup,
-  CSelect,
   CInput,
-  CInputFile,
   CSwitch,
   CLabel,
   CModal,
@@ -20,10 +18,10 @@ import {
   CModalFooter,
   CAlert,
   CRow,
-  CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
 import '@coreui/icons/css/all.css';
+import { freeSet } from '@coreui/icons'
 
 import { useDispatch, useSelector } from "react-redux";
 import { addNewSocialMedia, editSocialMediaData, deleteSocialMedia } from "../../actions/socialMedia.action";
@@ -38,12 +36,15 @@ const initialState = {
 
 const SocialMediaDetail = (props) => {
   const [modal, setModal] = useState(true)
+  const [danger, setWarning] = useState(false)
+
   const dispatch = useDispatch();
   const message = useSelector(state => state.message)
   const error = useSelector(state => state.error)
-  const socialMediasData = useSelector(state => state.socialMedias.socialMediasList)
+  //const socialMediasData = useSelector(state => state.socialMedias.socialMediasList)
+  const socialMediaData = useSelector(state => state.socialMedias.socialMedia)
   
-  const socialMedia = socialMediasData && props.match.params.id ? socialMediasData.find(socialMedia => socialMedia._id.toString() === props.match.params.id) : initialState;
+  const socialMedia = socialMediaData && props.match.params.id ? socialMediaData : initialState;
   const [state, setState] = useState(socialMedia)
 
   
@@ -57,15 +58,6 @@ const SocialMediaDetail = (props) => {
   const resetForm = () => {
     setState(socialMedia)
   }
-
-
-  const handleOne = () => {
- 
-      dispatch(handleOne())
-    }
-  
-
-
 
 
   const handleSubmit = (event) => {
@@ -104,6 +96,7 @@ const SocialMediaDetail = (props) => {
   };
   const getDefaults = () => {
     resetForm();
+    setWarning(!danger)
     setTimeout(() => {
       setModal(false)
       props.history.push("/socialMedias");
@@ -114,13 +107,13 @@ const SocialMediaDetail = (props) => {
   return (
     <CRow>
       <CCol xs="12" md="12">
+            {
+              state &&
         <CCard>
           <CCardHeader>
             {props.match.params.id ? "SOCIAL MEDIA DETAIL FORM" : "ADD NEW SOCIAL MEDIA"}
           </CCardHeader>
           <CCardBody>
-            {
-              state &&
             <CForm onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
               <CFormGroup row>
                 <CCol md="2">
@@ -146,28 +139,44 @@ const SocialMediaDetail = (props) => {
                     <CSwitch
                     onClick={handleSwitch}
                     name="isActive"
-                      className="mr-1"
-                      color="success"
-                      variant="opposite"
-                      defaultChecked = {state.isActive}
+                    className="mr-1"
+                    color="success"
+                    variant="opposite"
+                    defaultChecked = {state.isActive}
                     />
                   </CCol>
               </CFormGroup>
+              </CForm>
+                    </CCardBody>
                   <CCardFooter>
-                <CRow>
                 <CCol>
-                  <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
-                  <CButton onClick={resetForm} type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
-                </CCol>
+              <CButton onClick={resetForm} type="reset" color="warning"><CIcon  content={freeSet.cilReload} /> Reset Form </CButton>
+                <CButton onClick={() => props.history.push(`/socialMedias`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
+              </CCol>
+              <div className="card-header-actions">
+               <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update SocialMedia" : "Add SocialMedia"}</CButton>
                 {props.match.params.id &&
-                <CCol >
-                      <CButton onClick={deleteSocialMediaData} type="button" block color="danger">Delete SocialMedia</CButton>
-                    </CCol>
-}
-                      <CButton onClick={handleOne} type="button" block color="danger">Add SocialMedias</CButton>
-                </CRow>
+                  <CButton onClick={() => setWarning(!danger)} type="button" color="danger" className="mr-1">Delete SocialMedia <CIcon  content={freeSet.cilDelete}/></CButton>
+                }
+              </div>
+              <CModal 
+              show={danger} 
+              onClose={() => setWarning(!danger)}
+              color="danger"
+            >
+              <CModalHeader closeButton>
+                <CModalTitle>Delete SocialMedia</CModalTitle>
+              </CModalHeader>
+              <CModalBody>
+                Are you sure deleting selected socialMedia?
+              </CModalBody>
+              <CModalFooter>
+                <CButton color="danger" onClick={deleteSocialMediaData}>Delete SocialMedia</CButton>{' '}
+                <CButton color="secondary" onClick={() => setWarning(!danger)}>Cancel</CButton>
+              </CModalFooter>
+            </CModal>
               </CCardFooter>
-            </CForm>
+                  </CCard>
             }
           {
             (error || message) &&
@@ -195,8 +204,6 @@ const SocialMediaDetail = (props) => {
                 }
 
 
-          </CCardBody>
-        </CCard>
       </CCol>
     </CRow>
   )

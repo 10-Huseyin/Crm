@@ -1,4 +1,5 @@
 import {
+  GET_COMPANY_INTRO,
   GET_COMPANY_INTROS,
   ADD_NEW_COMPANY_INTRO,
   DELETE_COMPANY_INTRO,
@@ -8,11 +9,14 @@ import {
 
 const initialState = {
   companyIntroList: [],
+  companyIntro: {}
 };
 
 export default (state = initialState, action) => {
   //console.log(action);
   switch (action.type) {
+    case GET_COMPANY_INTRO:
+      return { ...state, companyIntro: action.payload };
     case GET_COMPANY_INTROS:
       return { ...state, companyIntroList: action.payload };
     case ADD_NEW_COMPANY_INTRO:

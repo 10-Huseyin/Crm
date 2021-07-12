@@ -1,4 +1,5 @@
 import {
+  GET_SOCIALMEDIA,
   GET_SOCIALMEDIAS,
   ADD_NEW_SOCIALMEDIA,
   DELETE_SOCIALMEDIA,
@@ -30,6 +31,28 @@ export function getSocialMedias(limit, page) {
     .catch((error) => error);
   };
 }
+
+
+export const getOneData = (data) => ({
+  type: GET_SOCIALMEDIA,
+  payload: data,
+});
+export function getOneSocialMedia(id) {
+  return (dispatch) => {
+    return axios.get(`${API_BASE}socialMedia/${id}`)
+    .then((result) => {
+      //console.log(result);
+      dispatch(getOneData(result.data.data))
+      return result.data.status;
+    },
+    (error)=> {
+      setError(error, dispatch)
+    return error
+  })
+    .catch((error) => error);
+  };
+}
+
 
 export const postData = (data) => ({
   type: ADD_NEW_SOCIALMEDIA,

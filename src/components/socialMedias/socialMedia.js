@@ -12,7 +12,7 @@ import {
   CPagination,
   CAlert
 } from '@coreui/react'
-import { getSocialMedias } from 'src/actions/socialMedia.action'
+import { getSocialMedias, getOneSocialMedia } from 'src/actions/socialMedia.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {
@@ -72,23 +72,33 @@ const SocialMedias = () => {
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
+  const handleSocialMedia =(id)=>{
+    dispatch(getOneSocialMedia(id))
+    .then(res => {
+      if (res === 200) {
+        history.push(`/socialMedia/${id}`)
+      }
+    })
+  }
+
   console.log(socialMediasData)
   return (
     <>
-    <CButton type="button"
-    onClick={() => history.push(`/socialMedias/add`)}
-    block color="primary">Add SocialMedia</CButton>
     <CRow>
-       <CCol xl={9}>
-        <CCard>
-          <CCardHeader>
-            SocialMedias
-            <small className="text-muted"> Table</small>
-          </CCardHeader>
-    {errorMsg && <CAlert color="warning">
-                {errorMsg}
-              </CAlert>}
-          <CCardBody>
+        <CCol xl={9}>
+          <CCard>
+            <CCardHeader>
+              Social Medias <small className="text-muted"> Table</small>
+              <div className="card-header-actions">
+                <CButton type="button"
+                  onClick={() => history.push(`/socialMedias/add`)}
+                  block color="primary">Add Social Media</CButton>
+              </div>
+            </CCardHeader>
+            {errorMsg && <CAlert color="warning">
+              {errorMsg}
+            </CAlert>}
+            <CCardBody>
           <CDataTable
             items={socialMediasData}
             fields={[
@@ -100,7 +110,7 @@ const SocialMedias = () => {
             //itemsPerPage={perPage}
             //activePage={page}
             clickableRows
-            onRowClick={(item) => history.push(`/socialMedias/${item._id}`)}
+            onRowClick={item => handleSocialMedia(item._id)}
             scopedSlots = {{
               "isActive":
                 (item)=>(

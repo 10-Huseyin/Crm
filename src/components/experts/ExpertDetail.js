@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCard,
@@ -30,7 +30,7 @@ import '@coreui/icons/css/all.css';
 import { freeSet } from '@coreui/icons'
 
 import { useDispatch, useSelector } from "react-redux";
-import { addNewExpert, editExpertData, deleteExpert, getOneExpert } from "../../actions/expert.action";
+import { addNewExpert, editExpertData, deleteExpert } from "../../actions/expert.action";
 
 const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 

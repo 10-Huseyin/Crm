@@ -1,4 +1,5 @@
 import {
+  GET_SOCIALMEDIA,
   GET_SOCIALMEDIAS,
   ADD_NEW_SOCIALMEDIA,
   DELETE_SOCIALMEDIA,
@@ -7,6 +8,7 @@ import {
 
 const initialState = {
   socialMediasList: [],
+  socialMedia:{}
 };
 
 const socialMediasReducer = (state = initialState, action) => {
@@ -14,6 +16,8 @@ const socialMediasReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_SOCIALMEDIAS:
       return { ...state, socialMediasList: action.payload };
+    case GET_SOCIALMEDIA:
+      return { ...state, socialMedia: action.payload };
     case ADD_NEW_SOCIALMEDIA:
       return { ...state, socialMediasList: [...state.socialMediasList, action.payload] };
     case DELETE_SOCIALMEDIA:

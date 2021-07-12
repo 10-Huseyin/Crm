@@ -1,4 +1,5 @@
 import {
+  GET_MEDIA,
   GET_MEDIAS,
   ADD_NEW_MEDIA,
   DELETE_MEDIA,
@@ -6,7 +7,6 @@ import {
 } from "./actionTypes";
 import axios from "axios";
 import { setMessage, setError, setPagination } from "./message.action";
-import App from "src/App";
 import { API_BASE } from "./api_base";
 
 
@@ -22,6 +22,46 @@ export function getMedias(limit, page) {
       //console.log(result);
       dispatch(setPagination({page:result.data.pages, total:result.data.total}));
       dispatch(getData(result.data.response))
+      return result.data.status;
+    },
+    (error)=> {
+      setError(error, dispatch)
+    return error
+  })
+    .catch((error) => error);
+  };
+}
+
+export function getMediasByTitle(title, limit, page) {
+  console.log(title, limit, page)
+  return (dispatch) => {
+    return axios.get(`${API_BASE}medias/title/${title}?limit=${limit}&page=${page}`)
+    .then((result) => {
+      //console.log(result);
+      dispatch(setPagination({page:result.data.pages, total:result.data.total}));
+      dispatch(getData(result.data.data))
+      return result.data.status;
+    },
+    (error)=> {
+      setError(error, dispatch)
+    return error
+  })
+    .catch((error) => error);
+  };
+}
+
+
+
+export const getOneData = (data) => ({
+  type: GET_MEDIA,
+  payload: data,
+});
+export function getOneMedia(id) {
+  return (dispatch) => {
+    return axios.get(`${API_BASE}medias/${id}`)
+    .then((result) => {
+      //console.log(result);
+      dispatch(getOneData(result.data.data))
       return result.data.status;
     },
     (error)=> {
