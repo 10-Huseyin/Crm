@@ -1,5 +1,6 @@
 import {
     GET_EXPERTS,
+    GET_EXPERT,
     ADD_NEW_EXPERT,
     DELETE_EXPERT,
     EDIT_EXPERT,
@@ -7,10 +8,8 @@ import {
   } from "./actionTypes";
   import axios from "axios";
   import { setMessage, setError, setPagination } from "./message.action";
-  //import { API_BASE } from "../Helpers/env";
-  
-  const API_BASE = "https://crmapp-server.herokuapp.com/experts"
-  
+import { API_BASE } from "./api_base";
+    
   export const getData = (data) => ({
     type: GET_EXPERTS,
     payload: data,
@@ -18,11 +17,31 @@ import {
   export function getExperts(limit, page) {
     //console.log(limit, page)
     return (dispatch) => {
-      return axios.get(`${API_BASE}?limit=${limit}&page=${page}`)
+      return axios.get(`${API_BASE}experts?limit=${limit}&page=${page}`)
       .then((result) => {
         //console.log(result);
         dispatch(setPagination({page:result.data.pages, total:result.data.total}));
         dispatch(getData(result.data.response))
+        return result.data.status;
+      },
+      (error)=> {
+        setError(error, dispatch)
+      return error
+    })
+      .catch((error) => error);
+    };
+  }
+
+  export const getOneData = (data) => ({
+    type: GET_EXPERT,
+    payload: data,
+  });
+  export function getOneExpert(id) {
+    return (dispatch) => {
+      return axios.get(`${API_BASE}experts/${id}`)
+      .then((result) => {
+        console.log(result.data.data);
+        dispatch(getOneData(result.data.data))
         return result.data.status;
       },
       (error)=> {
@@ -42,7 +61,7 @@ import {
     console.log("add new expert => ",state);
     return (dispatch) => {
       return axios
-        .post(`${API_BASE}`, state)
+        .post(`${API_BASE}experts`, state)
         .then((response)=>{
           console.log(response)
           let msg = response.data.status === 200 ? (response.data.message || "Expert is added succesfully") : "Expert could not added!"
@@ -64,7 +83,7 @@ import {
   export function deleteExpert(id) {
     return (dispatch) => {
       return axios
-        .delete(`${API_BASE}/${id}`, {})
+        .delete(`${API_BASE}experts/${id}`, {})
         .then((response)=>{
           console.log(response)
           let msg = response.data.status === 200 ? (response.data.message || "Expert is deleted succesfully") : "Expert is not deleted!"
@@ -88,11 +107,12 @@ import {
     console.log(state,id);
     return (dispatch) => {
       return axios
-        .put(`${API_BASE}/${id}`, state)
+        .put(`${API_BASE}experts/${id}`, state)
         .then((response)=>{
           console.log(response)
           let msg = response.data.status === 200 ? (response.data.message || "Expert is updated succesfully") : "Expert could not updated!"
           setMessage(msg,dispatch)
+          return response.data.status;
         },
           (error)=> {
             setError(error, dispatch)
@@ -107,7 +127,7 @@ import {
     return (dispatch) => {
       dispatch({
           type:TOGGLE_VISIBLE,
-          payload:axios.put(`${API_BASE}/${id}`,{})
+          payload:axios.put(`${API_BASE}experts/${id}`,{})
           .then(res=>console.log(res))
       })
     }

@@ -8,13 +8,11 @@ import {
     SET_MESSAGE,
     CLEAR_MESSAGE
   } from "./actionTypes";
+import { API_BASE } from "./api_base";
   
-  
-  const API_URL = "https://crmapp-server.herokuapp.com/";
-
   export const register = (data) => (dispatch) => {
     console.log(data)
-    return axios.post(API_URL + "users", data)
+    return axios.post(API_BASE + "users", data)
     .then(
       (response) => {
         console.log("response ==>",response)
@@ -61,7 +59,7 @@ import {
   
   export const login = (data) => (dispatch) => {
     console.log(data)
-    return axios.post(API_URL + "users/login", data)
+    return axios.post(API_BASE + "users/login", data)
     .then(
       (response) => {
         console.log("response ==>",response)

@@ -10,9 +10,9 @@ import {
   CRow,
   CButton,
   CPagination,
-  CAlert
+  CAlert,
 } from '@coreui/react'
-import { getExperts } from 'src/actions/expert.action'
+import { getExperts, getOneExpert } from 'src/actions/expert.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {
@@ -49,82 +49,95 @@ const Experts = () => {
   const perPage = 10;
   const pageNum = paginationData ? paginationData.page : 1;
   //console.log(pageNum)
- 
+
   const pageChange = newPage => {
     currentPage !== newPage && history.push(`/experts?page=${newPage}`);
-    dispatch(getExperts(perPage,newPage))
+    dispatch(getExperts(perPage, newPage))
   }
 
   useEffect(() => {
-    dispatch(getExperts(perPage,page))
-    .then(res=>{
-      if (res !== 200) {
-        seterrorMsg("An error occured when data is triggered!")
-      } else if (res === 200){
-        seterrorMsg("");
-      }
+    dispatch(getExperts(perPage, page))
+      .then(res => {
+        if (res !== 200) {
+          seterrorMsg("An error occured when data is triggered!")
+        } else if (res === 200) {
+          seterrorMsg("");
+        }
 
-      setTimeout(() => {
-        seterrorMsg("");
-      }, 3000);
-    })
-    
+        setTimeout(() => {
+          seterrorMsg("");
+        }, 3000);
+      })
+
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
+const handleExpert =(id)=>{
+  dispatch(getOneExpert(id))
+  .then(res => {
+    if (res === 200) {
+      history.push(`/experts/${id}`)
+    }
+  })
+}
+
+
+
   //console.log(errorMsg)
   return (
+
     <>
-    <CButton type="button"
-    onClick={() => history.push(`/experts/add`)}
-    block color="primary">Add Expert</CButton>
-    <CRow>
-       <CCol xl={9}>
-        <CCard>
-          <CCardHeader>
-            Experts
-            <small className="text-muted"> Table</small>
-          </CCardHeader>
-    {errorMsg && <CAlert color="warning">
-                {errorMsg}
-              </CAlert>}
-          <CCardBody>
-          <CDataTable
-            items={expertsData}
-            fields={[
-              { key: 'firstname', _classes: 'font-weight-bold' },
-              "lastname",  'expertise', "isActive",
-            ]}
-            hover
-            striped
-            //itemsPerPage={perPage}
-            //activePage={page}
-            clickableRows
-            onRowClick={(item) => history.push(`/experts/${item._id}`)}
-            scopedSlots = {{
-              "isActive":
-                (item)=>(
-                  <td>
-                    <CBadge color={getBadge(item.isActive)}>
-                      {getActive(item.isActive)}
-                    </CBadge>
-                  </td>
-                )
-              }}
+      <CRow>
+        <CCol xl={9}>
+          <CCard>
+            <CCardHeader>
+              Experts <small className="text-muted"> Table</small>
+              <div className="card-header-actions">
+                <CButton type="button"
+                  onClick={() => history.push(`/experts/add`)}
+                  block color="primary">Add Expert</CButton>
+              </div>
+            </CCardHeader>
+            {errorMsg && <CAlert color="warning">
+              {errorMsg}
+            </CAlert>}
+            <CCardBody>
+              <CDataTable
+                items={expertsData}
+                fields={[
+                  { key: 'firstname', _classes: 'font-weight-bold' },
+                  "lastname", 'expertise', "isActive",
+                ]}
+                hover
+                striped
+                //itemsPerPage={perPage}
+                //activePage={page}
+                clickableRows
+                onRowClick={item => handleExpert(item._id)}
+                scopedSlots={{
+                  "isActive":
+                    (item) => (
+                      <td>
+                        <CBadge color={getBadge(item.isActive)}>
+                          {getActive(item.isActive)}
+                        </CBadge>
+                      </td>
+                    )
+                }}
               />
-          { 
-            pageNum > 1 &&
-            <CPagination
-          align="center"
-          activePage={page}
-          pages={pageNum}
-          onActivePageChange={pageChange}
-          />
-        }
-          </CCardBody>
-        </CCard>
-      </CCol> 
-    </CRow>
+              {
+                pageNum > 1 &&
+                <CPagination
+                  align="center"
+                  activePage={page}
+                  pages={pageNum}
+                  onActivePageChange={pageChange}
+                />
+              }
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
     </>
   )
 }

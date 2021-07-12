@@ -72,6 +72,7 @@ const Register = (props) => {
     fd.set("email", state.email);
     fd.set("password", state.password);
     fd.set("alt", state.alt);
+    fd.set("roleId", "60e460071a737800158336f5");
     
     //console.log(fd.getAll('mediaId'))
       dispatch(register(fd))

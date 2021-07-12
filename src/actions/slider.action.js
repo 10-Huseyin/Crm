@@ -7,9 +7,8 @@ import {
 } from "./actionTypes";
 import { setMessage, setError } from "./message.action";
 import axios from "axios";
-//import { API_BASE } from "../Helpers/env";
+import { API_BASE } from "./api_base";
 
-const API_BASE = "https://crmapp-server.herokuapp.com/slider/?limit=3&page=1"
 
 export const getData = (data) => ({
   type: GET_SLIDERS,
@@ -18,7 +17,7 @@ export const getData = (data) => ({
 
 export function getSlider() {
   return (dispatch) => {
-    return axios.get(`${API_BASE}`).then((result) => dispatch(getData(result.data),
+    return axios.get(`${API_BASE}slider?limit=3&page=1`).then((result) => dispatch(getData(result.data),
   
     ));
   };
@@ -32,7 +31,7 @@ export function addNewSlider(state) {
   console.log("add new slider => ",state);
   return (dispatch) => {
    return axios
-      .post(`${API_BASE}`, state)
+      .post(`${API_BASE}slider`, state)
       .then((result) => {console.log(result);dispatch(postData(result.data))})
       .catch((error) => console.log(error));
   };
@@ -45,7 +44,7 @@ export const removeData = (data) => ({
 export function deleteSlider(id) {
   return (dispatch) => {
     return axios
-      .delete(`${API_BASE}/${id}`, {})
+      .delete(`${API_BASE}/${id}slider`, {})
       .then((response)=>{
         
         removeData(response.data)
@@ -64,7 +63,7 @@ export function editSliderFunk(fd, id) {
   console.log(fd,id);
   return (dispatch) => {
     return axios 
-      .put(`${API_BASE}/${id}`, fd)
+      .put(`${API_BASE}/${id}slider`, fd)
       .then((result) =>{
         console.log(result.data)
         dispatch(editData(result.data)
@@ -79,7 +78,7 @@ export function toggleVisible(id) {
   return (dispatch) => {
     dispatch({
         type:TOGGLE_VISIBLE,
-        payload:axios.put(`${API_BASE}/${id}`,{})
+        payload:axios.put(`${API_BASE}slider/${id}`,{})
         .then(res=>console.log(res))
     })
   }

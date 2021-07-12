@@ -1,5 +1,6 @@
 import {
   GET_USERS,
+  GET_USER,
   ADD_NEW_USER,
   DELETE_USER,
   EDIT_USER,
@@ -8,6 +9,7 @@ import {
 
 const initialState = {
   userList: [],
+  user:{}
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +17,8 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS:
       return { ...state, userList: action.payload };
+    case GET_USER:
+      return { ...state, user: action.payload };
     case ADD_NEW_USER:
       return { ...state, userList: [...state.userList, action.payload] };
     case DELETE_USER:

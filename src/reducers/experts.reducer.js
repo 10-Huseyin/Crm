@@ -1,5 +1,6 @@
 import {
   GET_EXPERTS,
+  GET_EXPERT,
   ADD_NEW_EXPERT,
   DELETE_EXPERT,
   EDIT_EXPERT,
@@ -8,6 +9,7 @@ import {
 
 const initialState = {
   expertList: [],
+  expert:{}
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +17,8 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_EXPERTS:
       return { ...state, expertList: action.payload };
+    case GET_EXPERT:
+      return { ...state, expert: action.payload };
     case ADD_NEW_EXPERT:
       return { ...state, expertList: [...state.expertList, action.payload] };
     case DELETE_EXPERT:

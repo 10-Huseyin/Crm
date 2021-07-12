@@ -6,8 +6,8 @@ import {
 } from "./actionTypes";
 import axios from "axios";
 import { setMessage, setError, setPagination } from "./message.action";
+import { API_BASE } from "./api_base";
 
-const API_BASE = "https://crmapp-server.herokuapp.com/socialMedia"
 
 export const getData = (data) => ({
   type: GET_SOCIALMEDIAS,
@@ -16,7 +16,7 @@ export const getData = (data) => ({
 export function getSocialMedias(limit, page) {
   //console.log(limit, page)
   return (dispatch) => {
-    return axios.get(`${API_BASE}?limit=${limit}&page=${page}`)
+    return axios.get(`${API_BASE}socialMedia?limit=${limit}&page=${page}`)
     .then((result) => {
       //console.log(result);
       dispatch(setPagination({page:result.data.pages, total:result.data.total}));
@@ -40,7 +40,7 @@ export function addNewSocialMedia(state) {
   console.log("add new socialMedia => ",state);
   return (dispatch) => {
     return axios
-      .post(`${API_BASE}`, state)
+      .post(`${API_BASE}socialMedia`, state)
       .then((response)=>{
         console.log(response)
         let msg = response.data.status === 200 ? (response.data.message || "SocialMedia is added succesfully") : "SocialMedia could not added!"
@@ -62,7 +62,7 @@ export const removeData = (data) => ({
 export function deleteSocialMedia(id) {
   return (dispatch) => {
     return axios
-      .delete(`${API_BASE}/${id}`, {})
+      .delete(`${API_BASE}socialMedia/${id}`, {})
       .then((response)=>{
         console.log(response)
         let msg = response.data.status === 200 ? (response.data.message || "SocialMedia is deleted succesfully") : "SocialMedia is not deleted!"
@@ -86,11 +86,12 @@ export function editSocialMediaData(state, id) {
   console.log(state,id);
   return (dispatch) => {
     return axios
-      .put(`${API_BASE}/${id}`, state)
+      .put(`${API_BASE}socialMedia/${id}`, state)
       .then((response)=>{
         console.log(response)
         let msg = response.data.status === 200 ? (response.data.message || "SocialMedia is updated succesfully") : "SocialMedia could not updated!"
         setMessage(msg,dispatch)
+        return response.data.status;
       },
         (error)=> {
           setError(error, dispatch)
@@ -99,3 +100,23 @@ export function editSocialMediaData(state, id) {
         .catch((error) => error);
   };
 }
+
+const socialArr = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
+
+  export function handleOne () {
+    const fdata = new FormData();
+    
+    socialArr.forEach(item => {
+      
+      fdata.set("link", `https://${item}.com/`);
+      fdata.set("title", item.toUpperCase());
+      fdata.set("isActive", true);
+      fdata.set("isDeleted", false);
+      console.log(fdata);
+      return () => {
+        return axios
+          .post(`${API_BASE}socialMedia`, fdata)
+      }
+    });
+  
+  };

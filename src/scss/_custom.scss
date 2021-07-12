@@ -54,6 +54,10 @@
   .c-expert-img{
     width: 100px;
     height: 50px;
-    display: block;
-    position: absolute;
+    //display: block;
+    //position: absolute;
+  }
+
+  .card-footer {
+    display: inline-flex;
   }

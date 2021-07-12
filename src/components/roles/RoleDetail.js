@@ -8,9 +8,7 @@ import {
   CCol,
   CForm,
   CFormGroup,
-  CSelect,
   CInput,
-  CInputFile,
   CSwitch,
   CLabel,
   CModal,
@@ -20,10 +18,10 @@ import {
   CModalFooter,
   CAlert,
   CRow,
-  CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
 import '@coreui/icons/css/all.css';
+import { freeSet } from '@coreui/icons'
 
 import { useDispatch, useSelector } from "react-redux";
 import { addNewRole, editRoleData, deleteRole } from "../../actions/role.action";
@@ -37,12 +35,15 @@ const initialState = {
 
 const RoleDetail = (props) => {
   const [modal, setModal] = useState(true)
+  const [danger, setWarning] = useState(false)
+
   const dispatch = useDispatch();
   const message = useSelector(state => state.message)
   const error = useSelector(state => state.error)
-  const rolesData = useSelector(state => state.roles.rolesList)
+  //const rolesData = useSelector(state => state.roles.rolesList)
+  const roleData = useSelector(state => state.roles.role)
   
-  const role = rolesData && props.match.params.id ? rolesData.find(role => role._id.toString() === props.match.params.id) : initialState;
+  const role = roleData && props.match.params.id ? roleData : initialState;
   const [state, setState] = useState(role)
 
   
@@ -97,25 +98,25 @@ const RoleDetail = (props) => {
       props.history.push("/roles");
     }, 2000);
   }
-  console.log(rolesData)
+  //console.log(rolesData)
   console.log(state, message, error);
   return (
     <CRow>
       <CCol xs="12" md="12">
+            {
+              state &&
         <CCard>
           <CCardHeader>
             {props.match.params.id ? "ROLE DETAIL FORM" : "ADD NEW ROLE"}
           </CCardHeader>
           <CCardBody>
-            {
-              state &&
             <CForm onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
               <CFormGroup row>
                 <CCol md="2">
                   <CLabel htmlFor="rolename">Role Name</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput defaultValue={state.name} id="rolename" name="name" placeholder="Role Name" disabled />
+                  <CInput onChange={handleInput} value={state.name} id="rolename" name="name" placeholder="Role Name" />
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
@@ -124,41 +125,46 @@ const RoleDetail = (props) => {
                 </CCol>
                 <CCol sm="9">
                     <CSwitch
-                    onClick={handleSwitch}
+                    onChange={handleSwitch}
                     name="isActive"
                       className="mr-1"
                       color="success"
                       variant="opposite"
-                      defaultChecked = {state.isActive}
+                      checked = {state.isActive}
                     />
                   </CCol>
               </CFormGroup>
-              <CFormGroup row >
-                <CCol md="2">
-                  <CLabel >Update Role</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CSelect custom name="roleId" id="select" onChange={handleInput}>
-                      <option value={state._id? state._id : ""}>{state._id? state.name : "Please select"}</option>
-                      {rolesData.map(item=><option key={item._id} value={item._id}>{item.name}</option>)}
-                    </CSelect>
-                </CCol>
-                    
-              </CFormGroup>
+                </CForm>
+                          </CCardBody>
                   <CCardFooter>
-                <CRow>
-                <CCol>
-                  <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
-                  <CButton onClick={resetForm} type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
-                </CCol>
+                  <CCol>
+              <CButton onClick={resetForm} type="reset" color="warning"><CIcon  content={freeSet.cilReload} /> Reset Form </CButton>
+                <CButton onClick={() => props.history.push(`/roles`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
+              </CCol>
+              <div className="card-header-actions">
+               <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update Role" : "Add Role"}</CButton>
                 {props.match.params.id &&
-                <CCol >
-                      <CButton onClick={deleteRoleData} type="button" block color="danger">Delete Role</CButton>
-                    </CCol>
-}
-                </CRow>
+                  <CButton onClick={() => setWarning(!danger)} type="button" color="danger" className="mr-1">Delete Role <CIcon  content={freeSet.cilDelete}/></CButton>
+                }
+              </div>
+              <CModal 
+              show={danger} 
+              onClose={() => setWarning(!danger)}
+              color="danger"
+            >
+              <CModalHeader closeButton>
+                <CModalTitle>Delete Role</CModalTitle>
+              </CModalHeader>
+              <CModalBody>
+                Are you sure deleting selected role?
+              </CModalBody>
+              <CModalFooter>
+                <CButton color="danger" onClick={deleteRoleData}>Delete Role</CButton>{' '}
+                <CButton color="secondary" onClick={() => setWarning(!danger)}>Cancel</CButton>
+              </CModalFooter>
+            </CModal>
               </CCardFooter>
-            </CForm>
+                    </CCard>
             }
           {
             (error || message) &&
@@ -186,8 +192,6 @@ const RoleDetail = (props) => {
                 }
 
 
-          </CCardBody>
-        </CCard>
       </CCol>
     </CRow>
   )

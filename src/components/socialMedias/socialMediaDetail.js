@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CButton,
   CCard,
@@ -58,11 +58,22 @@ const SocialMediaDetail = (props) => {
     setState(socialMedia)
   }
 
+
+  const handleOne = () => {
+ 
+      dispatch(handleOne())
+    }
+  
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
     
-    fd.set("name", state.name);
+    fd.set("link", state.link);
+    fd.set("title", state.title);
     fd.set("isActive", state.isActive);
     fd.set("isDeleted", state.isDeleted);
     
@@ -98,8 +109,8 @@ const SocialMediaDetail = (props) => {
       props.history.push("/socialMedias");
     }, 2000);
   }
-  console.log(socialMediasData)
-  console.log(state, message, error);
+  //console.log(socialMediasData)
+  //console.log(state, message, error);
   return (
     <CRow>
       <CCol xs="12" md="12">
@@ -116,7 +127,15 @@ const SocialMediaDetail = (props) => {
                   <CLabel htmlFor="socialMediatitle">SocialMedia Title</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput defaultValue={state.title} id="socialMediatitle" name="title" placeholder="SocialMedia Title" disabled />
+                  <CInput onChange={handleInput}  defaultValue={state.title} id="socialMediatitle" name="title" placeholder="SocialMedia Title" />
+                </CCol>
+              </CFormGroup>
+              <CFormGroup row>
+                <CCol md="2">
+                  <CLabel htmlFor="socialMedialink">SocialMedia Link</CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  <CInput onChange={handleInput}  defaultValue={state.link} id="socialMedialink" name="link" placeholder="SocialMedia Link"  />
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
@@ -134,18 +153,6 @@ const SocialMediaDetail = (props) => {
                     />
                   </CCol>
               </CFormGroup>
-              <CFormGroup row >
-                <CCol md="2">
-                  <CLabel >Update SocialMedia</CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  <CSelect custom name="socialMediaId" id="select" onChange={handleInput}>
-                      <option value={state._id? state._id : ""}>{state._id? state.title : "Please select"}</option>
-                      {socialMediasData.map(item=><option key={item._id} value={item._id}>{item.title}</option>)}
-                    </CSelect>
-                </CCol>
-                    
-              </CFormGroup>
                   <CCardFooter>
                 <CRow>
                 <CCol>
@@ -157,6 +164,7 @@ const SocialMediaDetail = (props) => {
                       <CButton onClick={deleteSocialMediaData} type="button" block color="danger">Delete SocialMedia</CButton>
                     </CCol>
 }
+                      <CButton onClick={handleOne} type="button" block color="danger">Add SocialMedias</CButton>
                 </CRow>
               </CCardFooter>
             </CForm>

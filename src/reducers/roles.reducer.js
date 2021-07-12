@@ -1,5 +1,6 @@
 import {
   GET_ROLES,
+  GET_ROLE,
   ADD_NEW_ROLE,
   DELETE_ROLE,
   EDIT_ROLE,
@@ -7,13 +8,16 @@ import {
 
 const initialState = {
   rolesList: [],
+  role:{}
 };
 
 const rolesReducer = (state = initialState, action) => {
-  //console.log(action);
+  console.log(action);
   switch (action.type) {
     case GET_ROLES:
       return { ...state, rolesList: action.payload };
+    case GET_ROLE:
+      return { ...state, role: action.payload };
     case ADD_NEW_ROLE:
       return { ...state, rolesList: [...state.rolesList, action.payload] };
     case DELETE_ROLE:

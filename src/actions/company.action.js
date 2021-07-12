@@ -7,9 +7,7 @@ import {
 } from "./actionTypes";
 import axios from "axios";
 import { setMessage, setError, setPagination } from "./message.action";
-//import { API_BASE } from "../Helpers/env";
-
-const API_BASE = "https://crmapp-server.herokuapp.com/companyintroduction"
+import { API_BASE } from "./api_base";
 
 export const getData = (data) => ({
   type: GET_COMPANY_INTROS,
@@ -18,7 +16,7 @@ export const getData = (data) => ({
 export function getCompanyIntro(limit, page) {
   console.log(limit, page)
   return (dispatch) => {
-    axios.get(`${API_BASE}?limit=${limit}&page=${page}`).then((result) => {
+    axios.get(`${API_BASE}companyintroduction?limit=${limit}&page=${page}`).then((result) => {
       console.log(result);
       dispatch(setPagination({page:result.data.pages, total:result.data.total}));
       dispatch(getData(result.data.response))});
@@ -34,7 +32,7 @@ export function addCompanyIntro(state) {
   console.log("add new CompanyIntro => ",state);
   return (dispatch) => {
     return axios
-      .post(`${API_BASE}`, state)
+      .post(`${API_BASE}companyintroduction`, state)
       .then((response)=>{console.log(response);  setMessage(response.data.message,dispatch)},
       (error)=> {setError(error, dispatch)})
       .catch((error) => console.log(error));
@@ -48,7 +46,7 @@ export const removeData = (data) => ({
 export function deleteCompanyIntro(id) {
   return (dispatch) => {
     return axios
-      .delete(`${API_BASE}/${id}`, {})
+      .delete(`${API_BASE}companyintroduction/${id}`, {})
       .then((response)=>{
         console.log(response)
         let msg = response.data.message ? response.data.message : "CompanyIntro deleted succesfully"
@@ -66,7 +64,7 @@ export function editCompanyIntro(state, id) {
   console.log(state,id);
   return (dispatch) => {
     return axios
-      .put(`${API_BASE}/${id}`, state)
+      .put(`${API_BASE}companyintroduction/${id}`, state)
       .then((response)=>{
         let msg = response.data.message ? response.data.message : "CompanyIntro updated succesfully"
         setMessage(msg,dispatch)},
@@ -79,7 +77,7 @@ export function toggleVisible(id) {
   return (dispatch) => {
     dispatch({
         type:TOGGLE_VISIBLE,
-        payload:axios.put(`${API_BASE}/${id}`,{})
+        payload:axios.put(`${API_BASE}companyintroduction/${id}`,{})
         .then(res=>console.log(res))
     })
   }

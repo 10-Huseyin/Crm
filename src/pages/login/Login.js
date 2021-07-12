@@ -69,6 +69,7 @@ const [loginForm, setloginForm] = useState(initialState)
     fd.set("email", loginForm.email);
     fd.set("password", loginForm.password);
 
+    //const fdata = {email:loginForm.email , password:loginForm.password} 
     dispatch(login(fd))
       .then((res) => {
         if(res === 200) {

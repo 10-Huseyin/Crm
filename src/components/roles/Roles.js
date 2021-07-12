@@ -12,7 +12,7 @@ import {
   CPagination,
   CAlert
 } from '@coreui/react'
-import { getRoles } from 'src/actions/role.action'
+import { getRoles, getOneRole } from 'src/actions/role.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {
@@ -72,23 +72,36 @@ const Roles = () => {
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
+
+  const handleRole =(id)=>{
+    dispatch(getOneRole(id))
+    .then(res => {
+      if (res === 200) {
+        history.push(`/roles/${id}`)
+      }
+    })
+  }
+  
+
+
   console.log(rolesData)
   return (
     <>
-    <CButton type="button"
-    onClick={() => history.push(`/roles/add`)}
-    block color="primary">Add Role</CButton>
-    <CRow>
-       <CCol xl={9}>
-        <CCard>
-          <CCardHeader>
-            Roles
-            <small className="text-muted"> Table</small>
-          </CCardHeader>
-    {errorMsg && <CAlert color="warning">
-                {errorMsg}
-              </CAlert>}
-          <CCardBody>
+      <CRow>
+        <CCol xl={9}>
+          <CCard>
+            <CCardHeader>
+              Roles <small className="text-muted"> Table</small>
+              <div className="card-header-actions">
+                <CButton type="button"
+                  onClick={() => history.push(`/roles/add`)}
+                  block color="primary">Add Role</CButton>
+              </div>
+            </CCardHeader>
+            {errorMsg && <CAlert color="warning">
+              {errorMsg}
+            </CAlert>}
+            <CCardBody>
           <CDataTable
             items={rolesData}
             fields={[
@@ -100,7 +113,7 @@ const Roles = () => {
             //itemsPerPage={perPage}
             //activePage={page}
             clickableRows
-            onRowClick={(item) => history.push(`/roles/${item._id}`)}
+            onRowClick={item => handleRole(item._id)}
             scopedSlots = {{
               "isActive":
                 (item)=>(
