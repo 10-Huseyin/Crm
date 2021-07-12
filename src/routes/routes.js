@@ -47,10 +47,12 @@ const MediaDetail = React.lazy(() => import('../components/medias/MediaDetail'))
 const Experts = React.lazy(() => import('../components/experts/Experts'));
 //const ExpertAdd = React.lazy(() => import('../components/experts/ExpertAdd_eski'));
 const ExpertDetail = React.lazy(() => import('../components/experts/ExpertDetail'));
+
 const Sliders = React.lazy(() => import('../components/sliders/Sliders'));
-const Slider = React.lazy(() => import('../components/sliders/Slider'));
-const SliderAdd = React.lazy(() => import('../components/sliders/SliderAdd'));
-const SliderEdit = React.lazy(() => import('../components/sliders/SliderEdit'));
+
+const SliderDetail = React.lazy(() => import('../components/sliders/SliderDetail'));
+
+
 const CompanyIntros = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntros'));
 const CompanyIntroAdd = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntroAdd'));
 
@@ -114,10 +116,11 @@ const routes = [
   { path: '/medias', exact: true,  name: 'Medias', component: Medias },
   { path: '/medias/add', exact: true, name: 'Media Add', component: MediaDetail },
   { path: '/medias/:id', exact: true, name: 'Media Details', component: MediaDetail },
-  { path: '/sliders', exact: true,  name: 'Sliders', component: Sliders },
-  { path: '/sliders/add', exact: true,  name: 'Slider Add', component: SliderAdd },
-  // { path: '/sliders/:id', exact: true, name: 'Slider Details', component: Slider },
-  { path: '/sliders/:id', exact: true, name: 'Slider Edit', component: SliderEdit },
+  
+  { path: '/slider', exact: true,  name: 'Sliders', component: Sliders },
+  { path: '/slider/add', exact: true,  name: 'Slider Add', component: SliderDetail },
+  { path: '/slider/:id', exact: true, name: 'Slider Details', component: SliderDetail },
+
   { path: '/companyintroduction', exact: true,  name: 'Company Introduction', component: CompanyIntros},
   { path: '/companyintroduction/add', exact: true,  name: 'Company Introduction', component: CompanyIntroAdd},
   { path: '/companyintroduction/:id', exact: true,  name: 'CompanyIntro', component: CompanyIntro},

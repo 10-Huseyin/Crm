@@ -48,26 +48,6 @@ const BasicForms = (props) => {
   }
   
 
-  // const getPhoto = (e) => {
-  //   console.log(e.target.files[0]);
-  //   setPhoto(e.target.files[0])
-
-  // };
-
-  // const uploadPhoto = () => {
-  //   const fd = new FormData();
-
-  //   fd.append("image", photo, photo.name);
-  //   axios.post(
-  //     "https://api.imgbb.com/1/upload?expiration=600&key=a4a61c5615a8ba139a774ff21a6d5373",
-  //     fd
-  //   ).then((res) => {
-  //     console.log(res.data.data.display_url);
-  //     setState({ ...state, mediaId: res.data.data.display_url });
-  //     setMessage("Media uploaded succesfully!")
-  //   }).catch(err => setMessage("Some error occured, try again!"))
-  // };
-
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
 

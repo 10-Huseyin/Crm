@@ -1,6 +1,7 @@
 import {
   GET_SLIDERS,
   ADD_NEW_SLIDER,
+  GET_SLIDER,
   DELETE_SLIDER,
   EDIT_SLIDER,
   TOGGLE_VISIBLE,
@@ -8,14 +9,16 @@ import {
 
 const initialState = {
   sliderList: [],
-  pagenationInfo:{},
+  slider:{},
 };
 
 export default (state = initialState, action) => {
-  //console.log(action);
+ 
   switch (action.type) {
     case GET_SLIDERS:
-      return { ...state, sliderList: action.payload.response,pagenationInfo:action.payload };
+      return { ...state, sliderList: action.payload};
+      case GET_SLIDER:
+        return { ...state, slider: action.payload};
     case ADD_NEW_SLIDER:
       return { ...state, sliderList: [...state.sliderList, action.payload] };
     case DELETE_SLIDER:

@@ -63,7 +63,7 @@ const _nav =  [
   {
     _tag: 'CSidebarNavItem',
     name: 'Sliders',
-    to: '/sliders',
+    to: '/slider',
     icon: 'cil-layers'
   },
   {

@@ -21,7 +21,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { DocsLink } from 'src/reusable'
 import { useDispatch, useSelector } from "react-redux";
-import { getSlider,deleteSlider,editSliderFunk } from "../../actions/slider.action";
+import { getSliders,deleteSlider,editSliderFunk } from "../../actions/slider.action";
  
 
 
@@ -118,7 +118,7 @@ const BasicForms = (props) => {
 
     dispatch(editSliderFunk(fd, state._id))
       resetForm()
-      dispatch(getSlider())
+      dispatch(getSliders())
       setTimeout(() => {
         props.history.push("/sliders");
       }, 1000)

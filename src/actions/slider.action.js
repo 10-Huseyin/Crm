@@ -1,11 +1,12 @@
 import {
   GET_SLIDERS,
+  GET_SLIDER,
   ADD_NEW_SLIDER,
   DELETE_SLIDER,
   EDIT_SLIDER,
-  TOGGLE_VISIBLE
-} from "./actionTypes";
-import { setMessage, setError } from "./message.action";
+  TOGGLE_VISIBLE,
+  } from "./actionTypes";
+import { setMessage, setError ,setPagination} from "./message.action";
 import axios from "axios";
 import { API_BASE } from "./api_base";
 
@@ -15,25 +16,65 @@ export const getData = (data) => ({
   payload: data,
 });
 
-export function getSlider() {
+export function getSliders(limit, page) {
+ 
   return (dispatch) => {
-    return axios.get(`${API_BASE}slider?limit=3&page=1`).then((result) => dispatch(getData(result.data),
-  
-    ));
+    return axios.get(`${API_BASE}slider?limit=${limit}&page=${page}`)
+    .then((result) => {
+       dispatch(setPagination({page:result.data.pages, total:result.data.total}));
+      dispatch(getData(result.data.response))
+      return result.data.status;
+    },
+    (error)=> {
+      setError(error, dispatch)
+    return error
+  })
+    .catch((error) => error);
   };
 }
+
+export const getOneData = (data) => ({
+  type: GET_SLIDER,
+  payload: data,
+});
+export function getOneSlider(id) {
+  return (dispatch) => {
+    return axios.get(`${API_BASE}slider/${id}`)
+    .then((result) => {
+      console.log(result.data.data);
+      dispatch(getOneData(result.data.data))
+      return result.data.status;
+    },
+    (error)=> {
+      setError(error, dispatch)
+    return error
+  })
+    .catch((error) => error);
+  };
+}
+
+
 
 export const postData = (data) => ({
   type: ADD_NEW_SLIDER,
   payload: data,
 });
 export function addNewSlider(state) {
-  console.log("add new slider => ",state);
+
   return (dispatch) => {
-   return axios
+    return axios
       .post(`${API_BASE}slider`, state)
-      .then((result) => {console.log(result);dispatch(postData(result.data))})
-      .catch((error) => console.log(error));
+      .then((response)=>{
+        console.log(response)
+        let msg = response.data.status === 200 ? (response.data.message || "Slider added succesfully") : "Slider could not added!"
+        setMessage(msg,dispatch)
+        return response.data.status
+      },
+      (error)=> {
+        setError(error, dispatch)
+      return error
+    })
+      .catch((error) => error);
   };
 }
 
@@ -44,14 +85,19 @@ export const removeData = (data) => ({
 export function deleteSlider(id) {
   return (dispatch) => {
     return axios
-      .delete(`${API_BASE}/${id}slider`, {})
+      .delete(`${API_BASE}slider/${id}`, {})
       .then((response)=>{
-        
-        removeData(response.data)
-        let msg = response.data.message ? response.data.message : "Slider is deleted succesfully"
-        setMessage(msg,dispatch)},
-      (error)=> {setError(error, dispatch)})
-      .catch((error) => console.log(error));
+        console.log(response)
+        let msg = response.data.status === 200 ? (response.data.message || "Slider deleted succesfully") : "Slider is not deleted!"
+        setMessage(msg,dispatch)
+        return response.data.status
+      }
+        ,
+        (error)=> {
+          setError(error, dispatch)
+        return error
+      })
+        .catch((error) => error);
   };
 }
 
@@ -62,15 +108,19 @@ export const editData = (data) => ({
 export function editSliderFunk(fd, id) {
   console.log(fd,id);
   return (dispatch) => {
-    return axios 
-      .put(`${API_BASE}/${id}slider`, fd)
-      .then((result) =>{
-        console.log(result.data)
-        dispatch(editData(result.data)
-        )}
-        )
-            // .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+    return axios
+      .put(`${API_BASE}slider/${id}`, fd)
+      .then((response)=>{
+        console.log(response)
+        let msg = response.data.status === 200 ? (response.data.message || "Slider is updated succesfully") : "Slider could not updated!"
+        setMessage(msg,dispatch)
+        return response.data.status;
+      },
+        (error)=> {
+          setError(error, dispatch)
+        return error
+      })
+        .catch((error) => error);
   };
 }
 export function toggleVisible(id) {
