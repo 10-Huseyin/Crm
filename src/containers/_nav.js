@@ -26,9 +26,15 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Company',
+    name: 'Company Intro',
     to: '/companyintroduction',
     icon: 'cil-graph'
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Company Profile',
+    to: '/companyprofile',
+    icon: 'cil-pencil'
   },
   {
     _tag: 'CSidebarNavItem',
