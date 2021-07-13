@@ -16,8 +16,6 @@ import {
   CInputGroupPrepend,
   CInputGroupAppend,
   CInputGroupText,
-  CImg,
-  CCardText
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { getMedias, getOneMedia, getMediasByTitle } from 'src/actions/media.action';
@@ -58,7 +56,7 @@ const Medias = () => {
   const mediasData = useSelector(state => state.medias.mediasList)
   const dispatch = useDispatch()
 
-  const perPage = 12;
+  const perPage = 10;
   const pageNum = paginationData ? paginationData.page : 1;
   //console.log(pageNum)
  
@@ -94,7 +92,6 @@ const Medias = () => {
 
   
   const handleMedia =(id)=>{
-    console.log(id)
     dispatch(getOneMedia(id))
     .then(res => {
       if (res === 200) {
@@ -157,31 +154,29 @@ const Medias = () => {
               {errorMsg}
             </CAlert>}
             <CCardBody>
-
-              <CRow>
-          {mediasData.map(item => {
-            return <CCol xs="12" sm="6" md="3">
-              <CCard >
-                <CCardHeader>
-                  {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
-                  <div className="card-header-actions">
-                  <CBadge color={getBadge(item.isActive)}>
+          <CDataTable
+            items={mediasData}
+            fields={[
+              { key: 'title', _classes: 'font-weight-bold' },
+              "url", "isHomePage", "isActive",
+            ]}
+            hover
+            striped
+            //itemsPerPage={perPage}
+            //activePage={page}
+            clickableRows
+            onRowClick={item => handleMedia(item._id)}
+            scopedSlots = {{
+              "isActive":
+                (item)=>(
+                  <td>
+                    <CBadge color={getBadge(item.isActive)}>
                       {getActive(item.isActive)}
                     </CBadge>
-                  </div>
-                </CCardHeader>
-                <CImg
-                      src={item.mediaKey ? item.url :"" }
-                      className="c-media-img"
-                      title= {item.alt}
-                      onClick={() => handleMedia(item._id)}
-                      style={{cursor:'pointer'}}
-                      />
-          </CCard>
-        </CCol>
-          })
-        }
-        </CRow>
+                  </td>
+                )
+              }}
+              />
           { 
             pageNum > 1 &&
             <CPagination

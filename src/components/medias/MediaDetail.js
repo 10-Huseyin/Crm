@@ -73,7 +73,7 @@ const MediaDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
-    if (state.mediaId.name) {
+    if (state.mediaId) {
       fd.set("mediaId", state.mediaId, state.mediaId.name);
     }
 
@@ -107,6 +107,9 @@ const MediaDetail = (props) => {
           getDefaults()
         }
       })
+      
+        setWarning(!danger)
+      
   };
   const getDefaults = () => {
     resetForm();
@@ -185,7 +188,7 @@ const MediaDetail = (props) => {
                   </CCol>
                   <CCol xs="12" md="9">
                     <CImg
-                      src={state.mediaId && (state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.mediaId.url )}
+                      src={state.mediaId && state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.url }
                       className="c-expert-img"
                       alt="expert-img"
                       />
@@ -196,7 +199,7 @@ const MediaDetail = (props) => {
             <CCardFooter>
               <CCol>
                 <CButton onClick={resetForm} type="reset" color="warning"><CIcon content={freeSet.cilReload} /> Reset Form </CButton>
-                <CButton onClick={() => props.history.push(`/roles`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
+                <CButton onClick={() => props.history.push(`/medias`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
               </CCol>
               <div className="card-header-actions">
                 <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update Media" : "Add Media"}</CButton>
@@ -213,7 +216,7 @@ const MediaDetail = (props) => {
                   <CModalTitle>Delete Media</CModalTitle>
                 </CModalHeader>
                 <CModalBody>
-                  Are you sure deleting selected role?
+                  Are you sure deleting selected media?
                 </CModalBody>
                 <CModalFooter>
                   <CButton color="danger" onClick={deleteMediaData}>Delete Media</CButton>{' '}
@@ -247,7 +250,6 @@ const MediaDetail = (props) => {
             </CModalFooter>
           </CModal>
         }
-
       </CCol>
     </CRow>
   )
