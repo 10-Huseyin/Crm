@@ -124,8 +124,8 @@ const ExpertDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
-    if (state.mediaId.title) {
-      fd.set("mediaId", state.mediaId, state.mediaId.title);
+    if (state.mediaId.name) {
+      fd.set("mediaId", state.mediaId, state.mediaId.name);
     }
     fd.set("firstname", state.firstname);
     fd.set("lastname", state.lastname);

@@ -18,6 +18,8 @@ import {
   CModalFooter,
   CAlert,
   CRow,
+  CImg,
+  CInputFile
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
 import '@coreui/icons/css/all.css';
@@ -28,11 +30,11 @@ import { addNewMedia, editMediaData, deleteMedia } from "../../actions/media.act
 
 
 const initialState = {
-  title: "",
-  url: "",
+  title: "gallery",
   alt: "",
-  isHomePage: false,
+  mediaId: {},
   isActive: true,
+  isHomePage: false,
   isDeleted: false,
 };
 
@@ -45,14 +47,21 @@ const MediaDetail = (props) => {
   const error = useSelector(state => state.error)
   //const mediasData = useSelector(state => state.medias.mediasList)
   const mediaData = useSelector(state => state.medias.media)
+  const [uploadMessage, setUploadMessage] = useState("");
 
   const media = mediaData && props.match.params.id ? mediaData : initialState;
   const [state, setState] = useState(media)
 
+  const onChangePhoto = (e) => {
+    console.log(e.target.files);
+    setState({ ...state, alt: e.target.files[0].name, mediaId: e.target.files[0] });
+    setUploadMessage("Media selected succesfully!")
+  };
 
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
+
   const handleSwitch = (e) => {
     setState({ ...state, [e.target.name]: e.target.checked })
   }
@@ -64,12 +73,14 @@ const MediaDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
+    if (state.mediaId.name) {
+      fd.set("mediaId", state.mediaId, state.mediaId.name);
+    }
 
     fd.set("title", state.title);
     fd.set("alt", state.alt);
-    fd.set("url", state.url);
-    fd.set("isHomePage", state.isHomePage);
     fd.set("isActive", state.isActive);
+    fd.set("isHomePage", state.isHomePage);
     fd.set("isDeleted", state.isDeleted);
 
     props.match.params.id ?
@@ -123,7 +134,7 @@ const MediaDetail = (props) => {
                     <CLabel htmlFor="mediatitle">Media Title</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.title} id="mediatitle" name="title" placeholder="Media Title" />
+                    <CInput value={state.title} id="mediatitle" name="title" placeholder="Media Title" disabled/>
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
@@ -158,18 +169,26 @@ const MediaDetail = (props) => {
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="mediaurl">Media URL</CLabel>
+                    <CLabel>Add New Photo</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.url} id="mediaurl" name="url" placeholder="Media URL" />
+                    <CInputFile onChange={onChangePhoto} custom id="custom-file-input" required />
+                    <CLabel htmlFor="custom-file-input" variant="custom-file">
+                      {state.alt ? state.alt : "Choose file..."}
+                    </CLabel>
+                    <span className="ml-2">{uploadMessage}</span>
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="mediaalt">Media alt</CLabel>
+                    <CLabel>Selected Photo</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.alt} id="mediaalt" name="alt" placeholder="Media Alt" />
+                    <CImg
+                      src={state.mediaId && (state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.mediaId.url )}
+                      className="c-expert-img"
+                      alt="expert-img"
+                      />
                   </CCol>
                 </CFormGroup>
               </CForm>
