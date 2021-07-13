@@ -42,7 +42,7 @@ const initialState = {
   isActive: true,
   isDeleted: false,
   mediaId: {}, //logo
-  // alt: "", //logo
+  // alt: "", //logo sub
   socialMediaId: [],
 };
 
