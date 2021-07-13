@@ -1,4 +1,5 @@
 import {
+  GET_COMPANY_INTRO,
   GET_COMPANY_INTROS,
   ADD_NEW_COMPANY_INTRO,
   DELETE_COMPANY_INTRO,
@@ -13,13 +14,39 @@ export const getData = (data) => ({
   type: GET_COMPANY_INTROS,
   payload: data,
 });
-export function getCompanyIntro(limit, page) {
-  console.log(limit, page)
+export function getCompanyIntros(limit, page) {
   return (dispatch) => {
-    axios.get(`${API_BASE}companyintroduction?limit=${limit}&page=${page}`).then((result) => {
-      console.log(result);
+    return axios.get(`${API_BASE}companyintroduction?limit=${limit}&page=${page}`)
+    .then((result) => {
+      //console.log(result);
       dispatch(setPagination({page:result.data.pages, total:result.data.total}));
-      dispatch(getData(result.data.response))});
+      dispatch(getData(result.data.response))
+      return result.data.status;
+    },
+    (error)=> {
+      setError(error, dispatch)
+    return error
+  })
+    .catch((error) => error);
+  };
+}
+export const getOneData = (data) => ({
+  type: GET_COMPANY_INTRO,
+  payload: data,
+});
+export function getOneIntro(id) {
+  return (dispatch) => {
+    return axios.get(`${API_BASE}companyprofile/${id}`)
+    .then((result) => {
+      console.log(result.data.data);
+      dispatch(getOneData(result.data.data))
+      return result.data.status;
+    },
+    (error)=> {
+      setError(error, dispatch)
+    return error
+  })
+    .catch((error) => error);
   };
 }
 
@@ -33,9 +60,17 @@ export function addCompanyIntro(state) {
   return (dispatch) => {
     return axios
       .post(`${API_BASE}companyintroduction`, state)
-      .then((response)=>{console.log(response);  setMessage(response.data.message,dispatch)},
-      (error)=> {setError(error, dispatch)})
-      .catch((error) => console.log(error));
+      .then((response)=>{
+        console.log(response)
+        let msg = response.data.status === 200 ? (response.data.message || "Company Intro is added succesfully") : "Company Intro could not added!"
+        setMessage(msg,dispatch)
+        return response.data.status
+      },
+      (error)=> {
+        setError(error, dispatch)
+      return error
+    })
+      .catch((error) => error);
   };
 }
 
@@ -49,10 +84,16 @@ export function deleteCompanyIntro(id) {
       .delete(`${API_BASE}companyintroduction/${id}`, {})
       .then((response)=>{
         console.log(response)
-        let msg = response.data.message ? response.data.message : "CompanyIntro deleted succesfully"
-        setMessage(msg,dispatch)},
-      (error)=> {setError(error, dispatch)})
-      .catch((error) => console.log(error));
+        let msg = response.data.status === 200 ? (response.data.message || "Company Intro  is deleted succesfully") : "Company Intro  is not deleted!"
+        setMessage(msg,dispatch)
+        return response.data.status
+      }
+        ,
+        (error)=> {
+          setError(error, dispatch)
+        return error
+      })
+        .catch((error) => error);
   };
 }
 
@@ -62,15 +103,21 @@ export const editData = (data) => ({
 });
 export function editCompanyIntro(state, id) {
   console.log(state,id);
-  return (dispatch) => {
-    return axios
-      .put(`${API_BASE}companyintroduction/${id}`, state)
-      .then((response)=>{
-        let msg = response.data.message ? response.data.message : "CompanyIntro updated succesfully"
-        setMessage(msg,dispatch)},
-      (error)=> {setError(error, dispatch)})
-      .catch((error) => console.log(error));
-  };
+    return (dispatch) => {
+      return axios
+        .put(`${API_BASE}companyintroduction/${id}`, state)
+        .then((response)=>{
+          console.log(response)
+          let msg = response.data.status === 200 ? (response.data.message || "Company Intro is updated succesfully") : "Company Intro could not updated!"
+          setMessage(msg,dispatch)
+          return response.data.status;
+        },
+          (error)=> {
+            setError(error, dispatch)
+          return error
+        })
+          .catch((error) => error);
+    };
 }
 export function toggleVisible(id) {
 

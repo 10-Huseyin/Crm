@@ -72,7 +72,7 @@ const CProfiles = () => {
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
-const handleExpert =(id)=>{
+const handleProfile =(id)=>{
   dispatch(getOneProfile(id))
   .then(res => {
     if (res === 200) {
@@ -88,7 +88,7 @@ const handleExpert =(id)=>{
         <CCol xl={9}>
           <CCard>
             <CCardHeader>
-              Experts <small className="text-muted"> Table</small>
+              Company Profiles <small className="text-muted"> Table</small>
               <div className="card-header-actions">
                 <CButton type="button"
                   onClick={() => history.push(`/companyprofile/add`)}
@@ -110,7 +110,7 @@ const handleExpert =(id)=>{
                 //itemsPerPage={perPage}
                 //activePage={page}
                 clickableRows
-                onRowClick={item => handleExpert(item._id)}
+                onRowClick={item => handleProfile(item._id)}
                 scopedSlots={{
                   "isActive":
                     (item) => (
