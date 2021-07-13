@@ -11,6 +11,7 @@ import medias from "./media.reducer";
 import experts from "./experts.reducer";
 import pagination from "./pagination.reducer";
 import companyIntro from "./company.reducer";
+import companyProfile from "./companyProfile.reducer";
 
 export default combineReducers({
   auth,
@@ -25,4 +26,5 @@ export default combineReducers({
   roles,
   socialMedias,
   medias,
+  companyProfile,
 });

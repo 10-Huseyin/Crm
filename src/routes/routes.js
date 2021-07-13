@@ -49,16 +49,15 @@ const Experts = React.lazy(() => import('../components/experts/Experts'));
 const ExpertDetail = React.lazy(() => import('../components/experts/ExpertDetail'));
 
 const Sliders = React.lazy(() => import('../components/sliders/Sliders'));
-
 const SliderDetail = React.lazy(() => import('../components/sliders/SliderDetail'));
 
 
 const CompanyIntros = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntros'));
 const CompanyIntroAdd = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntroAdd'));
-
 const CompanyIntro = React.lazy(() => import('../components/CompanyIntroduction/CompanyIntro'));
 
-
+const CProfiles = React.lazy(() => import('../components/companyProfile/CProfiles'));
+const CProfileDetail = React.lazy(() => import('../components/companyProfile/CProfileDetail'));
 
 
 const routes = [
@@ -124,6 +123,10 @@ const routes = [
   { path: '/companyintroduction', exact: true,  name: 'Company Introduction', component: CompanyIntros},
   { path: '/companyintroduction/add', exact: true,  name: 'Company Introduction', component: CompanyIntroAdd},
   { path: '/companyintroduction/:id', exact: true,  name: 'CompanyIntro', component: CompanyIntro},
+
+  { path: '/companyprofile', exact: true,  name: 'Company Profile', component: CProfiles },
+  { path: '/companyprofile/add', exact: true,  name: 'Company Profile Add', component: CProfileDetail },
+  { path: '/companyprofile/:id', exact: true, name: 'Company Profile Details', component: CProfileDetail },
 ];
 
 export default routes;

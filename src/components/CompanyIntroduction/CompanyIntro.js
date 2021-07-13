@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CRow, CForm, CFormGroup, CLabel, CInput, CSelect, CSwitch, CCardFooter, CButton, CModal, CModalHeader, CModalTitle, CModalFooter, CModalBody, CAlert,CInputRadio} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { useDispatch, useSelector } from "react-redux";
-import { editCompanyIntro, deleteCompanyIntro } from "../../actions/company.action";
+import { editCompanyIntro, deleteCompanyIntro } from "../../actions/companyIntro.action";
 
 
 const CompanyIntro = (props) => {

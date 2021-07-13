@@ -43,7 +43,7 @@ const initialState = {
   order: "",
   isActive: true,
   isDelete: false,
-  mediaId: "",
+  mediaId: {},
   isVideo: "",
   alt:"",
 };
@@ -81,7 +81,7 @@ const SliderDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
-    if (state.mediaId.title) {
+    if (state.mediaId.name) {
       fd.set("mediaId", state.mediaId, state.mediaId.title);
     }
     fd.set("title", state.title);
@@ -143,7 +143,7 @@ const SliderDetail = (props) => {
       order: "",
       isActive: true,
       isDelete: false,
-      mediaId: "",
+      mediaId: {},
       isVideo: "",
       alt:"",
     })

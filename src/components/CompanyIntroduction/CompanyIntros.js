@@ -11,7 +11,7 @@ import {
   CButton,
   CPagination
 } from '@coreui/react'
-import { getCompanyIntro } from 'src/actions/company.action'
+import { getCompanyIntro } from 'src/actions/companyIntro.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {

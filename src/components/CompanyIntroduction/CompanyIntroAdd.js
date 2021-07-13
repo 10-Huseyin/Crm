@@ -15,7 +15,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { useDispatch} from "react-redux";
-import { addCompanyIntro } from "../../actions/company.action";
+import { addCompanyIntro } from "../../actions/companyIntro.action";
 
 
 const initialState = {

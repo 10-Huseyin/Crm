@@ -30,22 +30,23 @@ import '@coreui/icons/css/all.css';
 import { freeSet } from '@coreui/icons'
 
 import { useDispatch, useSelector } from "react-redux";
-import { addNewExpert, editExpertData, deleteExpert } from "../../actions/expert.action";
+import { addNewProfile, editProfileData, deleteProfile } from "../../actions/companyProfile.action";
 
 const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 
 const initialState = {
-  firstname: "",
-  lastname: "",
-  expertise: "",
+  name: "",
+  phones: "",
+  address: "",
+  email:"",
   isActive: true,
   isDeleted: false,
-  mediaId: {},
-  alt: "",
+  mediaId: {}, //logo
+  // alt: "", //logo
   socialMediaId: [],
 };
 
-const ExpertDetail = (props) => {
+const CProfileDetail = (props) => {
   const [modal, setModal] = useState(true)
   const [danger, setWarning] = useState(false)
 
@@ -54,30 +55,19 @@ const ExpertDetail = (props) => {
   const error = useSelector(state => state.error)
   //const expertsData = useSelector(state => state.experts.expertList)
   
-  const expertData = useSelector(state => state.experts.expert)
+  const profileData = useSelector(state => state.companyProfile.profile)
   //console.log("burası en üst, expertdata ile state arasında")
-  const expert = expertData && props.match.params.id ? expertData : initialState;
-  const [state, setState] = useState(expert)
+  const profile = profileData && props.match.params.id ? profileData : initialState;
+  const [state, setState] = useState(profile)
 //console.log(state)
   const [uploadMessage, setUploadMessage] = useState("");
   const [social, setSocial] = useState({ title: "", link: "" })
 
-  // useEffect(() => {
-  //   console.log("useeffect içinde, en başta")
-  //   dispatch(getOneExpert(props.match.params.id))
-  //   .then(res => {
-  //     if (res === 200) {
-  //       console.log("useffect if içinde")
-  //       expert !== state && setState(expert)
-  //     }
-  //   })
-     
-  // },[])
 
   const onChangePhoto = (e) => {
     console.log(e.target.files);
     setState({ ...state, alt: e.target.files[0].name, mediaId: e.target.files[0] });
-    setUploadMessage("Media selected succesfully!")
+    setUploadMessage("Logo Media selected succesfully!")
   };
 
   const handleInput = (e) => {
@@ -127,24 +117,25 @@ const ExpertDetail = (props) => {
     if (state.mediaId.name) {
       fd.set("mediaId", state.mediaId, state.mediaId.title);
     }
-    fd.set("firstname", state.firstname);
-    fd.set("lastname", state.lastname);
-    fd.set("expertise", state.expertise);
+    fd.set("name", state.name);
+    fd.set("phones", state.phones);
+    fd.set("address", state.address);
+    fd.set("email", state.email);
     fd.set("isActive", state.isActive);
     fd.set("isDeleted", state.isDeleted);
-    fd.set("alt", state.alt);
+    // fd.set("alt", state.alt);
     fd.append("socialMediaId", JSON.stringify(state.socialMediaId))
 
 
     props.match.params.id ?
-      dispatch(editExpertData(fd, props.match.params.id))
+      dispatch(editProfileData(fd, props.match.params.id))
         .then(res => {
           if (res === 200) {
             getDefaults()
           }
         })
       :
-      dispatch(addNewExpert(fd))
+      dispatch(addNewProfile(fd))
         .then(res => {
           if (res === 200) {
             getDefaults()
@@ -152,9 +143,9 @@ const ExpertDetail = (props) => {
         })
   };
 
-  const deleteExpertData = (event) => {
+  const deleteProfileData = (event) => {
     event.preventDefault();
-    dispatch(deleteExpert(state._id))
+    dispatch(deleteProfile(state._id))
       .then(res => {
         if (res === 200) {
           getDefaults()
@@ -166,24 +157,25 @@ const ExpertDetail = (props) => {
     setWarning(!danger)
     setTimeout(() => {
       setModal(false)
-      props.history.push("/experts");
+      props.history.push("/companyprofile");
     }, 2000);
   }
 
 
   function resetForm () {
     props.match.params.id?
-    setState(expertData)
+    setState(profileData)
     :
     setState({
-      firstname: "",
-  lastname: "",
-  expertise: "",
-  isActive: true,
-  isDeleted: false,
-  mediaId: {},
-  alt: "",
-  socialMediaId: [],
+      name: "",
+      phones: "",
+      address: "",
+      email:"",
+      isActive: true,
+      isDeleted: false,
+      mediaId: {}, //logo
+      // alt: "", //logo
+      socialMediaId: [],
     })
     //setState(expert)  
     // state.socialMediaId.splice(0, state.socialMediaId.length)
@@ -194,7 +186,7 @@ const ExpertDetail = (props) => {
   //console.log("return den hemen önce")
   //console.log(initialState);
   //console.log(expertData);
-  console.log(state, social, message, error);
+  console.log(state, social,message, error);
   //console.log(props.match.params.id )
   return (
     <CRow>
@@ -203,32 +195,40 @@ const ExpertDetail = (props) => {
           state &&
           <CCard>
             <CCardHeader>
-              {props.match.params.id ? "EXPERT DETAIL FORM" : "ADD NEW EXPERT"}
+              {props.match.params.id ? "COMPANY PROFILE DETAIL FORM" : "ADD NEW COMPANY PROFILE"}
             </CCardHeader>
             <CCardBody>
               <CForm onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="expertfirstname">First Name</CLabel>
+                    <CLabel htmlFor="profilename">Name</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.firstname} id="expertfirstname" name="firstname" placeholder="Expert First Name" required />
+                    <CInput onChange={handleInput} value={state.name} id="profilename" name="name" placeholder="Name" required />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="subtitle">Last Name </CLabel>
+                    <CLabel htmlFor="phones">Phones</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.lastname} id="expertlastname" name="lastname" placeholder="Expert Last Name" required />
+                    <CInput onChange={handleInput} value={state.phones} id="phones" name="phones" placeholder="Phones" required />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="expertise">Expertise </CLabel>
+                    <CLabel htmlFor="address">Address </CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.expertise} id="expertise" name="expertise" placeholder="Expertise" required />
+                    <CInput onChange={handleInput} value={state.address} id="address" name="address" placeholder="Address" required />
+                  </CCol>
+                </CFormGroup>
+                <CFormGroup row>
+                  <CCol md="2">
+                    <CLabel htmlFor="email">Email </CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput onChange={handleInput} value={state.email} id="email" name="email" placeholder="Email" required />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
@@ -248,28 +248,36 @@ const ExpertDetail = (props) => {
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel>Add New Photo</CLabel>
+                    <CLabel>Add New Logo</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CInputFile onChange={onChangePhoto} custom id="custom-file-input" required />
                     <CLabel htmlFor="custom-file-input" variant="custom-file">
-                      {state.alt ? state.alt : "Choose file..."}
+                      {state.alt ? state.alt : "Choose logo file..."}
                     </CLabel>
                     <span className="ml-2">{uploadMessage}</span>
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel>Selected Photo</CLabel>
+                    <CLabel>Selected Logo:</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CImg
                       src={state.mediaId && (state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.mediaId.url )}
-                      className="c-expert-img"
-                      alt="expert-img"
+                      className="c-profile-img"
+                      alt="profile-img"
                       />
                   </CCol>
                 </CFormGroup>
+                {/* <CFormGroup row>
+                  <CCol md="2">
+                    <CLabel htmlFor="alt">Sub Info:</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput onChange={handleInput} value={state.alt} id="alt" name="alt" placeholder="Enter logo sub info..." required />
+                  </CCol>
+                </CFormGroup> */}
                 <CFormGroup row >
                   <CCol md="2">
                     <CLabel >Select Social</CLabel>
@@ -320,12 +328,12 @@ const ExpertDetail = (props) => {
             <CCardFooter>
               <CCol>
               <CButton onClick={resetForm} type="reset" color="warning"><CIcon  content={freeSet.cilReload} /> Reset Form </CButton>
-                <CButton onClick={() => props.history.push(`/experts`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
+                <CButton onClick={() => props.history.push(`/companyprofile`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
               </CCol>
               <div className="card-header-actions">
-               <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update Expert" : "Add Expert"}</CButton>
+               <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update Profile" : "Add Profile"}</CButton>
                 {props.match.params.id &&
-                  <CButton onClick={() => setWarning(!danger)} type="button" color="danger" className="mr-1">Delete Expert <CIcon  content={freeSet.cilDelete}/></CButton>
+                  <CButton onClick={() => setWarning(!danger)} type="button" color="danger" className="mr-1">Delete Profile <CIcon  content={freeSet.cilDelete}/></CButton>
                 }
               </div>
               <CModal 
@@ -334,13 +342,13 @@ const ExpertDetail = (props) => {
               color="danger"
             >
               <CModalHeader closeButton>
-                <CModalTitle>Delete Expert</CModalTitle>
+                <CModalTitle>Delete Profile</CModalTitle>
               </CModalHeader>
               <CModalBody>
-                Are you sure deleting selected expert?
+                Are you sure deleting selected profile?
               </CModalBody>
               <CModalFooter>
-                <CButton color="danger" onClick={deleteExpertData}>Delete Expert</CButton>{' '}
+                <CButton color="danger" onClick={deleteProfileData}>Delete Profile</CButton>{' '}
                 <CButton color="secondary" onClick={() => setWarning(!danger)}>Cancel</CButton>
               </CModalFooter>
             </CModal>
@@ -355,13 +363,13 @@ const ExpertDetail = (props) => {
             onClose={setModal}
           >
             <CModalHeader closeButton>
-              <CModalTitle>Add Expert</CModalTitle>
+              <CModalTitle>Add Company Profile</CModalTitle>
             </CModalHeader>
             <CModalBody>
               <CAlert color={error ? "danger" : "success"}>
                 {error ? error : message}
               </CAlert>
-              {message ? "Redirecting experts page!" : ""}
+              {message ? "Redirecting Company Profile Page!" : ""}
             </CModalBody>
             <CModalFooter>
               <CButton
@@ -378,4 +386,4 @@ const ExpertDetail = (props) => {
   )
 }
 
-export default ExpertDetail
+export default CProfileDetail
