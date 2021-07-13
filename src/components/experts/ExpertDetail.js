@@ -125,7 +125,11 @@ const ExpertDetail = (props) => {
     event.preventDefault();
     const fd = new FormData();
     if (state.mediaId.name) {
+<<<<<<< HEAD
       fd.set("mediaId", state.mediaId, state.mediaId.title);
+=======
+      fd.set("mediaId", state.mediaId, state.mediaId.name);
+>>>>>>> 02c3fc03119804b9cff8b28134b427674d5b4321
     }
     fd.set("firstname", state.firstname);
     fd.set("lastname", state.lastname);

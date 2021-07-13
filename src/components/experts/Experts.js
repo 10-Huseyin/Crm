@@ -81,11 +81,8 @@ const handleExpert =(id)=>{
   })
 }
 
-
-
   //console.log(errorMsg)
   return (
-
     <>
       <CRow>
         <CCol xl={9}>
