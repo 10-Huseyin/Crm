@@ -36,7 +36,7 @@ export const getOneData = (data) => ({
 });
 export function getOneIntro(id) {
   return (dispatch) => {
-    return axios.get(`${API_BASE}companyprofile/${id}`)
+    return axios.get(`${API_BASE}companyintroduction/${id}`)
     .then((result) => {
       console.log(result.data.data);
       dispatch(getOneData(result.data.data))

@@ -307,7 +307,7 @@ const ExpertDetail = (props) => {
                           </CInputGroupPrepend>
                           <CInput disabled className="mb-0" type="text" id={`socialmedia-input${index}`} name="socialmedia-input" value={item.link} />
                           <CInputGroupAppend>
-                            <CButton onClick={() => deleteSocial(item.title)} type="button" color="primary">X</CButton>
+                            <CButton onClick={() => deleteSocial(item)} type="button" color="primary">X</CButton>
                           </CInputGroupAppend>
                         </CInputGroup>
                       )
