@@ -42,7 +42,7 @@ const initialState = {
   email:"",
   isActive: true,
   isDeleted: false,
-  mediaId: {}, //logo
+  logo:null, //logo
   // alt: "", //logo sub
   socialMediaId: [],
 };
@@ -63,13 +63,15 @@ const CProfileDetail = (props) => {
 //console.log(state)
   const [uploadMessage, setUploadMessage] = useState("");
   const [social, setSocial] = useState({ title: "", link: "" })
-  const [phone, setPhone] = useState({})
+  const [phone, setPhone] = useState("")
 
 
   const onChangePhoto = (e) => {
     console.log(e.target.files);
-    setState({ ...state, alt: e.target.files[0].name, mediaId: e.target.files[0] });
-    setUploadMessage("Logo Media selected succesfully!")
+    // setState({ ...state, 
+    //   // alt: e.target.files[0].name,
+    //    logo: e.target.files[0] });
+    // setUploadMessage("Logo Media selected succesfully!")
   };
 
   const handleInput = (e) => {
@@ -77,6 +79,10 @@ const CProfileDetail = (props) => {
   }
   const handleSwitch = (e) => {
     setState({ ...state, [e.target.name]: e.target.checked })
+  }
+  const handlePhone = (e) => {
+    setPhone(e.target.value)
+    
   }
 
   const selectSocial = (e) => {
@@ -131,9 +137,9 @@ const CProfileDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
-    if (state.mediaId.title) {
-      fd.set("mediaId", state.mediaId, state.mediaId.title);
-    }
+    // if (state.logo.title) {
+    //   fd.set("logo", state.logo, state.logo.title);
+    // }
     fd.set("name", state.name);
     fd.set("phones", state.phones);
     fd.set("address", state.address);
@@ -189,7 +195,7 @@ const CProfileDetail = (props) => {
       email:"",
       isActive: true,
       isDeleted: false,
-      mediaId: {}, //logo
+      logo:null, //logo
       // alt: "", //logo
       socialMediaId: [],
     })
@@ -281,12 +287,17 @@ const CProfileDetail = (props) => {
               
                 <CFormGroup row >
                   <CCol md="2">
-                    <CLabel >Add Phone Number</CLabel>
+                    <CLabel >Add Phone Number:</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                    
                     <CInputGroup>
-                      <CInput onChange={(e) => setPhone({ ...phone})} type="text" id="Phone-number" name="Phone-number" placeholder="Add Phone Number" value={phone} />
+                      <CInput
+                       onChange={handlePhone} 
+                       type="text" id="Phone-number" name="Phone-number" 
+                       placeholder="Add Phone Number" 
+                       value={phone} 
+                       />
                       <CInputGroupAppend>
                         <CButton onClick={addPhone} type="button" color="primary">Add Phone Number</CButton>
                       </CInputGroupAppend>
@@ -312,14 +323,6 @@ const CProfileDetail = (props) => {
                       )
                     })
                     )}
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="2">
-                    <CLabel htmlFor="phones">Phones</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.phones} id="phones" name="phones" placeholder="Phones" required />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row >
