@@ -42,7 +42,7 @@ const initialState = {
   email:"",
   isActive: true,
   isDeleted: false,
-  mediaId: {},
+  logo: {},
   alt: "", //logo sub
   socialMediaId: [],
 };
@@ -68,8 +68,8 @@ const CProfileDetail = (props) => {
 
   const onChangePhoto = (e) =>{
     console.log(e.target.files);
-    setState({ ...state, alt: e.target.files[0].name, mediaId: e.target.files[0] });
-    setUploadMessage("Media selected succesfully!")
+    setState({ ...state, alt: e.target.files[0].name, logo: e.target.files[0] });
+    setUploadMessage("Logo selected succesfully!")
   };
 
   const handleInput = (e) => {
@@ -135,11 +135,11 @@ const CProfileDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
-    if (state.mediaId.name) {
-      fd.set("mediaId", state.mediaId, state.mediaId.title);
+    if (state.logo.name) {
+      fd.set("logo", state.logo, state.logo.title);
     }
     fd.set("name", state.name);
-    fd.set("phones", state.phones);
+    fd.set("phones", JSON.stringify(state.phones));
     fd.set("address", state.address);
     fd.set("email", state.email);
     fd.set("isActive", state.isActive);
@@ -193,7 +193,7 @@ const CProfileDetail = (props) => {
       email:"",
       isActive: true,
       isDeleted: false,
-      mediaId: {},
+      logo: {},
       alt: "", //logo
       socialMediaId: [],
     })
@@ -274,7 +274,7 @@ const CProfileDetail = (props) => {
                   </CCol>
                   <CCol xs="12" md="9">
                     <CImg
-                      src={state.mediaId && (state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.mediaId.url )}
+                      src={state.logo && (state.logo.name ? URL.createObjectURL(state.logo) : state.logo.url )}
                       className="c-profile-img"
                       alt="profile-img"
                       />
