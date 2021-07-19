@@ -42,8 +42,8 @@ const initialState = {
   email:"",
   isActive: true,
   isDeleted: false,
-  logo:null, //logo
-  // alt: "", //logo sub
+  mediaId: {},
+  alt: "", //logo sub
   socialMediaId: [],
 };
 
@@ -54,7 +54,7 @@ const CProfileDetail = (props) => {
   const dispatch = useDispatch();
   const message = useSelector(state => state.message)
   const error = useSelector(state => state.error)
-  //const expertsData = useSelector(state => state.experts.expertList)
+
   
   const profileData = useSelector(state => state.companyProfile.profile)
   //console.log("burası en üst, expertdata ile state arasında")
@@ -66,12 +66,10 @@ const CProfileDetail = (props) => {
   const [phone, setPhone] = useState("")
 
 
-  const onChangePhoto = (e) => {
+  const onChangePhoto = (e) =>{
     console.log(e.target.files);
-    // setState({ ...state, 
-    //   // alt: e.target.files[0].name,
-    //    logo: e.target.files[0] });
-    // setUploadMessage("Logo Media selected succesfully!")
+    setState({ ...state, alt: e.target.files[0].name, mediaId: e.target.files[0] });
+    setUploadMessage("Media selected succesfully!")
   };
 
   const handleInput = (e) => {
@@ -137,16 +135,16 @@ const CProfileDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
-    // if (state.logo.title) {
-    //   fd.set("logo", state.logo, state.logo.title);
-    // }
+    if (state.mediaId.name) {
+      fd.set("mediaId", state.mediaId, state.mediaId.title);
+    }
     fd.set("name", state.name);
     fd.set("phones", state.phones);
     fd.set("address", state.address);
     fd.set("email", state.email);
     fd.set("isActive", state.isActive);
     fd.set("isDeleted", state.isDeleted);
-    // fd.set("alt", state.alt);
+    fd.set("alt", state.alt);
     fd.append("socialMediaId", JSON.stringify(state.socialMediaId))
 
 
@@ -195,13 +193,11 @@ const CProfileDetail = (props) => {
       email:"",
       isActive: true,
       isDeleted: false,
-      logo:null, //logo
-      // alt: "", //logo
+      mediaId: {},
+      alt: "", //logo
       socialMediaId: [],
     })
-    //setState(expert)  
-    // state.socialMediaId.splice(0, state.socialMediaId.length)
-    // setState({ ...state, socialMediaId: state.socialMediaId })
+
   }
 
   //console.log("return den hemen önce")
