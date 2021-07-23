@@ -34,15 +34,16 @@ import { addNewProfile, editProfileData, deleteProfile } from "../../actions/com
 
 const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 
+
 const initialState = {
   name: "",
-  phones: "",
+  phones: [],
   address: "",
   email:"",
   isActive: true,
   isDeleted: false,
-  mediaId: {}, //logo
-  // alt: "", //logo sub
+  logo: {},
+  alt: "", //logo sub
   socialMediaId: [],
 };
 
@@ -53,7 +54,7 @@ const CProfileDetail = (props) => {
   const dispatch = useDispatch();
   const message = useSelector(state => state.message)
   const error = useSelector(state => state.error)
-  //const expertsData = useSelector(state => state.experts.expertList)
+
   
   const profileData = useSelector(state => state.companyProfile.profile)
   //console.log("burası en üst, expertdata ile state arasında")
@@ -62,12 +63,13 @@ const CProfileDetail = (props) => {
 //console.log(state)
   const [uploadMessage, setUploadMessage] = useState("");
   const [social, setSocial] = useState({ title: "", link: "" })
+  const [phone, setPhone] = useState("")
 
 
-  const onChangePhoto = (e) => {
+  const onChangePhoto = (e) =>{
     console.log(e.target.files);
-    setState({ ...state, alt: e.target.files[0].name, mediaId: e.target.files[0] });
-    setUploadMessage("Logo Media selected succesfully!")
+    setState({ ...state, alt: e.target.files[0].name, logo: e.target.files[0] });
+    setUploadMessage("Logo selected succesfully!")
   };
 
   const handleInput = (e) => {
@@ -76,7 +78,10 @@ const CProfileDetail = (props) => {
   const handleSwitch = (e) => {
     setState({ ...state, [e.target.name]: e.target.checked })
   }
-
+  const handlePhone = (e) => {
+    setPhone(e.target.value)
+    
+  }
 
   const selectSocial = (e) => {
     //console.log(e.currentTarget)
@@ -110,20 +115,36 @@ const CProfileDetail = (props) => {
     let temp_socialMedia = state.socialMediaId.filter((item) => item.title !== title)
     setState({ ...state, socialMediaId: temp_socialMedia })
   }
+ 
+
+  const addPhone = () => {
+    if (!phone) {
+      alert("please add phone number");
+      return
+    }
+    
+    state.phones.push(phone)
+    setState({ ...state, phones: state.phones })
+    setPhone("")
+  }
+   const deletePhones = (title) => {
+    let temp_phones = state.phones.filter((item) => item !== title)
+    setState({ ...state, phones: temp_phones })
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
-    if (state.mediaId.name) {
-      fd.set("mediaId", state.mediaId, state.mediaId.title);
+    if (state.logo.name) {
+      fd.set("logo", state.logo, state.logo.title);
     }
     fd.set("name", state.name);
-    fd.set("phones", state.phones);
+    fd.set("phones", JSON.stringify(state.phones));
     fd.set("address", state.address);
     fd.set("email", state.email);
     fd.set("isActive", state.isActive);
     fd.set("isDeleted", state.isDeleted);
-    // fd.set("alt", state.alt);
+    fd.set("alt", state.alt);
     fd.append("socialMediaId", JSON.stringify(state.socialMediaId))
 
 
@@ -161,32 +182,28 @@ const CProfileDetail = (props) => {
     }, 2000);
   }
 
-
   function resetForm () {
     props.match.params.id?
     setState(profileData)
     :
     setState({
       name: "",
-      phones: "",
+      phones: [],
       address: "",
       email:"",
       isActive: true,
       isDeleted: false,
-      mediaId: {}, //logo
-      // alt: "", //logo
+      logo: {},
+      alt: "", //logo
       socialMediaId: [],
     })
-    //setState(expert)  
-    // state.socialMediaId.splice(0, state.socialMediaId.length)
-    // setState({ ...state, socialMediaId: state.socialMediaId })
-  }
 
+  }
 
   //console.log("return den hemen önce")
   //console.log(initialState);
   //console.log(expertData);
-  console.log(state, social,message, error);
+  console.log(state);
   //console.log(props.match.params.id )
   return (
     <CRow>
@@ -207,14 +224,7 @@ const CProfileDetail = (props) => {
                     <CInput onChange={handleInput} value={state.name} id="profilename" name="name" placeholder="Name" required />
                   </CCol>
                 </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="2">
-                    <CLabel htmlFor="phones">Phones</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.phones} id="phones" name="phones" placeholder="Phones" required />
-                  </CCol>
-                </CFormGroup>
+                
                 <CFormGroup row>
                   <CCol md="2">
                     <CLabel htmlFor="address">Address </CLabel>
@@ -264,20 +274,53 @@ const CProfileDetail = (props) => {
                   </CCol>
                   <CCol xs="12" md="9">
                     <CImg
-                      src={state.mediaId && (state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.mediaId.url )}
+                      src={state.logo && (state.logo.name ? URL.createObjectURL(state.logo) : state.logo.url )}
                       className="c-profile-img"
                       alt="profile-img"
                       />
                   </CCol>
                 </CFormGroup>
-                {/* <CFormGroup row>
+              
+                <CFormGroup row >
                   <CCol md="2">
-                    <CLabel htmlFor="alt">Sub Info:</CLabel>
+                    <CLabel >Add Phone Number:</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.alt} id="alt" name="alt" placeholder="Enter logo sub info..." required />
+                   
+                    <CInputGroup>
+                      <CInput
+                       onChange={handlePhone} 
+                       type="text" id="Phone-number" name="Phone-number" 
+                       placeholder="Add Phone Number" 
+                       value={phone} 
+                       />
+                      <CInputGroupAppend>
+                        <CButton onClick={addPhone} type="button" color="primary">Add Phone Number</CButton>
+                      </CInputGroupAppend>
+                    </CInputGroup>
                   </CCol>
-                </CFormGroup> */}
+                </CFormGroup>
+                <CFormGroup row>
+                  <CCol md="2">
+                    <CLabel htmlFor="phonenumber-input">Phone Numbers</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="6">
+                    {state.phones && (state.phones.map((item, index) => {
+                      return (
+                        <CInputGroup key={index} size="sm">
+                          <CInputGroupPrepend>
+                            <CInputGroupText><CIcon name={`cib-${item}`} /></CInputGroupText>
+                          </CInputGroupPrepend>
+                          <CInput disabled className="mb-0" type="text" id={`socialmedia-input${index}`} name="socialmedia-input" value={item} />
+                          <CInputGroupAppend>
+                            <CButton onClick={() => deletePhones(item)} type="button" color="primary">X</CButton>
+                          </CInputGroupAppend>
+                        </CInputGroup>
+                      )
+                    })
+                    )}
+                  </CCol>
+                </CFormGroup>
                 <CFormGroup row >
                   <CCol md="2">
                     <CLabel >Select Social</CLabel>
@@ -315,7 +358,7 @@ const CProfileDetail = (props) => {
                           </CInputGroupPrepend>
                           <CInput disabled className="mb-0" type="text" id={`socialmedia-input${index}`} name="socialmedia-input" value={item.link} />
                           <CInputGroupAppend>
-                            <CButton onClick={() => deleteSocial(item.title)} type="button" color="primary">X</CButton>
+                            <CButton onClick={() => deleteSocial(item)} type="button" color="primary">X</CButton>
                           </CInputGroupAppend>
                         </CInputGroup>
                       )

@@ -58,13 +58,13 @@ import { API_BASE } from "./api_base";
   });
 
   export function addNewProfile(state) {
-    console.log("add new profile => ",state);
+    console.log("add new Company Profile => ",state);
     return (dispatch) => {
       return axios
         .post(`${API_BASE}companyprofile`, state)
         .then((response)=>{
           console.log(response)
-          let msg = response.data.status === 200 ? (response.data.message || "Profile is added succesfully") : "Profile could not added!"
+          let msg = response.data.status === 200 ? (response.data.message || "Company Profile is added succesfully") : "Company Profile could not added!"
           setMessage(msg,dispatch)
           return response.data.status
         },
@@ -78,6 +78,7 @@ import { API_BASE } from "./api_base";
   
   export const removeData = (data) => ({
     type: DELETE_COMPANY_PROFILE,
+    payload: data,
     payload: data,
   });
   export function deleteProfile(id) {
