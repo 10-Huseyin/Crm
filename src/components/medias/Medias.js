@@ -163,7 +163,7 @@ const Medias = () => {
             return <CCol xs="12" sm="6" md="3">
               <CCard >
                 <CCardHeader>
-                  {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
+                  {item.title && (item.title.charAt(0).toUpperCase() + item.title.slice(1))}
                   <div className="card-header-actions">
                   <CBadge color={getBadge(item.isActive)}>
                       {getActive(item.isActive)}

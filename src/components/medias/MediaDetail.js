@@ -41,6 +41,7 @@ const initialState = {
 const MediaDetail = (props) => {
   const [modal, setModal] = useState(true)
   const [danger, setWarning] = useState(false)
+  const [info, setInfo] = useState(false)
 
   const dispatch = useDispatch();
   const message = useSelector(state => state.message)
@@ -190,8 +191,33 @@ const MediaDetail = (props) => {
                     <CImg
                       src={state.mediaId && state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.url }
                       className="c-expert-img"
-                      alt="expert-img"
+                      alt={state.alt ? state.alt : ""}
+                      onClick={() => setInfo(!info)} 
                       />
+                  </CCol>
+                  <CModal
+                show={info}
+                onClose={() => setInfo(!info)}
+                color="info"
+                className="modal-xl"
+              > 
+                <CModalHeader closeButton>
+                </CModalHeader>
+                <CModalBody>
+                <CImg
+                      src={state.mediaId && state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.url }
+                      className="c-media-img-lg"
+                      alt={state.alt ? state.alt : ""}
+                      />
+                </CModalBody>
+              </CModal>
+                </CFormGroup>
+                <CFormGroup row>
+                  <CCol md="2">
+                    <CLabel htmlFor="mediaalt">Media Alt</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput value={state.alt} id="mediaalt" name="alt" placeholder="Media Alt" onChange={handleInput}/>
                   </CCol>
                 </CFormGroup>
               </CForm>

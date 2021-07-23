@@ -12,6 +12,12 @@ export const ADD_NEW_ROLE='ADD_NEW_ROLE'
 export const DELETE_ROLE='DELETE_ROLE'
 export const EDIT_ROLE='EDIT_ROLE'
 
+export const GET_PRODUCT='GET_PRODUCT'
+export const GET_PRODUCTS='GET_PRODUCTS'
+export const ADD_NEW_PRODUCT='ADD_NEW_PRODUCT'
+export const DELETE_PRODUCT='DELETE_PRODUCT'
+export const EDIT_PRODUCT='EDIT_PRODUCT'
+
 export const GET_USER='GET_USER'
 export const GET_USERS='GET_USERS'
 export const ADD_NEW_USER='ADD_NEW_USER'

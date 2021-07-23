@@ -9,6 +9,7 @@ import roles from "./roles.reducer";
 import socialMedias from "./socialMedia.reducer";
 import medias from "./media.reducer";
 import experts from "./experts.reducer";
+import products from "./products.reducer";
 import pagination from "./pagination.reducer";
 import companyIntro from "./company.reducer";
 import companyProfile from "./companyProfile.reducer";
@@ -27,4 +28,5 @@ export default combineReducers({
   socialMedias,
   medias,
   companyProfile,
+  products,
 });

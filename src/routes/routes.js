@@ -42,8 +42,10 @@ const Roles = React.lazy(() => import('../components/roles/Roles'));
 const RoleDetail = React.lazy(() => import('../components/roles/RoleDetail'));
 const SocialMedias = React.lazy(() => import('../components/socialMedias/socialMedia'));
 const SocialMediaDetail = React.lazy(() => import('../components/socialMedias/socialMediaDetail'));
-const Medias = React.lazy(() => import('../components/medias/Media'));
+const Medias = React.lazy(() => import('../components/medias/Medias'));
 const MediaDetail = React.lazy(() => import('../components/medias/MediaDetail'));
+const Products = React.lazy(() => import('../components/products/Products'));
+const ProductDetail = React.lazy(() => import('../components/products/ProductDetail'));
 const Experts = React.lazy(() => import('../components/experts/Experts'));
 //const ExpertAdd = React.lazy(() => import('../components/experts/ExpertAdd_eski'));
 const ExpertDetail = React.lazy(() => import('../components/experts/ExpertDetail'));
@@ -103,6 +105,9 @@ const routes = [
   { path: '/experts', exact: true,  name: 'Experts', component: Experts },
   { path: '/experts/add', exact: true,  name: 'Expert Add', component: ExpertDetail },
   { path: '/experts/:id', exact: true, name: 'Expert Details', component: ExpertDetail },
+  { path: '/products', exact: true,  name: 'Products', component: Products },
+  { path: '/products/add', exact: true,  name: 'Product Add', component: ProductDetail },
+  { path: '/products/:id', exact: true, name: 'Product Details', component: ProductDetail },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/add', exact: true, name: 'User Add', component: UserDetail },
   { path: '/users/:id', exact: true, name: 'User Details', component: UserDetail },

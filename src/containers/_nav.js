@@ -44,6 +44,12 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Products',
+    to: '/products',
+    icon: 'cil-people'
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Roles',
     to: '/roles',
     icon: <CIcon content={freeSet.cilFingerprint} customClasses="c-sidebar-nav-icon"/>
