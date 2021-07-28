@@ -45,6 +45,7 @@ const initialState = {
   logo: {},
   alt: "", //logo sub
   socialMediaId: [],
+  copyright:"",
 };
 
 const CProfileDetail = (props) => {
@@ -145,6 +146,7 @@ const CProfileDetail = (props) => {
     fd.set("isActive", state.isActive);
     fd.set("isDeleted", state.isDeleted);
     fd.set("alt", state.alt);
+    fd.set("copyright", state.copyright);
     fd.append("socialMediaId", JSON.stringify(state.socialMediaId))
 
 
@@ -196,6 +198,7 @@ const CProfileDetail = (props) => {
       logo: {},
       alt: "", //logo
       socialMediaId: [],
+      copyright:"",
     })
 
   }
@@ -364,6 +367,14 @@ const CProfileDetail = (props) => {
                       )
                     })
                     )}
+                  </CCol>
+                </CFormGroup>
+                <CFormGroup row>
+                  <CCol md="2">
+                    <CLabel htmlFor="copyright">Copyright </CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput onChange={handleInput} value={state.copyright} id="copyright" name="copyright" placeholder="Copyright" required />
                   </CCol>
                 </CFormGroup>
               </CForm>

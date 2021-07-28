@@ -90,9 +90,9 @@ const handleProfile =(id)=>{
             <CCardHeader>
               Company Profiles <small className="text-muted"> Table</small>
               <div className="card-header-actions">
-                <CButton type="button"
+                {/* <CButton type="button"
                   onClick={() => history.push(`/companyprofile/add`)}
-                  block color="primary">Add Company Profile</CButton>
+                  block color="primary">Add Company Profile</CButton> */}
               </div>
             </CCardHeader>
             {errorMsg && <CAlert color="warning">
