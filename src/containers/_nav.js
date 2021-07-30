@@ -26,6 +26,12 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Menüs',
+    to: '/menus',
+    icon: 'cil-calculator'
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Company Intro',
     to: '/companyintroduction',
     icon: 'cil-graph'

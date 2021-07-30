@@ -12,7 +12,7 @@ import {
   CPagination,
   CAlert,
 } from '@coreui/react'
-import { getProfiles, getOneProfile } from 'src/actions/companyProfile.action'
+import { getMenüs, getOneMenü } from 'src/actions/menu.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {
@@ -36,14 +36,14 @@ const getActive = status => {
   }
 }
 
-const CProfiles = () => {
+const Menus = () => {
   const history = useHistory()
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
   const [errorMsg, seterrorMsg] = useState("")
   const paginationData = useSelector(state => state.pagination)
-  const profilesData = useSelector(state => state.companyProfile.profileList)
+  const menüsData = useSelector(state => state.menus.menuList)
   const dispatch = useDispatch()
 
   const perPage = 10;
@@ -51,12 +51,12 @@ const CProfiles = () => {
   //console.log(pageNum)
 
   const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/companyprofile?page=${newPage}`);
-    dispatch(getProfiles(perPage, newPage))
+    currentPage !== newPage && history.push(`/menus?page=${newPage}`);
+    dispatch(getMenüs(perPage, newPage))
   }
 
   useEffect(() => {
-    dispatch(getProfiles(perPage, page))
+    dispatch(getMenüs(perPage, page))
       .then(res => {
         if (res !== 200) {
           seterrorMsg("An error occured when data is triggered!")
@@ -72,27 +72,27 @@ const CProfiles = () => {
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
-const handleProfile =(id)=>{
-  dispatch(getOneProfile(id))
+const handleMenu =(id)=>{
+  dispatch(getOneMenü(id))
   .then(res => {
     if (res === 200) {
-      history.push(`/companyprofile/${id}`)
+      history.push(`/menus/${id}`)
     }
   })
 }
 
+  //console.log(errorMsg)
   return (
-
     <>
       <CRow>
         <CCol xl={9}>
           <CCard>
             <CCardHeader>
-              Company Profiles <small className="text-muted"> Table</small>
+              Menus <small className="text-muted"> Table</small>
               <div className="card-header-actions">
-                {/* <CButton type="button"
-                  onClick={() => history.push(`/companyprofile/add`)}
-                  block color="primary">Add Company Profile</CButton> */}
+                <CButton type="button"
+                  onClick={() => history.push(`/menus/add`)}
+                  block color="primary">Add Menü</CButton>
               </div>
             </CCardHeader>
             {errorMsg && <CAlert color="warning">
@@ -100,17 +100,17 @@ const handleProfile =(id)=>{
             </CAlert>}
             <CCardBody>
               <CDataTable
-                items={profilesData}
+                items={menüsData}
                 fields={[
-                  { key: 'name', _classes: 'font-weight-bold' },
-                  "address", 'email', "isActive",
+                  { key: 'text', _classes: 'font-weight-bold' },
+                  "link", 'order', "parentId",
                 ]}
                 hover
                 striped
                 //itemsPerPage={perPage}
                 //activePage={page}
                 clickableRows
-                onRowClick={item => handleProfile(item._id)}
+                onRowClick={item => handleMenu(item._id)}
                 scopedSlots={{
                   "isActive":
                     (item) => (
@@ -139,4 +139,4 @@ const handleProfile =(id)=>{
   )
 }
 
-export default CProfiles
+export default Menus
