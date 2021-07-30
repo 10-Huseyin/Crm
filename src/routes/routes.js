@@ -61,6 +61,8 @@ const CompanyIntroDetail = React.lazy(() => import('../components/CompanyIntrodu
 const CProfiles = React.lazy(() => import('../components/companyProfile/CProfiles'));
 const CProfileDetail = React.lazy(() => import('../components/companyProfile/CProfileDetail'));
 
+const Menus = React.lazy(() => import('../components/menus/Menus'));
+const MenuDetail = React.lazy(() => import('../components/menus/MenuDetail'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -132,6 +134,10 @@ const routes = [
   { path: '/companyprofile', exact: true,  name: 'Company Profile', component: CProfiles },
   { path: '/companyprofile/add', exact: true,  name: 'Company Profile Add', component: CProfileDetail },
   { path: '/companyprofile/:id', exact: true, name: 'Company Profile Details', component: CProfileDetail },
+
+  { path: '/menus', exact: true,  name: 'Menüs', component: Menus },
+  { path: '/menus/add', exact: true,  name: 'Menu Add', component: MenuDetail },
+  { path: '/menus/:id', exact: true, name: 'Menu Details', component: MenuDetail },
 ];
 
 export default routes;

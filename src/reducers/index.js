@@ -13,7 +13,7 @@ import products from "./products.reducer";
 import pagination from "./pagination.reducer";
 import companyIntro from "./company.reducer";
 import companyProfile from "./companyProfile.reducer";
-
+import menus from "./menus.reducer";
 export default combineReducers({
   auth,
   message,
@@ -29,4 +29,5 @@ export default combineReducers({
   medias,
   companyProfile,
   products,
+  menus,
 });
