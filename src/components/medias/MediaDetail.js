@@ -190,7 +190,7 @@ const MediaDetail = (props) => {
                   <CCol xs="12" md="9">
                     <CImg
                       src={state.mediaId && state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.url }
-                      className="c-expert-img"
+                      className="c-media-img"
                       alt={state.alt ? state.alt : ""}
                       onClick={() => setInfo(!info)} 
                       />

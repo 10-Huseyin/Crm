@@ -63,8 +63,8 @@
   }
 
   
-  .c-media-img{
-    width: 100%;
+  .c-media-img, .c-small-img{
+    width: auto;
     height: 180px;
     //display: block;
     //position: absolute;

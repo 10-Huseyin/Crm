@@ -98,7 +98,7 @@ const ProductDetail = (props) => {
     fd.set("content", state.content);
     fd.set("buttonText", state.buttonText);
     fd.set("order", state.order);
-    fd.set("alt", state.alt);
+    fd.set("alt", state.alt || state.mediaId.alt || "");
     fd.set("isActive", state.isActive);
     fd.set("isBlog", state.isBlog);
     fd.set("isHomePage", state.isHomePage);
@@ -282,7 +282,7 @@ const ProductDetail = (props) => {
                     <CLabel htmlFor="productMediaAlt">Media Alt</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.alt} id="productMediaAlt" name="alt" placeholder="Product Media Alt" />
+                    <CInput onChange={handleInput} value={state.alt || state.mediaId.alt || ""} id="productMediaAlt" name="alt" placeholder="Product Media Alt" />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
@@ -292,7 +292,7 @@ const ProductDetail = (props) => {
                   <CCol xs="12" md="9">
                     <CImg
                       src={state.mediaId && (state.mediaId.name ? URL.createObjectURL(state.mediaId) : state.mediaId.url )}
-                      className="c-product-img"
+                      className="c-small-img"
                       alt="product-img"
                       />
                   </CCol>
