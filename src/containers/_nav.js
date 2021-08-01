@@ -16,17 +16,7 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Charts',
-    to: '/charts',
-    icon: 'cil-chart-pie',
-    badge: {
-      color: 'warning',
-      text: 'OLD',
-    }
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Menüs',
+    name: 'Menus',
     to: '/menus',
     icon: 'cil-calculator'
   },
@@ -34,14 +24,16 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'Company Intro',
     to: '/companyintroduction',
-    icon: 'cil-graph'
+    icon: <CIcon content={freeSet.cilLan} customClasses="c-sidebar-nav-icon"/>
   },
+
   {
     _tag: 'CSidebarNavItem',
     name: 'Company Profile',
     to: '/companyprofile',
-    icon: 'cil-pencil'
+    icon: <CIcon content={freeSet.cilInstitution} customClasses="c-sidebar-nav-icon"/>
   },
+  
   {
     _tag: 'CSidebarNavItem',
     name: 'Users',
@@ -52,7 +44,7 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'Products',
     to: '/products',
-    icon: 'cil-people'
+    icon: <CIcon content={freeSet.cilFactory} customClasses="c-sidebar-nav-icon"/>
   },
   {
     _tag: 'CSidebarNavItem',
@@ -70,25 +62,25 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'IconBox',
     to: '/iconbox',
-    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
+    icon: <CIcon content={freeSet.cil3d} customClasses="c-sidebar-nav-icon"/>
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Messages',
     to: '/messages',
-    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
+    icon: <CIcon content={freeSet.cilEnvelopeLetter} customClasses="c-sidebar-nav-icon"/>
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Sections',
     to: '/sections',
-    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
+    icon: <CIcon content={freeSet.cilTextStrike} customClasses="c-sidebar-nav-icon"/>
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Subscribers',
     to: '/subscribers',
-    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
+    icon: <CIcon content={freeSet.cilPin} customClasses="c-sidebar-nav-icon"/>
   },
   { 
     _tag: 'CSidebarNavItem',
@@ -106,15 +98,7 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'Sliders',
     to: '/slider',
-    icon: 'cil-layers'
-  },
-  {
-    _tag: 'CSidebarNavDivider',
-    className: 'm-2'
-  },
-  {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Components'],
+    icon: <CIcon content={freeSet.cilLibrary} customClasses="c-sidebar-nav-icon"/>
   },
   {
     _tag: 'CSidebarNavDropdown',
@@ -145,6 +129,14 @@ const _nav =  [
       },
     ],
   },
+  {
+    _tag: 'CSidebarNavDivider',
+    className: 'm-2'
+  },
+  {
+    _tag: 'CSidebarNavTitle',
+    _children: ['CoreUI Components'],
+  },  
   {
     _tag: 'CSidebarNavDropdown',
     name: 'Base',
@@ -300,6 +292,16 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Charts',
+    to: '/charts',
+    icon: 'cil-chart-pie',
+    badge: {
+      color: 'warning',
+      text: 'OLD',
+    }
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Colors',
     to: '/theme/colors',
     icon: 'cil-drop',
@@ -338,55 +340,7 @@ const _nav =  [
       }
     ],
   },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Disabled',
-    icon: 'cil-ban',
-    badge: {
-      color: 'secondary',
-      text: 'NEW',
-    },
-    addLinkClass: 'c-disabled',
-    'disabled': true
-  },
-  {
-    _tag: 'CSidebarNavDropdown',
-    name: 'Labels',
-    route: '',
-    icon: 'cil-cursor',
-    _children: [
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Label danger',
-        to: '',
-        icon: {
-          name: 'cil-star',
-          className: 'text-danger'
-        },
-        label: true
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Label info',
-        to: '',
-        icon: {
-          name: 'cil-star',
-          className: 'text-info'
-        },
-        label: true
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Label warning',
-        to: '',
-        icon: {
-          name: 'cil-star',
-          className: 'text-warning'
-        },
-        label: true
-      }
-    ],
-  }
+  
 ]
 
 export default _nav

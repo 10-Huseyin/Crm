@@ -30,7 +30,7 @@ import '@coreui/icons/css/all.css';
 import { freeSet } from '@coreui/icons'
 
 import { useDispatch, useSelector } from "react-redux";
-import { addNewMenü, editMenüData, deleteMenü } from "../../actions/menu.action";
+import { addNewMenu, editMenuData, deleteMenu } from "../../actions/menu.action";
 
 const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 
@@ -53,10 +53,10 @@ const MenuDetail = (props) => {
   const error = useSelector(state => state.error)
 
   
-  const menüData = useSelector(state => state.menus.menu)
+  const menuData = useSelector(state => state.menus.menu)
 
-  const menü = menüData && props.match.params.id ? menüData : initialState;
-  const [state, setState] = useState(menü)
+  const menu = menuData && props.match.params.id ? menuData : initialState;
+  const [state, setState] = useState(menu)
 //console.log(state)
   const [uploadMessage, setUploadMessage] = useState("");
  
@@ -82,14 +82,14 @@ const MenuDetail = (props) => {
  
 
     props.match.params.id ?
-      dispatch(editMenüData(fd, props.match.params.id))
+      dispatch(editMenuData(fd, props.match.params.id))
         .then(res => {
           if (res === 200) {
             getDefaults()
           }
         })
       :
-      dispatch(addNewMenü(fd))
+      dispatch(addNewMenu(fd))
         .then(res => {
           if (res === 200) {
             getDefaults()
@@ -97,9 +97,9 @@ const MenuDetail = (props) => {
         })
   };
 
-  const deleteMenüData = (event) => {
+  const deleteMenuData = (event) => {
     event.preventDefault();
-    dispatch(deleteMenü(state._id))
+    dispatch(deleteMenu(state._id))
       .then(res => {
         if (res === 200) {
           getDefaults()
@@ -118,7 +118,7 @@ const MenuDetail = (props) => {
 
   function resetForm () {
     props.match.params.id?
-    setState(menüData)
+    setState(menuData)
     :
     setState({
       text: "",
@@ -134,7 +134,7 @@ const MenuDetail = (props) => {
 
   //console.log("return den hemen önce")
   //console.log(initialState);
-  console.log(menüData);
+  console.log(menuData);
   console.log(state,message, error);
   console.log(props.match.params.id )
   return (
@@ -150,10 +150,10 @@ const MenuDetail = (props) => {
               <CForm onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="parentId">Parent Menü Item gonna be selected items</CLabel>
+                    <CLabel htmlFor="parentId">Parent Menu Item gonna be selected items</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.parentId} id="parentId" name="firstname" placeholder="Parent Menü Item gonna be selected items" required />
+                    <CInput onChange={handleInput} value={state.parentId} id="parentId" name="firstname" placeholder="Parent Menu Item gonna be selected items" required />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
@@ -166,7 +166,7 @@ const MenuDetail = (props) => {
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="link"> Menü Item Link </CLabel>
+                    <CLabel htmlFor="link"> Menu Item Link </CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CInput onChange={handleInput} value={state.link} id="link" name="link" placeholder="link" required />
@@ -215,9 +215,9 @@ const MenuDetail = (props) => {
                 <CButton onClick={() => props.history.push(`/menus`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
               </CCol>
               <div className="card-header-actions">
-               <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update Menü" : "Add Menü"}</CButton>
+               <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update Menu" : "Add Menu"}</CButton>
                 {props.match.params.id &&
-                  <CButton onClick={() => setWarning(!danger)} type="button" color="danger" className="mr-1">Delete Menü <CIcon  content={freeSet.cilDelete}/></CButton>
+                  <CButton onClick={() => setWarning(!danger)} type="button" color="danger" className="mr-1">Delete Menu <CIcon  content={freeSet.cilDelete}/></CButton>
                 }
               </div>
               <CModal 
@@ -226,13 +226,13 @@ const MenuDetail = (props) => {
               color="danger"
             >
               <CModalHeader closeButton>
-                <CModalTitle>Delete Menü</CModalTitle>
+                <CModalTitle>Delete Menu</CModalTitle>
               </CModalHeader>
               <CModalBody>
-                Are you sure deleting selected menü item?
+                Are you sure deleting selected menu item?
               </CModalBody>
               <CModalFooter>
-                <CButton color="danger" onClick={deleteMenüData}>Delete Menü</CButton>{' '}
+                <CButton color="danger" onClick={deleteMenuData}>Delete Menu</CButton>{' '}
                 <CButton color="secondary" onClick={() => setWarning(!danger)}>Cancel</CButton>
               </CModalFooter>
             </CModal>
@@ -247,13 +247,13 @@ const MenuDetail = (props) => {
             onClose={setModal}
           >
             <CModalHeader closeButton>
-              <CModalTitle>Add Menü</CModalTitle>
+              <CModalTitle>Add Menu</CModalTitle>
             </CModalHeader>
             <CModalBody>
               <CAlert color={error ? "danger" : "success"}>
                 {error ? error : message}
               </CAlert>
-              {message ? "Redirecting menüs page!" : ""}
+              {message ? "Redirecting menus page!" : ""}
             </CModalBody>
             <CModalFooter>
               <CButton

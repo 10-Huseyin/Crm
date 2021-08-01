@@ -14,10 +14,10 @@ import { API_BASE } from "./api_base";
     type: GET_MENUS,
     payload: data,
   });
-  export function getMenüs(limit, page) {
+  export function getMenus(limit, page) {
     //console.log(limit, page)
     return (dispatch) => {
-      return axios.get(`${API_BASE}menüs?limit=${limit}&page=${page}`)
+      return axios.get(`${API_BASE}menus?limit=${limit}&page=${page}`)
       .then((result) => {
         //console.log(result);
         dispatch(setPagination({page:result.data.pages, total:result.data.total}));
@@ -36,9 +36,9 @@ import { API_BASE } from "./api_base";
     type: GET_MENU,
     payload: data,
   });
-  export function getOneMenü(id) {
+  export function getOneMenu(id) {
     return (dispatch) => {
-      return axios.get(`${API_BASE}menüs/${id}`)
+      return axios.get(`${API_BASE}menus/${id}`)
       .then((result) => {
         console.log(result.data.data);
         dispatch(getOneData(result.data.data))
@@ -57,14 +57,14 @@ import { API_BASE } from "./api_base";
     payload: data,
   });
 
-  export function addNewMenü(state) {
-    console.log("add new menü => ",state);
+  export function addNewMenu(state) {
+    console.log("add new menu => ",state);
     return (dispatch) => {
       return axios
-        .post(`${API_BASE}menüs`, state)
+        .post(`${API_BASE}menus`, state)
         .then((response)=>{
           console.log(response)
-          let msg = response.data.status === 200 ? (response.data.message || "Menü is added succesfully") : "Menü could not added!"
+          let msg = response.data.status === 200 ? (response.data.message || "Menu is added succesfully") : "Menu could not added!"
           setMessage(msg,dispatch)
           return response.data.status
         },
@@ -80,13 +80,13 @@ import { API_BASE } from "./api_base";
     type: DELETE_MENU,
     payload: data,
   });
-  export function deleteMenü(id) {
+  export function deleteMenu(id) {
     return (dispatch) => {
       return axios
-        .delete(`${API_BASE}menüs/${id}`, {})
+        .delete(`${API_BASE}menus/${id}`, {})
         .then((response)=>{
           console.log(response)
-          let msg = response.data.status === 200 ? (response.data.message || "Menü is deleted succesfully") : "Menü is not deleted!"
+          let msg = response.data.status === 200 ? (response.data.message || "Menu is deleted succesfully") : "Menu is not deleted!"
           setMessage(msg,dispatch)
           return response.data.status
         }
@@ -103,14 +103,14 @@ import { API_BASE } from "./api_base";
     type: EDIT_MENU,
     payload: data,
   });
-  export function editMenüData(state, id) {
+  export function editMenuData(state, id) {
     console.log(state,id);
     return (dispatch) => {
       return axios
-        .put(`${API_BASE}menüs/${id}`, state)
+        .put(`${API_BASE}menus/${id}`, state)
         .then((response)=>{
           console.log(response)
-          let msg = response.data.status === 200 ? (response.data.message || "Menü is updated succesfully") : "Menü could not updated!"
+          let msg = response.data.status === 200 ? (response.data.message || "Menu is updated succesfully") : "Menu could not updated!"
           setMessage(msg,dispatch)
           return response.data.status;
         },
@@ -127,7 +127,7 @@ import { API_BASE } from "./api_base";
     return (dispatch) => {
       dispatch({
           type:TOGGLE_VISIBLE,
-          payload:axios.put(`${API_BASE}menüs/${id}`,{})
+          payload:axios.put(`${API_BASE}menus/${id}`,{})
           .then(res=>console.log(res))
       })
     }

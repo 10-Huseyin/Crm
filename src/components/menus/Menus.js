@@ -12,7 +12,7 @@ import {
   CPagination,
   CAlert,
 } from '@coreui/react'
-import { getMenüs, getOneMenü } from 'src/actions/menu.action'
+import { getMenus, getOneMenu } from 'src/actions/menu.action'
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = status => {
@@ -43,7 +43,7 @@ const Menus = () => {
   const [page, setPage] = useState(currentPage)
   const [errorMsg, seterrorMsg] = useState("")
   const paginationData = useSelector(state => state.pagination)
-  const menüsData = useSelector(state => state.menus.menuList)
+  const menusData = useSelector(state => state.menus.menuList)
   const dispatch = useDispatch()
 
   const perPage = 10;
@@ -52,11 +52,11 @@ const Menus = () => {
 
   const pageChange = newPage => {
     currentPage !== newPage && history.push(`/menus?page=${newPage}`);
-    dispatch(getMenüs(perPage, newPage))
+    dispatch(getMenus(perPage, newPage))
   }
 
   useEffect(() => {
-    dispatch(getMenüs(perPage, page))
+    dispatch(getMenus(perPage, page))
       .then(res => {
         if (res !== 200) {
           seterrorMsg("An error occured when data is triggered!")
@@ -73,7 +73,7 @@ const Menus = () => {
   }, [currentPage, page])
 
 const handleMenu =(id)=>{
-  dispatch(getOneMenü(id))
+  dispatch(getOneMenu(id))
   .then(res => {
     if (res === 200) {
       history.push(`/menus/${id}`)
@@ -92,7 +92,7 @@ const handleMenu =(id)=>{
               <div className="card-header-actions">
                 <CButton type="button"
                   onClick={() => history.push(`/menus/add`)}
-                  block color="primary">Add Menü</CButton>
+                  block color="primary">Add Menu</CButton>
               </div>
             </CCardHeader>
             {errorMsg && <CAlert color="warning">
@@ -100,10 +100,10 @@ const handleMenu =(id)=>{
             </CAlert>}
             <CCardBody>
               <CDataTable
-                items={menüsData}
+                items={menusData}
                 fields={[
                   { key: 'text', _classes: 'font-weight-bold' },
-                  "link", 'order', "parentId",
+                  "link", 'order', "iconClassName", "isActive",
                 ]}
                 hover
                 striped

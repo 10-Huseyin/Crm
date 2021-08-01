@@ -154,7 +154,7 @@ const routes = [
   { path: '/companyprofile/add', exact: true,  name: 'Company Profile Add', component: CProfileDetail },
   { path: '/companyprofile/:id', exact: true, name: 'Company Profile Details', component: CProfileDetail },
 
-  { path: '/menus', exact: true,  name: 'Menüs', component: Menus },
+  { path: '/menus', exact: true,  name: 'Menus', component: Menus },
   { path: '/menus/add', exact: true,  name: 'Menu Add', component: MenuDetail },
   { path: '/menus/:id', exact: true, name: 'Menu Details', component: MenuDetail },
 ];

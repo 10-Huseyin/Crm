@@ -197,7 +197,7 @@ const UserDetail = (props) => {
                     <CLabel>Add New Photo</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInputFile onChange={onChangePhoto} custom id="custom-file-input" required={props.match.params.id ? false : true} />
+                    <CInputFile onChange={onChangePhoto} accept="image/*" custom id="custom-file-input" required={props.match.params.id ? false : true} />
                     <CLabel htmlFor="custom-file-input" variant="custom-file">
                       {state.alt ? state.alt : "Choose file..."}
                     </CLabel>
