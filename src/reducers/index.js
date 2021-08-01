@@ -9,6 +9,10 @@ import roles from "./roles.reducer";
 import socialMedias from "./socialMedia.reducer";
 import medias from "./media.reducer";
 import experts from "./experts.reducer";
+import iconBoxes from "./iconBox.reducer";
+import messages from "./messages.reducer";
+import sections from "./sections.reducer";
+import subscribers from "./subscriber.reducer";
 import products from "./products.reducer";
 import pagination from "./pagination.reducer";
 import companyIntro from "./company.reducer";
@@ -22,6 +26,10 @@ export default combineReducers({
   slider,
   users,
   experts,
+  iconBoxes,
+  messages,
+  sections,
+  subscribers,
   companyIntro,
   pagination,
   roles,

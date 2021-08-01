@@ -66,6 +66,30 @@ const _nav =  [
     to: '/experts',
     icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
   },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'IconBox',
+    to: '/iconbox',
+    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Messages',
+    to: '/messages',
+    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Sections',
+    to: '/sections',
+    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Subscribers',
+    to: '/subscribers',
+    icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
+  },
   { 
     _tag: 'CSidebarNavItem',
     name: 'Social Media',
