@@ -18,6 +18,8 @@ import pagination from "./pagination.reducer";
 import companyIntro from "./company.reducer";
 import companyProfile from "./companyProfile.reducer";
 import menus from "./menus.reducer";
+import blogs from "./blogs.reducer";
+import comments from "./comments.reducer";
 export default combineReducers({
   auth,
   message,
@@ -38,4 +40,6 @@ export default combineReducers({
   companyProfile,
   products,
   menus,
+  blogs,
+  comments,
 });

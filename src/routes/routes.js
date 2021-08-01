@@ -70,6 +70,10 @@ const CProfileDetail = React.lazy(() => import('../components/companyProfile/CPr
 
 const Menus = React.lazy(() => import('../components/menus/Menus'));
 const MenuDetail = React.lazy(() => import('../components/menus/MenuDetail'));
+const Blogs = React.lazy(() => import('../components/blogs/Blogs'));
+const BlogDetail = React.lazy(() => import('../components/blogs/BlogDetail'));
+const Comments = React.lazy(() => import('../components/comments/Comments'));
+const CommentDetail = React.lazy(() => import('../components/comments/CommentDetail'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -157,6 +161,12 @@ const routes = [
   { path: '/menus', exact: true,  name: 'Menus', component: Menus },
   { path: '/menus/add', exact: true,  name: 'Menu Add', component: MenuDetail },
   { path: '/menus/:id', exact: true, name: 'Menu Details', component: MenuDetail },
+  { path: '/blogs', exact: true,  name: 'Blogs', component: Blogs },
+  { path: '/blogs/add', exact: true,  name: 'Blog Add', component: BlogDetail },
+  { path: '/blogs/:id', exact: true, name: 'Blog Details', component: BlogDetail },
+  { path: '/comments', exact: true,  name: 'Comments', component: Comments },
+  { path: '/comments/add', exact: true,  name: 'Comment Add', component: CommentDetail },
+  { path: '/comments/:id', exact: true, name: 'Comment Details', component: CommentDetail },
 ];
 
 export default routes;

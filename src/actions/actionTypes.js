@@ -84,6 +84,18 @@ export const ADD_NEW_MENU='ADD_NEW_MENU'
 export const DELETE_MENU='DELETE_MENU'
 export const EDIT_MENU='EDIT_MENU'
 
+export const GET_BLOGS='GET_BLOGS'
+export const GET_BLOG='GET_BLOG'
+export const ADD_NEW_BLOG='ADD_NEW_BLOG'
+export const DELETE_BLOG='DELETE_BLOG'
+export const EDIT_BLOG='EDIT_BLOG'
+
+export const GET_COMMENTS='GET_COMMENTS'
+export const GET_COMMENT='GET_COMMENT'
+export const ADD_NEW_COMMENT='ADD_NEW_COMMENT'
+export const DELETE_COMMENT='DELETE_COMMENT'
+export const EDIT_COMMENT='EDIT_COMMENT'
+
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";

@@ -22,6 +22,18 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Blogs',
+    to: '/blogs',
+    icon: <CIcon content={freeSet.cilCoffee} customClasses="c-sidebar-nav-icon"/>
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Comments',
+    to: '/comments',
+    icon: <CIcon content={freeSet.cilCommentBubble} customClasses="c-sidebar-nav-icon"/>
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Company Intro',
     to: '/companyintroduction',
     icon: <CIcon content={freeSet.cilLan} customClasses="c-sidebar-nav-icon"/>
