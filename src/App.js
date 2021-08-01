@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import AutVerify from './components/AutVerify';
 import './scss/style.scss';
 
 const loading = (
@@ -34,7 +35,6 @@ class App extends Component {
   }
 }
 
-
   render() {
     //console.log(this.props.auth)
     console.log(this.props)
@@ -60,6 +60,7 @@ class App extends Component {
             {/* <Route exact path="/" name="Home" render={props => <TheLayout {...props}/>} /> */}
             </Switch>
           </React.Suspense>
+          <AutVerify/>
       </HashRouter>
     );
   }
