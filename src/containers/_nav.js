@@ -139,6 +139,11 @@ const _nav =  [
         name: 'Error 500',
         to: '/500',
       },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Editor',
+        to: '/editor',
+      },
     ],
   },
   {

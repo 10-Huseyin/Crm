@@ -8,6 +8,9 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^29.0.0",
+    "@ckeditor/ckeditor5-inspector": "^2.2.2",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
     "@coreui/chartjs": "^3.0.0",
     "@coreui/coreui": "^3.4.0",
     "@coreui/icons": "^2.0.1",
