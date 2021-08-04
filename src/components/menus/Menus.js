@@ -54,7 +54,7 @@ const Menus = () => {
     currentPage !== newPage && history.push(`/menus?page=${newPage}`);
     dispatch(getMenus(perPage, newPage))
   }
-
+  console.log(menusData);
   useEffect(() => {
     dispatch(getMenus(perPage, page))
       .then(res => {
