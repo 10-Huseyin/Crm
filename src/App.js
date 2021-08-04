@@ -21,12 +21,12 @@ const Page500 = React.lazy(() => import('./pages/page500/Page500'));
 
 class App extends Component {
   
-  checkAuth = (nextState, replace) => {
-   const {isLoggedIn} = this.props.auth
-   if (!isLoggedIn) {
-     replace('/')
-    }
-  }
+  // checkAuth = (nextState, replace) => {
+  //  const {isLoggedIn} = this.props.auth
+  //  if (!isLoggedIn) {
+  //    replace('/')
+  //   }
+  // }
   
   checkSkipAuth = (nextState, replace) => {
   const {isLoggedIn} = this.props.auth
