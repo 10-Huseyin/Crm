@@ -161,6 +161,7 @@ const routes = [
   { path: '/menus', exact: true,  name: 'Menus', component: Menus },
   { path: '/menus/add', exact: true,  name: 'Menu Add', component: MenuDetail },
   { path: '/menus/:id', exact: true, name: 'Menu Details', component: MenuDetail },
+  
   { path: '/blogs', exact: true,  name: 'Blogs', component: Blogs },
   { path: '/blogs/add', exact: true,  name: 'Blog Add', component: BlogDetail },
   { path: '/blogs/:id', exact: true, name: 'Blog Details', component: BlogDetail },

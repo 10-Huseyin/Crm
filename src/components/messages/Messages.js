@@ -103,7 +103,7 @@ const handleMessage =(id)=>{
                 items={messagesData}
                 fields={[
                   { key: 'firstname', _classes: 'font-weight-bold' },
-                   "lastname", "subject", "content", "email", "phoneNumber", "isRead",
+                   "lastname", "subject", , "email","isRead",
                 ]}
                 hover
                 striped
