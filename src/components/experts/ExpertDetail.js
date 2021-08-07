@@ -193,7 +193,7 @@ const ExpertDetail = (props) => {
 
   //console.log("return den hemen önce")
   //console.log(initialState);
-  //console.log(expertData);
+  console.log(expertData);
   console.log(state, social, message, error);
   //console.log(props.match.params.id )
   return (

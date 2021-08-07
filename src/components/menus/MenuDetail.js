@@ -14,6 +14,7 @@ import {
   CInputGroupText,
   CInput,
   CInputFile,
+  CSelect,
   CSwitch,
   CLabel,
   CModal,
@@ -30,9 +31,8 @@ import '@coreui/icons/css/all.css';
 import { freeSet } from '@coreui/icons'
 
 import { useDispatch, useSelector } from "react-redux";
-import { addNewMenu, editMenuData, deleteMenu } from "../../actions/menu.action";
+import { getMenus,addNewMenu, editMenuData, deleteMenu } from "../../actions/menu.action";
 
-const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 
 const initialState = {
   text: "",
@@ -43,7 +43,7 @@ const initialState = {
   iconClassName: "",
   order: "",
 };
-
+const menuType = ["Main Menu", "Sub Menu"]
 const MenuDetail = (props) => {
   const [modal, setModal] = useState(true)
   const [danger, setWarning] = useState(false)
@@ -54,12 +54,12 @@ const MenuDetail = (props) => {
 
   
   const menuData = useSelector(state => state.menus.menu)
-
+  const menusData = useSelector(state => state.menus.menuList)
   const menu = menuData && props.match.params.id ? menuData : initialState;
   const [state, setState] = useState(menu)
-//console.log(state)
+console.log(menuData)
   const [uploadMessage, setUploadMessage] = useState("");
- 
+  const [selectedMenuType, setselectedMenuType] = useState("Main Menu")
 
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
@@ -67,11 +67,12 @@ const MenuDetail = (props) => {
   const handleSwitch = (e) => {
     setState({ ...state, [e.target.name]: e.target.checked })
   }
-
+  console.log(selectedMenuType);
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
     
+    state.parentId=(selectedMenuType==="Main Menu") ? null:
     fd.set("parentId", state.parentId);
     fd.set("text", state.text);
     fd.set("link", state.link);
@@ -130,13 +131,18 @@ const MenuDetail = (props) => {
       order: "",
     })
    }
-
+   const handleMenuType =(menuType)=>{
+   if(menuType==="Sub Menu"){
+     //menus data ya göre bir state olustur ve main menuleri oraya çekip sselecte aktar...
+   }
+   
+  }
 
   //console.log("return den hemen önce")
   //console.log(initialState);
-  console.log(menuData);
+  console.log(menusData);
   console.log(state,message, error);
-  console.log(props.match.params.id )
+  //console.log(props.match.params.id )
   return (
     <CRow>
       <CCol xs="12" md="12">
@@ -148,14 +154,38 @@ const MenuDetail = (props) => {
             </CCardHeader>
             <CCardBody>
               <CForm onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
+                
                 <CFormGroup row>
-                  <CCol md="2">
-                    <CLabel htmlFor="parentId">Parent Menu Item gonna be selected items</CLabel>
+                <CCol md="2">
+                    <CLabel htmlFor="parentId">Select Menu Type:</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.parentId} id="parentId" name="firstname" placeholder="Parent Menu Item gonna be selected items" required />
-                  </CCol>
+                
+                  <CSelect custom name="roleId" id="select-role" 
+                  onChange={e => {setselectedMenuType(e.target.value);handleMenuType(e.target.value)}}
+                  >
+              <option key={0}>Select Menu Type...</option>
+                      {menuType.map((item, index) => <option key={index+1} value={item}>{item}</option>)}
+                    </CSelect>
+                      </CCol>
                 </CFormGroup>
+                  {selectedMenuType==="Sub Menu" ? 
+                  <CFormGroup row>
+                  <CCol md="2">
+                      <CLabel htmlFor="childId">Select Main Menu</CLabel>
+                    </CCol>
+                    <CCol xs="12" md="9">
+                  
+                    <CSelect custom name="roleId" id="select-role" 
+                    // onChange={e => {setselectedMenuType(e.target.value);handleMenuType(e.target.value)}}
+                    >
+                <option key={0}>Select Main Menu To Add SubMenu...</option>
+                        {menuType.map((item, index) => <option key={index+1} value={item}>{item}</option>)}
+                      </CSelect>
+                        </CCol>
+                  </CFormGroup>
+                  :null                
+                  }
                 <CFormGroup row>
                   <CCol md="2">
                     <CLabel htmlFor="text">Text</CLabel>

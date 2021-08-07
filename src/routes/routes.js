@@ -50,8 +50,10 @@ const Products = React.lazy(() => import('../components/products/Products'));
 const ProductDetail = React.lazy(() => import('../components/products/ProductDetail'));
 const Experts = React.lazy(() => import('../components/experts/Experts'));
 const ExpertDetail = React.lazy(() => import('../components/experts/ExpertDetail'));
+
 const IconBox = React.lazy(() => import('../components/iconBox/IconBox')); 
 const IconBoxDetail = React.lazy(() => import('../components/iconBox/IconBoxDetail'));
+
 const Messages = React.lazy(() => import('../components/messages/Messages'));
 const MessageDetail = React.lazy(() => import('../components/messages/MessageDetail'));
 const Sections = React.lazy(() => import('../components/sections/Sections'));
@@ -120,9 +122,11 @@ const routes = [
   { path: '/experts', exact: true,  name: 'Experts', component: Experts },
   { path: '/experts/add', exact: true,  name: 'Expert Add', component: ExpertDetail },
   { path: '/experts/:id', exact: true, name: 'Expert Details', component: ExpertDetail },
+
   { path: '/iconBox', exact: true,  name: 'IconBox', component: IconBox },
   { path: '/iconBox/add', exact: true,  name: 'IconBox Add', component: IconBoxDetail },
   { path: '/iconBox/:id', exact: true, name: 'IconBox Details', component: IconBoxDetail },
+  
   { path: '/messages', exact: true,  name: 'Messages', component: Messages },
   { path: '/messages/add', exact: true,  name: 'Message Add', component: MessageDetail },
   { path: '/messages/:id', exact: true, name: 'Message Details', component: MessageDetail },
@@ -166,6 +170,7 @@ const routes = [
   { path: '/menus', exact: true,  name: 'Menus', component: Menus },
   { path: '/menus/add', exact: true,  name: 'Menu Add', component: MenuDetail },
   { path: '/menus/:id', exact: true, name: 'Menu Details', component: MenuDetail },
+  
   { path: '/blogs', exact: true,  name: 'Blogs', component: Blogs },
   { path: '/blogs/add', exact: true,  name: 'Blog Add', component: BlogDetail },
   { path: '/blogs/:id', exact: true, name: 'Blog Details', component: BlogDetail },
