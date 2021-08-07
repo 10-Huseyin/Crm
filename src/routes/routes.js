@@ -25,7 +25,6 @@ const ButtonDropdowns = React.lazy(() => import('../components/buttons/button-dr
 const ButtonGroups = React.lazy(() => import('../components/buttons/button-groups/ButtonGroups'));
 const Buttons = React.lazy(() => import('../components/buttons/buttons/Buttons'));
 const Charts = React.lazy(() => import('../components/charts/Charts'));
-const Editor = React.lazy(() => import('../components/Editor'));
 //const Stats = React.lazy(() => import('../components/charts/Stats'));
 const Dashboard = React.lazy(() => import('../components/dashboard/Dashboard'));
 const CoreUIIcons = React.lazy(() => import('../components/icons/coreui-icons/CoreUIIcons'));
@@ -41,6 +40,8 @@ const Users = React.lazy(() => import('../components/users/Users'));
 const UserDetail = React.lazy(() => import('../components/users/UserDetail'));
 const Roles = React.lazy(() => import('../components/roles/Roles'));
 const RoleDetail = React.lazy(() => import('../components/roles/RoleDetail'));
+const StaticPages = React.lazy(() => import('../components/staticPages/StaticPages'));
+const StaticPageDetail = React.lazy(() => import('../components/staticPages/StaticPageDetail'));
 const SocialMedias = React.lazy(() => import('../components/socialMedias/socialMedia'));
 const SocialMediaDetail = React.lazy(() => import('../components/socialMedias/socialMediaDetail'));
 const Medias = React.lazy(() => import('../components/medias/Medias'));
@@ -105,7 +106,6 @@ const routes = [
   { path: '/buttons/button-groups', name: 'Button Groups', component: ButtonGroups },
   { path: '/buttons/brand-buttons', name: 'Brand Buttons', component: BrandButtons },
   { path: '/charts', name: 'Charts', component: Charts },
-  { path: '/editor', name: 'Editor', component: Editor },
   // { path: '/stats', name: 'Stats', component: Stats },
   { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
@@ -141,6 +141,9 @@ const routes = [
   { path: '/roles', exact: true,  name: 'Roles', component: Roles },
   { path: '/roles/add', exact: true, name: 'Role Add', component: RoleDetail },
   { path: '/roles/:id', exact: true, name: 'Role Details', component: RoleDetail },
+  { path: '/staticPages', exact: true,  name: 'StaticPages', component: StaticPages },
+  { path: '/staticPages/add', exact: true, name: 'StaticPage Add', component: StaticPageDetail },
+  { path: '/staticPages/:id', exact: true, name: 'StaticPage Details', component: StaticPageDetail },
   { path: '/socialMedias', exact: true,  name: 'SocialMedias', component: SocialMedias },
   { path: '/socialMedias/add', exact: true, name: 'SocialMedia Add', component: SocialMediaDetail },
   { path: '/socialMedias/:id', exact: true, name: 'SocialMedia Details', component: SocialMediaDetail },

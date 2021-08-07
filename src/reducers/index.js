@@ -5,6 +5,7 @@ import error from "./error.reducer";
 import sidebar from "./sidebar.reducer";
 import slider from "./slider.reducer";
 import users from "./users.reducer";
+import staticPages from "./staticPages.reducer";
 import roles from "./roles.reducer";
 import socialMedias from "./socialMedia.reducer";
 import medias from "./media.reducer";
@@ -35,6 +36,7 @@ export default combineReducers({
   companyIntro,
   pagination,
   roles,
+  staticPages,
   socialMedias,
   medias,
   companyProfile,

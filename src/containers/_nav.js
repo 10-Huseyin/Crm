@@ -66,6 +66,12 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'StaticPages',
+    to: '/staticPages',
+    icon: <CIcon content={freeSet.cilFingerprint} customClasses="c-sidebar-nav-icon"/>
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Experts',
     to: '/experts',
     icon: <CIcon content={freeSet.cilContact} customClasses="c-sidebar-nav-icon"/>
@@ -138,12 +144,7 @@ const _nav =  [
         _tag: 'CSidebarNavItem',
         name: 'Error 500',
         to: '/500',
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Editor',
-        to: '/editor',
-      },
+      }
     ],
   },
   {
