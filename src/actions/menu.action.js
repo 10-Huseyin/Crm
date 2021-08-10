@@ -37,10 +37,11 @@ import { API_BASE } from "./api_base";
     payload: data,
   });
   export function getOneMenu(id) {
+    console.log(id);
     return (dispatch) => {
       return axios.get(`${API_BASE}menus/${id}`)
       .then((result) => {
-        console.log(result.data.data);
+        console.log(result);
         dispatch(getOneData(result.data.data))
         return result.data.status;
       },

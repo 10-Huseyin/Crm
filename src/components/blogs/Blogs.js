@@ -103,7 +103,7 @@ const handleBlog =(id)=>{
                 items={blogsData}
                 fields={[
                   { key: 'title', _classes: 'font-weight-bold' },
-                   "content", "isActive", 
+                   "content", "isActive","userId" 
                 ]}
                 hover
                 striped

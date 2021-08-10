@@ -40,7 +40,7 @@ import { API_BASE } from "./api_base";
     return (dispatch) => {
       return axios.get(`${API_BASE}experts/${id}`)
       .then((result) => {
-        console.log(result.data.data);
+        console.log(result);
         dispatch(getOneData(result.data.data))
         return result.data.status;
       },
