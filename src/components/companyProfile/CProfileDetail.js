@@ -23,7 +23,8 @@ import {
   CModalFooter,
   CAlert,
   CRow,
-  CImg
+  CImg,
+  CTextarea
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
 import '@coreui/icons/css/all.css';
@@ -46,6 +47,7 @@ const initialState = {
   alt: "", //logo sub
   socialMediaId: [],
   copyright:"",
+  googlemap_iframe:"",
 };
 
 const CProfileDetail = (props) => {
@@ -147,6 +149,8 @@ const CProfileDetail = (props) => {
     fd.set("isDeleted", state.isDeleted);
     fd.set("alt", state.alt);
     fd.set("copyright", state.copyright);
+    fd.set("googlemap_iframe", state.googlemap_iframe);
+
     fd.append("socialMediaId", JSON.stringify(state.socialMediaId))
 
 
@@ -199,6 +203,7 @@ const CProfileDetail = (props) => {
       alt: "", //logo
       socialMediaId: [],
       copyright:"",
+      googlemap_iframe:"",
     })
 
   }
@@ -367,6 +372,18 @@ const CProfileDetail = (props) => {
                       )
                     })
                     )}
+                  </CCol>
+                </CFormGroup>
+                <CFormGroup row>
+                  <CCol md="2">
+                    <CLabel htmlFor="googlemap_iframe">Google Map Iframe:</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CTextarea onChange={handleInput} value={state.googlemap_iframe} id="googlemap_iframe" 
+                    name="googlemap_iframe"
+                    rows="7"
+                    placeholder="Please choose your address on google maps and get the iframe code and add it here... " 
+                    required />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>

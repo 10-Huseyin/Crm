@@ -55,6 +55,8 @@ const Blogs = () => {
     dispatch(getBlogs(perPage, newPage))
   }
 
+  
+
   useEffect(() => {
     dispatch(getBlogs(perPage, page))
       .then(res => {
@@ -62,6 +64,7 @@ const Blogs = () => {
           seterrorMsg("An error occured when data is triggered!")
         } else if (res === 200) {
           seterrorMsg("");
+       
         }
 
         setTimeout(() => {
@@ -101,9 +104,10 @@ const handleBlog =(id)=>{
             <CCardBody>
               <CDataTable
                 items={blogsData}
+               
                 fields={[
                   { key: 'title', _classes: 'font-weight-bold' },
-                   "content", "isActive","userId" 
+                   "content", "isActive"
                 ]}
                 hover
                 striped

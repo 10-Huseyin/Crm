@@ -60,7 +60,7 @@ const BlogDetail = (props) => {
   const [uploadMessage, setUploadMessage] = useState("");
 
   const userId = useSelector(state => state.auth.user.id)
-  console.log(userId);
+ 
 
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })

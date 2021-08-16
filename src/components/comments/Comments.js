@@ -44,11 +44,13 @@ const Comments = () => {
   const [errorMsg, seterrorMsg] = useState("")
   const paginationData = useSelector(state => state.pagination)
   const commentsData = useSelector(state => state.comments.commentList)
+  console.log(commentsData);
   const dispatch = useDispatch()
 
   const perPage = 10;
   const pageNum = paginationData ? paginationData.page : 1;
   //console.log(pageNum)
+
 
   const pageChange = newPage => {
     currentPage !== newPage && history.push(`/comments?page=${newPage}`);

@@ -23,28 +23,28 @@ import {
   CModalFooter,
   CAlert,
   CRow,
-  CImg
+  CImg,
+  CTextarea
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react';
 import '@coreui/icons/css/all.css';
 import { freeSet } from '@coreui/icons'
 
 import { useDispatch, useSelector } from "react-redux";
-import { addNewMenu, editMenuData, deleteMenu } from "../../actions/menu.action";
+import { addNewComment, editCommentData, deleteComment } from "../../actions/comment.action";
 
-const socialMedia = ["twitter", "linkedin", "flickr", "tumblr", "xing", "github", "stackoverflow", "youtube", "dribbble", "instagram", "pinterest", "vk", "yahoo", "behance", "reddit", "vimeo"]
 
 const initialState = {
-  text: "",
-  parentId: "",
-  link: "",
+  userId: "",
+  title: "",
+  content: "",
   isActive: true,
   isDeleted: false,
-  iconClassName: "",
-  order: "",
+  reasonToBlock: "",
+
 };
 
-const MenuDetail = (props) => {
+const CommentDetail = (props) => {
   const [modal, setModal] = useState(true)
   const [danger, setWarning] = useState(false)
 
@@ -53,13 +53,16 @@ const MenuDetail = (props) => {
   const error = useSelector(state => state.error)
 
   
-  const menuData = useSelector(state => state.menus.menu)
+  const commentData = useSelector(state => state.comments.comment)
+ console.log(commentData);
+  const comment = commentData && props.match.params.id ? commentData : initialState;
 
-  const menu = menuData && props.match.params.id ? menuData : initialState;
-  const [state, setState] = useState(menu)
+  const [state, setState] = useState(comment)
 //console.log(state)
   const [uploadMessage, setUploadMessage] = useState("");
- 
+  const userId = useSelector(state => state.auth.user.id)
+  console.log(userId);
+
 
   const handleInput = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
@@ -72,24 +75,24 @@ const MenuDetail = (props) => {
     event.preventDefault();
     const fd = new FormData();
     
-    fd.set("parentId", state.parentId);
-    fd.set("text", state.text);
-    fd.set("link", state.link);
+    fd.set("userId", userId);
+    fd.set("title", state.title);
+    fd.set("content", state.content);
     fd.set("isActive", state.isActive);
     fd.set("isDeleted", state.isDeleted);
-    fd.set("iconClassName", state.iconClassName); 
-    fd.set("order", state.order);
+    fd.set("reasonToBlock", state.reasonToBlock); 
+ 
  
 
     props.match.params.id ?
-      dispatch(editMenuData(fd, props.match.params.id))
+      dispatch(editCommentData(fd, props.match.params.id))
         .then(res => {
           if (res === 200) {
             getDefaults()
           }
         })
       :
-      dispatch(addNewMenu(fd))
+      dispatch(addNewComment(fd))
         .then(res => {
           if (res === 200) {
             getDefaults()
@@ -97,9 +100,9 @@ const MenuDetail = (props) => {
         })
   };
 
-  const deleteMenuData = (event) => {
+  const deleteCommentData = (event) => {
     event.preventDefault();
-    dispatch(deleteMenu(state._id))
+    dispatch(deleteComment(state._id))
       .then(res => {
         if (res === 200) {
           getDefaults()
@@ -111,32 +114,25 @@ const MenuDetail = (props) => {
     setWarning(!danger)
     setTimeout(() => {
       setModal(false)
-      props.history.push("/menus");
+      props.history.push("/comments");
     }, 2000);
   }
 
 
   function resetForm () {
     props.match.params.id?
-    setState(menuData)
+    setState(commentData)
     :
     setState({
-      text: "",
-      parentId: "",
-      link: "",
+      userId: "",
+      title: "",
+      content: "",
       isActive: true,
       isDeleted: false,
-      iconClassName: "",
-      order: "",
+      reasonToBlock: "",
     })
    }
 
-
-  //console.log("return den hemen önce")
-  //console.log(initialState);
-  console.log(menuData);
-  console.log(state,message, error);
-  console.log(props.match.params.id )
   return (
     <CRow>
       <CCol xs="12" md="12">
@@ -144,54 +140,37 @@ const MenuDetail = (props) => {
           state &&
           <CCard>
             <CCardHeader>
-              {props.match.params.id ? "MENU DETAIL FORM" : "ADD NEW MENU"}
+              {props.match.params.id ? "COMMENT DETAIL FORM" : "ADD NEW COMMENT"}
             </CCardHeader>
             <CCardBody>
               <CForm onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
-                <CFormGroup row>
+               <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="parentId">Parent Menu Item gonna be selected items</CLabel>
+                    <CLabel htmlFor="text">Title</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.parentId} id="parentId" name="firstname" placeholder="Parent Menu Item gonna be selected items" required />
+                    <CInput onChange={handleInput} value={state.title} id="title" name="title" placeholder="Title" required />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="text">Text</CLabel>
+                    <CLabel htmlFor="content">Content</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.text} id="text" name="text" placeholder="Text" required />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="2">
-                    <CLabel htmlFor="link"> Menu Item Link </CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.link} id="link" name="link" placeholder="link" required />
+                    <CTextarea onChange={handleInput} value={state.content} id="content" name="content" placeholder="Content" required />
                   </CCol>
                 </CFormGroup>
                 
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="iconClassName">Icon ClassName</CLabel>
+                    <CLabel htmlFor="reasonToBlock">Reason To Block</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.iconClassName} id="iconClassName" name="iconClassName" placeholder="iconClassName" required />
+                    <CInput onChange={handleInput} value={state.reasonToBlock} id="reasonToBlock" name="reasonToBlock" placeholder="Reason To Block" required />
                   </CCol>
                 </CFormGroup>
                 
-                <CFormGroup row>
-                  <CCol md="2">
-                    <CLabel htmlFor="order">Order</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput onChange={handleInput} value={state.order} id="order" name="order" placeholder="order" required />
-                  </CCol>
-                </CFormGroup>
-
-                <CFormGroup row>
+                               <CFormGroup row>
                   <CCol md="2">
                     <CLabel>Status</CLabel>
                   </CCol>
@@ -212,12 +191,12 @@ const MenuDetail = (props) => {
             <CCardFooter>
               <CCol>
               <CButton onClick={resetForm} type="reset" color="warning"><CIcon  content={freeSet.cilReload} /> Reset Form </CButton>
-                <CButton onClick={() => props.history.push(`/menus`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
+                <CButton onClick={() => props.history.push(`/comments`)} type="button" color="secondary"><CIcon name="cil-ban" /> Cancel / Back</CButton>
               </CCol>
               <div className="card-header-actions">
-               <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update Menu" : "Add Menu"}</CButton>
+               <CButton onClick={handleSubmit} type="submit" color="primary"><CIcon name="cil-check" /> {props.match.params.id ? "Update comment" : "Add Comment"}</CButton>
                 {props.match.params.id &&
-                  <CButton onClick={() => setWarning(!danger)} type="button" color="danger" className="mr-1">Delete Menu <CIcon  content={freeSet.cilDelete}/></CButton>
+                  <CButton onClick={() => setWarning(!danger)} type="button" color="danger" className="mr-1">Delete Comment <CIcon  content={freeSet.cilDelete}/></CButton>
                 }
               </div>
               <CModal 
@@ -226,13 +205,13 @@ const MenuDetail = (props) => {
               color="danger"
             >
               <CModalHeader closeButton>
-                <CModalTitle>Delete Menu</CModalTitle>
+                <CModalTitle>Delete Comment</CModalTitle>
               </CModalHeader>
               <CModalBody>
-                Are you sure deleting selected menu item?
+                Are you sure deleting selected comment item?
               </CModalBody>
               <CModalFooter>
-                <CButton color="danger" onClick={deleteMenuData}>Delete Menu</CButton>{' '}
+                <CButton color="danger" onClick={deleteCommentData}>Delete Comment</CButton>{' '}
                 <CButton color="secondary" onClick={() => setWarning(!danger)}>Cancel</CButton>
               </CModalFooter>
             </CModal>
@@ -247,13 +226,13 @@ const MenuDetail = (props) => {
             onClose={setModal}
           >
             <CModalHeader closeButton>
-              <CModalTitle>Add Menu</CModalTitle>
+              <CModalTitle>Add Comment</CModalTitle>
             </CModalHeader>
             <CModalBody>
               <CAlert color={error ? "danger" : "success"}>
                 {error ? error : message}
               </CAlert>
-              {message ? "Redirecting menus page!" : ""}
+              {message ? "Redirecting Comments page!" : ""}
             </CModalBody>
             <CModalFooter>
               <CButton
@@ -270,4 +249,4 @@ const MenuDetail = (props) => {
   )
 }
 
-export default MenuDetail
+export default CommentDetail
