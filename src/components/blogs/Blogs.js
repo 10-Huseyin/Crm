@@ -45,7 +45,7 @@ const Blogs = () => {
   const paginationData = useSelector(state => state.pagination)
   const blogsData = useSelector(state => state.blogs.blogList)
   const dispatch = useDispatch()
-
+  console.log(blogsData);
   const perPage = 10;
   const pageNum = paginationData ? paginationData.page : 1;
   //console.log(pageNum)

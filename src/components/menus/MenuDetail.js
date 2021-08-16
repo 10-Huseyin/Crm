@@ -178,7 +178,7 @@ console.log(menuData)
                   {selectedMenuType==="Sub Menu" ? 
                   <CFormGroup row>
                   <CCol md="2">
-                      <CLabel htmlFor="childId">Select Main Menu</CLabel>
+                      <CLabel htmlFor="childId">Select Main Menu:</CLabel>
                     </CCol>
                     <CCol xs="12" md="9">
                   
@@ -198,7 +198,7 @@ console.log(menuData)
                   }
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="text">Text</CLabel>
+                    <CLabel htmlFor="text">Text:</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CInput onChange={handleInput} value={state.text} id="text" name="text" placeholder="Text" required />
@@ -206,7 +206,7 @@ console.log(menuData)
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="link"> Menu Item Link </CLabel>
+                    <CLabel htmlFor="link"> Menu Item Link:</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CInput onChange={handleInput} value={state.link} id="link" name="link" placeholder="link" required />
@@ -215,7 +215,7 @@ console.log(menuData)
                 
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="iconClassName">Icon ClassName</CLabel>
+                    <CLabel htmlFor="iconClassName">Icon ClassName:</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CInput onChange={handleInput} value={state.iconClassName} id="iconClassName" name="iconClassName" placeholder="iconClassName" required />
@@ -224,7 +224,7 @@ console.log(menuData)
                 
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel htmlFor="order">Order</CLabel>
+                    <CLabel htmlFor="order">Order:</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CInput onChange={handleInput} value={state.order} id="order" name="order" placeholder="order" required />
@@ -233,7 +233,7 @@ console.log(menuData)
 
                 <CFormGroup row>
                   <CCol md="2">
-                    <CLabel>Status</CLabel>
+                    <CLabel>Status:</CLabel>
                   </CCol>
                   <CCol sm="9">
                     <CSwitch
