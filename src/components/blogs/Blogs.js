@@ -45,7 +45,7 @@ const Blogs = () => {
   const paginationData = useSelector(state => state.pagination)
   const blogsData = useSelector(state => state.blogs.blogList)
   const dispatch = useDispatch()
-
+  console.log(blogsData);
   const perPage = 10;
   const pageNum = paginationData ? paginationData.page : 1;
   //console.log(pageNum)
@@ -55,6 +55,8 @@ const Blogs = () => {
     dispatch(getBlogs(perPage, newPage))
   }
 
+  
+
   useEffect(() => {
     dispatch(getBlogs(perPage, page))
       .then(res => {
@@ -62,6 +64,7 @@ const Blogs = () => {
           seterrorMsg("An error occured when data is triggered!")
         } else if (res === 200) {
           seterrorMsg("");
+       
         }
 
         setTimeout(() => {
@@ -101,9 +104,10 @@ const handleBlog =(id)=>{
             <CCardBody>
               <CDataTable
                 items={blogsData}
+               
                 fields={[
                   { key: 'title', _classes: 'font-weight-bold' },
-                   "content", "isActive", 
+                   "content", "isActive"
                 ]}
                 hover
                 striped

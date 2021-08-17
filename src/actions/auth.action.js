@@ -66,6 +66,7 @@ import { API_BASE } from "./api_base";
         if (response.data.token) {
           //burda tüm verileri locale atmısız, sadece token için login durumunu göndersek ?
           localStorage.setItem("user", JSON.stringify(response.data));
+          
           dispatch({
             type: LOGIN_SUCCESS,
             payload: { user: response.data }
