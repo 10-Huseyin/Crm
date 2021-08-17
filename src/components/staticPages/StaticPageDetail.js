@@ -83,24 +83,38 @@ const config = {
     items: [
       'heading',
       '|',
+      'fontSize',
+      'fontFamily',
+      '|',
       'bold',
       'underline',
       'italic',
+      'strikethrough',
+      'subscript',
+      'superscript',
       'link',
-      'bulletedList',
+      '|',
+      'alignment',
+      '|',
       'numberedList',
+      'bulletedList',
+      'todoList',
       '|',
+      'indent',
+      'outdent',
+      '|',
+      'link',
       'blockQuote',
-      'insertTable',
-      '|',
       'imageUpload',
+      'insertTable',
+      'mediaEmbed',
+      '|',
       'undo',
-      'redo'
+      'redo',
+      'placeholder',
     ]
   },
-  table: {
-    contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
-  }
+  
 }
 
 

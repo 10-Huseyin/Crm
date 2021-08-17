@@ -22,9 +22,9 @@ function AutVerify() {
         
         if (user) {
           const {exp} = parseJwt(user.token);
-          console.log(new Date(exp*1000))  //expire time
+          //console.log(new Date(exp*1000))  //expire time
           if ((exp*1000) < Date.now()) {
-            console.log("logout action")
+            //console.log("logout action")
             dispatch(logout());
           }
         }
