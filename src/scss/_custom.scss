@@ -78,6 +78,14 @@
     //position: absolute;
   }
 
+
+  header a {
+    color: rgba(255, 255, 255, 0.8)
+  }
+  header a:hover {
+    color: rgba(255, 255, 255, 1)
+  }
+
   @media (min-width: 992px){
 
     .modal-lg, .modal-xl {

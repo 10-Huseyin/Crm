@@ -9,7 +9,7 @@ const loading = (
     <div className="sk-spinner sk-spinner-pulse"></div>
   </div>
 )
-
+ 
 // Containers
 const TheLayout = React.lazy(() => import('./containers/TheLayout'));
 

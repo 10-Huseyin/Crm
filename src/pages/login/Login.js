@@ -25,7 +25,7 @@ import {
   CModalFooter
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-
+ 
 const required = (value) => {
   if (!value) {
     return (
