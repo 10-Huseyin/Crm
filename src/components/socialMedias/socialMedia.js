@@ -100,6 +100,10 @@ const SocialMedias = () => {
             </CAlert>}
             <CCardBody>
           <CDataTable
+           columnFilter
+           tableFilter
+           hover
+           sorter
             items={socialMediasData}
             fields={[
               { key: 'title', _classes: 'font-weight-bold' },

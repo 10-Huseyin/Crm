@@ -103,6 +103,10 @@ const handleBlog =(id)=>{
             </CAlert>}
             <CCardBody>
               <CDataTable
+               columnFilter
+               tableFilter
+               hover
+               sorter
                 items={blogsData}
                
                 fields={[

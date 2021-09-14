@@ -100,6 +100,10 @@ const handleMessage =(id)=>{
             </CAlert>}
             <CCardBody>
               <CDataTable
+               columnFilter
+               tableFilter
+               hover
+               sorter
                 items={messagesData}
                 fields={[
                   { key: 'firstname', _classes: 'font-weight-bold' },

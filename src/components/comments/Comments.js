@@ -102,6 +102,10 @@ const handleComment =(id)=>{
             </CAlert>}
             <CCardBody>
               <CDataTable
+               columnFilter
+               tableFilter
+              
+               sorter
                 items={commentsData}
                 fields={[
                   { key: 'title', _classes: 'font-weight-bold' },

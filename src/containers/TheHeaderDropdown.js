@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from 'react-router-dom'
+import { getOneUser } from 'src/actions/user.action'
+
 
 import {
   CBadge,
@@ -15,8 +17,21 @@ import { logout } from 'src/actions/auth.action';
 
 const TheHeaderDropdown = () => {
   const history = useHistory()
+  const userInfoLocal = JSON.parse(localStorage.getItem("user"));
+ console.log(userInfoLocal);
+ const dispatch = useDispatch();
+  const userData = useSelector(state => state.users.user)
+  const [state, setState] = useState(userData)
+ console.log(state.mediaId.url);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getOneUser(userInfoLocal.id))
+      .then(res => {
+        console.log(res);
+      })
+  },[])
+ 
+ 
 
   const handleLogout = () => {
       dispatch(logout())
@@ -32,7 +47,8 @@ const TheHeaderDropdown = () => {
       <CDropdownToggle className="c-header-nav-link" caret={false}>
         <div className="c-avatar">
           <CImg
-            src={'avatars/6.jpg'}
+            src={`${state.mediaId.url}`}
+          
             className="c-avatar-img"
             alt="admin@bootstrapmaster.com"
           />

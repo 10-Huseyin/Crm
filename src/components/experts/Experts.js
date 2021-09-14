@@ -105,7 +105,10 @@ const handleExpert =(id)=>{
                   { key: 'firstname', _classes: 'font-weight-bold' },
                   "lastname", 'expertise', "isActive",
                 ]}
+                columnFilter
+                tableFilter
                 hover
+                sorter
                 striped
                 //itemsPerPage={perPage}
                 //activePage={page}

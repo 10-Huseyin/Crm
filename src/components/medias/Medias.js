@@ -17,7 +17,7 @@ import {
   CInputGroupAppend,
   CInputGroupText,
   CImg,
-  CCardText
+  
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { getMedias, getOneMedia, getMediasByTitle } from 'src/actions/media.action';

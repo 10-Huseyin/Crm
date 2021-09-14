@@ -107,7 +107,10 @@ const Users = () => {
                   { key: 'firstname', _classes: 'font-weight-bold' },
                   "lastname", 'email', "isActive",
                 ]}
+                columnFilter
+                tableFilter
                 hover
+                sorter
                 striped
                 //itemsPerPage={perPage}
                 //activePage={page}
