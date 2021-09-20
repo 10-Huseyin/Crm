@@ -22,7 +22,7 @@ const TheHeaderDropdown = () => {
  const dispatch = useDispatch();
   const userData = useSelector(state => state.users.user)
   const [state, setState] = useState(userData)
- console.log(state.mediaId.url);
+ //console.log(state && state.mediaId.url);
 
   useEffect(() => {
     dispatch(getOneUser(userInfoLocal.id))
@@ -48,7 +48,7 @@ const {user} = useSelector(state => state.auth)
       <CDropdownToggle className="c-header-nav-link" caret={false}>
         <div className="c-avatar">
           <CImg
-            src={`${state.mediaId.url}`}
+            //src={`${state.mediaId.url}`}
           
             className="c-avatar-img"
             alt="admin@bootstrapmaster.com"

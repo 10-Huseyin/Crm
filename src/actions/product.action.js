@@ -15,12 +15,18 @@ import { API_BASE } from "./api_base";
     type: GET_PRODUCTS,
     payload: data,
   });
-  export function getProducts(limit, page) {
+  export function getProducts(limit, page,filteredValue) {
+
     //console.log(limit, page)
     return (dispatch) => {
-      return axios.get(`${API_BASE}products?limit=${limit}&page=${page}`)
+      return filteredValue && filteredValue.title ? 
+      axios.post(`${API_BASE}products/filter?limit=${limit}&page=${page}`,
+      {query:{"title":filteredValue && filteredValue.title,"isActive":filteredValue.isActive ? filteredValue.isActive :true}}) 
+      :
+      axios.post(`${API_BASE}products/filter?limit=${limit}&page=${page}`,
+      {query:{"isActive": filteredValue && filteredValue.isActive ? filteredValue.isActive :true}})
       .then((result) => {
-        //console.log(result);
+        console.log(result);
         dispatch(setPagination({page:result.data.pages, total:result.data.total}));
         dispatch(getData(result.data.response))
         return result.data.status;
@@ -63,7 +69,7 @@ import { API_BASE } from "./api_base";
     return (dispatch) => {
       return axios.get(`${API_BASE}products`)
       .then((result) => {
-        console.log('allProductList action=>'+result);
+        console.log(result);
         //dispatch(setPagination({page:result.data.pages, total:result.data.total}));
         dispatch(getAllData(result.data.response))
         return result.data.status;

@@ -70,6 +70,7 @@ const Products = () => {
 
   const productsData = useSelector((state) => state.products.productList);
   console.log(productsData);
+
   const[realTimeProduct,setRealTimeProduct]=useState(productsData)
 
   const allProductsData = useSelector((state) => state.products.allProductList);
@@ -98,7 +99,7 @@ useEffect(() => {
 
   useEffect(() => {
     
-    dispatch(getProducts(perPage, page)).then((res) => {
+    dispatch(getProducts(perPage, page,filteredValue)).then((res) => {
       if (res !== 200) {
         seterrorMsg("An error occured when data is triggered!");
       } else if (res === 200) {
@@ -111,7 +112,7 @@ useEffect(() => {
     });
 
     currentPage !== page && setPage(currentPage);
-  }, [currentPage, page]);
+  }, [currentPage, page,filteredValue]);
 
   const handleProduct = (id) => {
     dispatch(getOneProduct(id)).then((res) => {
@@ -121,20 +122,21 @@ useEffect(() => {
     });
   };
   function onFilterValue(e) {
-    console.log('event=>>>'+e.target.name+"---- "+e.target.value);
-    if (e.target.name === "product") {
+    console.log('event=>>>'+e.target.name+" ---- "+e.target.value);
+ 
       setfilteredValue({
         ...filteredValue,
         title: e.target.value,
         
        });
-       console.log("filtered value==>>"+filteredValue);
-       dispatch(getQueryProducts(filteredValue))
-                .then((res)=>console.log("RES "+res))
-       setRealTimeProduct(allProductsData)
-       setPage(1);
-    } 
+      //  console.log("filtered value==>>"+filteredValue);
+      //  dispatch(getQueryProducts(filteredValue))
+      //           .then((res)=>console.log("RES "+res))
+      //  setRealTimeProduct(allProductsData)
+      //  setPage(1);
+    
    }
+   console.log("filtered value==>>",filteredValue);
   //console.log(errorMsg)
   return (
     <>
