@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const rolesReducer = (state = initialState, action) => {
-  console.log(action);
+  //console.log(action);
   switch (action.type) {
     case GET_ROLES:
       return { ...state, rolesList: action.payload };

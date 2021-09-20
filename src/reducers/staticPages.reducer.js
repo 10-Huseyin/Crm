@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const staticPagesReducer = (state = initialState, action) => {
-  console.log(action);
+  //console.log(action);
   switch (action.type) {
     case GET_STATICPAGES:
       return { ...state, staticPagesList: action.payload };

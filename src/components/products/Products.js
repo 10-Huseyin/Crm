@@ -11,10 +11,15 @@ import {
   CButton,
   CPagination,
   CAlert,
+  CInputGroupAppend,
+  CInput,
   CSelect,
   CInputGroup,
   CForm,
 } from "@coreui/react";
+import { freeSet } from '@coreui/icons'
+import CIcon from '@coreui/icons-react';
+
 import {
   Table,
   Button,
@@ -27,7 +32,7 @@ import {
   FormControl,
   ListGroup,
 } from "react-bootstrap";
-import { getProducts, getOneProduct,getAllProducts,getQueryProducts } from "src/actions/product.action";
+import { getProducts, getOneProduct, getAllProducts, getQueryProducts } from "src/actions/product.action";
 import { useDispatch, useSelector } from "react-redux";
 
 const getBadge = (status) => {
@@ -67,19 +72,13 @@ const Products = () => {
   const [page, setPage] = useState(currentPage);
   const [errorMsg, seterrorMsg] = useState("");
   const paginationData = useSelector((state) => state.pagination);
-
   const productsData = useSelector((state) => state.products.productList);
-  console.log(productsData);
-
-  const[realTimeProduct,setRealTimeProduct]=useState(productsData)
-
+  const [realTimeProduct, setRealTimeProduct] = useState(productsData)
   const allProductsData = useSelector((state) => state.products.allProductList);
-  console.log('allProductsData=>'+ allProductsData);
-
 
   const [filteredValue, setfilteredValue] = useState({
     title: "",
-   isActive:true,
+    isActive: true,
   });
 
   const dispatch = useDispatch();
@@ -93,51 +92,63 @@ const Products = () => {
     dispatch(getProducts(perPage, newPage));
   };
 
-useEffect(() => {
-  dispatch(getAllProducts()).then((res)=>console.log(res))
-},[filteredValue])
-
   useEffect(() => {
-    
-    dispatch(getProducts(perPage, page,filteredValue)).then((res) => {
+    handleAllProducts();
+  }, [currentPage, page]);
+
+  function handleAllProducts() {
+    dispatch(getAllProducts(perPage, page)).then((res) => {
       if (res !== 200) {
         seterrorMsg("An error occured when data is triggered!");
       } else if (res === 200) {
         seterrorMsg("");
       }
-
       setTimeout(() => {
         seterrorMsg("");
       }, 3000);
     });
-
     currentPage !== page && setPage(currentPage);
-  }, [currentPage, page,filteredValue]);
+  }
 
-  const handleProduct = (id) => {
+  const handleSearch = () => {
+    if (filteredValue.title) {
+      dispatch(getProducts(perPage, page, filteredValue)).then((res) => {
+        if (res !== 200) {
+          seterrorMsg("An error occured when data is triggered!");
+        } else if (res === 200) {
+          seterrorMsg("");
+        }
+        setTimeout(() => {
+          seterrorMsg("");
+        }, 3000);
+      });
+    } else {
+      handleAllProducts()
+    }
+  }
+
+  const handleOneProduct = (id) => {
     dispatch(getOneProduct(id)).then((res) => {
       if (res === 200) {
         history.push(`/products/${id}`);
       }
     });
   };
-  function onFilterValue(e) {
-    console.log('event=>>>'+e.target.name+" ---- "+e.target.value);
- 
-      setfilteredValue({
-        ...filteredValue,
-        title: e.target.value,
-        
-       });
-      //  console.log("filtered value==>>"+filteredValue);
-      //  dispatch(getQueryProducts(filteredValue))
-      //           .then((res)=>console.log("RES "+res))
-      //  setRealTimeProduct(allProductsData)
-      //  setPage(1);
-    
-   }
-   console.log("filtered value==>>",filteredValue);
-  //console.log(errorMsg)
+
+  function handleFilterInput(e) {
+    setfilteredValue({ ...filteredValue, title: e.target.value });
+    if (e.target.value === "") {
+      handleAllProducts();
+    }
+  }
+
+  const handleClearSearch = () => {
+    setfilteredValue({ isActive: true, title: "" });
+    handleAllProducts();
+  }
+
+  console.log(productsData);
+  console.log("filtered value==>>", filteredValue);
   return (
     <>
       <CRow>
@@ -158,34 +169,20 @@ useEffect(() => {
             </CCardHeader>
             {errorMsg && <CAlert color="warning">{errorMsg}</CAlert>}
             <CCardBody>
-              <InputGroup className="mb-2">
-                <FormControl
-                  id="productsData"
+              <CInputGroup style={{ paddingBottom: "15px" }}>
+                <CInput id="productsData"
                   type="text"
-                  placeholder="Select Product..."
+                  placeholder="Product..."
                   name="product"
                   list="productsSelect"
-                  size="sm"
-                  onChange={onFilterValue}
+                  value={filteredValue.title}
+                  onChange={handleFilterInput}
                 />
-                <datalist id="productsSelect">
-                  {allProductsData &&
-                    allProductsData.map((item, index) => {
-                      return (
-                        <option key={index} value={item.title}>
-                          {item.title}
-                        </option>
-                      );
-                    })}
-                </datalist>
-                {/* <InputGroup.Text
-            //onClick={onFilterPageClear}
-            style={{ cursor: "pointer" }}
-            title="Clear"
-          >
-            <i className="fa fa-times" aria-hidden="true"> X </i>
-          </InputGroup.Text> */}
-              </InputGroup>
+                <CInputGroupAppend>
+                  <CButton onClick={handleSearch} type="button" color="primary" className="d-flex align-items-center" disabled={filteredValue.title ? false : true} ><CIcon size="sm" className="m-0 mx-2" content={freeSet.cilSearch} />Search</CButton>
+                  <CButton onClick={handleClearSearch} type="button" color="secondary" className="d-flex align-items-center" ><CIcon size="sm" className="m-0 mx-2" content={freeSet.cilDelete} />Clear</CButton>
+                </CInputGroupAppend>
+              </CInputGroup>
               <CDataTable
                 //columnFilter
                 //tableFilter
@@ -201,7 +198,7 @@ useEffect(() => {
                 //itemsPerPage={perPage}
                 //activePage={page}
                 clickableRows
-                onRowClick={(item) => handleProduct(item._id)}
+                onRowClick={(item) => handleOneProduct(item._id)}
                 scopedSlots={{
                   isActive: (item) => (
                     <td>
