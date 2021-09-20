@@ -31,6 +31,21 @@ import { API_BASE } from "./api_base";
       .catch((error) => error);
     };
   }
+  export function getUnreadMessages() {
+    //console.log(limit, page)
+    return (dispatch) => {
+      return axios.post(`${API_BASE}messages/filter`, {query:{"isRead":true}})
+      .then((result) => {
+        console.log(result)
+        return result.data.total;
+      },
+      (error)=> {
+        setError(error, dispatch)
+      return error
+    })
+      .catch((error) => error);
+    };
+  }
 
   export const getOneData = (data) => ({
     type: GET_MESSAGE,

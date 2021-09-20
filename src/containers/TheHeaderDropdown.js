@@ -1,9 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from 'react-router-dom'
-import { getOneUser } from 'src/actions/user.action'
-
-
 import {
   CBadge,
   CDropdown,
@@ -13,16 +10,21 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { logout } from 'src/actions/auth.action';
+
+import { getOneUser } from 'src/actions/user.action'
+import { logout } from '../actions/auth.action';
+import {getUnreadMessages} from "../actions/messages.action"
 
 const TheHeaderDropdown = () => {
   const history = useHistory()
   const userInfoLocal = JSON.parse(localStorage.getItem("user"));
- console.log(userInfoLocal);
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const userData = useSelector(state => state.users.user)
   const [state, setState] = useState(userData)
- //console.log(state && state.mediaId.url);
+  const [unRead, setunRead] = useState(0)
+  
+  console.log(userInfoLocal);
+  console.log(state && state.mediaId && state.mediaId.url);
 
   useEffect(() => {
     dispatch(getOneUser(userInfoLocal.id))
@@ -30,8 +32,23 @@ const TheHeaderDropdown = () => {
         console.log(res);
       })
   },[])
+  useEffect(() => {
+    dispatch(getUnreadMessages())
+      .then(res => {
+        setunRead(res);
+      })
+  },[])
  
- 
+  const handleUser = () => {
+    if (state && state._id){
+      dispatch(getOneUser(state._id))
+      .then(res => {
+        if (res === 200) {
+          history.push(`/users/${state._id}`)
+        }
+      })
+    }
+  }
 
   const handleLogout = () => {
       dispatch(logout())
@@ -39,6 +56,7 @@ const TheHeaderDropdown = () => {
   };
 const {user} = useSelector(state => state.auth)
 
+console.log(unRead)
   return (
     <CDropdown
       inNav
@@ -48,8 +66,7 @@ const {user} = useSelector(state => state.auth)
       <CDropdownToggle className="c-header-nav-link" caret={false}>
         <div className="c-avatar">
           <CImg
-            //src={`${state.mediaId.url}`}
-          
+            src={`${state && state.mediaId && state.mediaId.url}`}
             className="c-avatar-img"
             alt="admin@bootstrapmaster.com"
           />
@@ -67,17 +84,12 @@ const {user} = useSelector(state => state.auth)
         <CDropdownItem>
           <CIcon name="cil-bell" className="mfe-2" />
           Notifications
-          <CBadge color="info" className="mfs-auto">42</CBadge>
+          <CBadge color="info" className="mfs-2">42</CBadge>
         </CDropdownItem>
-        <CDropdownItem>
+        <CDropdownItem onClick={() => history.push(`/messages`)}>
           <CIcon name="cil-envelope-open" className="mfe-2" />
           Messages
-          <CBadge color="success" className="mfs-auto">42</CBadge>
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-task" className="mfe-2" />
-          Tasks
-          <CBadge color="danger" className="mfs-auto">42</CBadge>
+          <CBadge color="success" className="mfs-2">{unRead !== 0 ? unRead : "" }</CBadge>
         </CDropdownItem>
         <CDropdownItem
           header
@@ -87,7 +99,7 @@ const {user} = useSelector(state => state.auth)
         >
           <strong>Settings</strong>
         </CDropdownItem>
-        <CDropdownItem>
+        <CDropdownItem onClick={handleUser}>
           <CIcon name="cil-user" className="mfe-2" />Profile
         </CDropdownItem>
         <CDropdownItem>

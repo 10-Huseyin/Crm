@@ -10,6 +10,7 @@ import {
   CSidebarMinimizer,
   CSidebarNavDropdown,
   CSidebarNavItem,
+  CImg
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
@@ -27,16 +28,12 @@ const TheSidebar = () => {
       onShowChange={(val) => dispatch({type: 'set', sidebar: val })}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
-        <CIcon
-          className="c-sidebar-brand-full"
-          name="logo-negative"
-          height={35}
-        />
-        <CIcon
-          className="c-sidebar-brand-minimized"
-          name="sygnet"
-          height={35}
-        />
+      <CImg
+      src="/logo.png"
+      fluid
+      style={{height:"30px"}}
+      className="mb-2"
+    />
       </CSidebarBrand>
       <CSidebarNav>
 

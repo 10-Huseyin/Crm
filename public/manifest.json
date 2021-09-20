@@ -1,10 +1,10 @@
 {
-  "short_name": "CoreUI-React",
-  "name": "CoreUI-React sample",
+  "short_name": "XPRSoft",
+  "name": "XPRSoft IT Solutions",
   "icons": [
     {
-      "src": "./assets/img/favicon.png",
-      "sizes": "100x100",
+      "src": "./favicon.png",
+      "sizes": "32x32",
       "type": "image/png"
     }
   ],

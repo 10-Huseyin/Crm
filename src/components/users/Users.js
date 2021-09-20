@@ -70,7 +70,7 @@ const Users = () => {
           seterrorMsg("");
         }, 3000);
       })
-
+ 
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
