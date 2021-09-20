@@ -44,6 +44,7 @@ const Subscribers = () => {
   const [errorMsg, seterrorMsg] = useState("")
   const paginationData = useSelector(state => state.pagination)
   const subscribersData = useSelector(state => state.subscribers.subscriberList)
+  console.log(subscribersData);
   const dispatch = useDispatch()
 
   const perPage = 10;
@@ -100,6 +101,10 @@ const handleSubscriber =(id)=>{
             </CAlert>}
             <CCardBody>
               <CDataTable
+               columnFilter
+               tableFilter
+               hover
+               sorter
                 items={subscribersData}
                 fields={[
                   { key: 'name', _classes: 'font-weight-bold' },

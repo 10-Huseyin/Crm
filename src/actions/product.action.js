@@ -1,5 +1,6 @@
 import {
     GET_PRODUCTS,
+    GET_ALL_PRODUCTS,
     GET_PRODUCT,
     ADD_NEW_PRODUCT,
     DELETE_PRODUCT,
@@ -14,14 +15,63 @@ import { API_BASE } from "./api_base";
     type: GET_PRODUCTS,
     payload: data,
   });
-  export function getProducts(limit, page) {
+  export function getProducts(limit, page,filteredValue) {
+
     //console.log(limit, page)
     return (dispatch) => {
-      return axios.get(`${API_BASE}products?limit=${limit}&page=${page}`)
+      return filteredValue && filteredValue.title ? 
+      axios.post(`${API_BASE}products/filter?limit=${limit}&page=${page}`,
+      {query:{"title":filteredValue && filteredValue.title,"isActive":filteredValue.isActive ? filteredValue.isActive :true}}) 
+      :
+      axios.post(`${API_BASE}products/filter?limit=${limit}&page=${page}`,
+      {query:{"isActive": filteredValue && filteredValue.isActive ? filteredValue.isActive :true}})
       .then((result) => {
-        //console.log(result);
+        console.log(result);
         dispatch(setPagination({page:result.data.pages, total:result.data.total}));
         dispatch(getData(result.data.response))
+        return result.data.status;
+      },
+      (error)=> {
+        setError(error, dispatch)
+      return error
+    })
+      .catch((error) => error);
+    };
+  }
+
+  export const getQueryData = (data) => ({
+    type: GET_PRODUCTS,
+    payload: data,
+  });
+  export function getQueryProducts(queryObject) {
+    //console.log(limit, page)
+    return (dispatch) => {
+      return axios.post(`${API_BASE}products/filter`,queryObject)
+      .then((result) => {
+        console.log("RESULT  "+result);
+        dispatch(setPagination({page:result.data.pages, total:result.data.total}));
+        dispatch(getQueryData(result.data.response))
+        return result.data.status;
+      },
+      (error)=> {
+        setError(error, dispatch)
+      return error
+    })
+      .catch((error) => error);
+    };
+  }
+  export const getAllData = (data) => ({
+    type: GET_ALL_PRODUCTS,
+    payload: data,
+  });
+  export function getAllProducts(limit, page) {
+    //console.log(limit, page)
+    return (dispatch) => {
+      return axios.get(`${API_BASE}products`)
+      .then((result) => {
+        console.log(result);
+        //dispatch(setPagination({page:result.data.pages, total:result.data.total}));
+        dispatch(getAllData(result.data.response))
         return result.data.status;
       },
       (error)=> {

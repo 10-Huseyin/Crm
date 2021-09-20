@@ -64,12 +64,9 @@ const TheHeader = () => {
         
       </CHeaderNav>
       <CHeaderNav className="px-3">
-      <CHeaderNavItem className="px-3" >
-          <CHeaderNavLink to="/setings"><CIcon name="cil-settings" alt="Settings" title="Settings"/></CHeaderNavLink>
-        </CHeaderNavItem>
-        <TheHeaderDropdownNotif/>
-        <TheHeaderDropdownTasks/>
-        <TheHeaderDropdownMssg/>
+        {/* <TheHeaderDropdownNotif/> */}
+        {/* <TheHeaderDropdownTasks/>
+        <TheHeaderDropdownMssg/> */}
         <TheHeaderDropdown/>
       </CHeaderNav>
 

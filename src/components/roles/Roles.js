@@ -103,6 +103,10 @@ const Roles = () => {
             </CAlert>}
             <CCardBody>
           <CDataTable
+           columnFilter
+           tableFilter
+           hover
+           sorter
             items={rolesData}
             fields={[
               { key: 'name', _classes: 'font-weight-bold' },

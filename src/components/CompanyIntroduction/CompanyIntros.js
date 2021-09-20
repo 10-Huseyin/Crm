@@ -106,7 +106,10 @@ const CompanyIntros = () => {
               { key: 'title', _classes: 'font-weight-bold' },
               "subTitle",  'iconName', "shortDescription",
             ]}
+            columnFilter
+            tableFilter
             hover
+            sorter
             striped
             // itemsPerPage={perPage}
             // activePage={page}

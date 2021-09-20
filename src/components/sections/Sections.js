@@ -105,7 +105,10 @@ const handleSection =(id)=>{
                   { key: 'secTitle', _classes: 'font-weight-bold' },
                   "secType", "isActive"
                 ]}
+                columnFilter
+                tableFilter
                 hover
+                sorter
                 striped
                 //itemsPerPage={perPage}
                 //activePage={page}

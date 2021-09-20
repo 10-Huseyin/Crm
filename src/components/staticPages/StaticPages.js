@@ -103,6 +103,10 @@ const StaticPages = () => {
             </CAlert>}
             <CCardBody>
           <CDataTable
+           columnFilter
+           tableFilter
+           hover
+           sorter
             items={staticPagesData}
             fields={[
               { key: 'name', _classes: 'font-weight-bold' },

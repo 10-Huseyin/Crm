@@ -51,10 +51,11 @@ const UserDetail = (props) => {
   const roles = useSelector(state => state.roles)
   //const usersData = useSelector(state => state.users.userList)
   const userData = useSelector(state => state.users.user)
+  console.log("userdata==>>"+userData);
 
   const user = userData && props.match.params.id ? userData : initialState;
   const [state, setState] = useState(user)
-
+  console.log("user==>>"+user);
   const [uploadMessage, setUploadMessage] = useState("");
 
 

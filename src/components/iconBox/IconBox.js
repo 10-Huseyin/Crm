@@ -100,6 +100,10 @@ const handleIconBox =(id)=>{
             </CAlert>}
             <CCardBody>
               <CDataTable
+               columnFilter
+               tableFilter
+               hover
+               sorter
                 items={iconBoxesData}
                 fields={[
                   { key: 'title', _classes: 'font-weight-bold' },

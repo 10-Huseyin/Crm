@@ -55,7 +55,7 @@ const CompanyIntroDetail = (props) => {
   //console.log("burası en üst, expertdata ile state arasında")
   const Intro = IntroData && props.match.params.id ? IntroData : initialState;
   const [state, setState] = useState(Intro)
-//console.log(state)
+console.log(state)
 
  
   const handleInput = (e) => {

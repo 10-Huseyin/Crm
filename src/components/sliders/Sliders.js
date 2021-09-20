@@ -101,6 +101,10 @@ const Sliders = () => {
             </CAlert>}
             <CCardBody>
               <CDataTable
+               columnFilter
+               tableFilter
+               hover
+               sorter
                 items={sliderData}
                 fields={[
                   { key: "title", _classes: "font-weight-bold" },
