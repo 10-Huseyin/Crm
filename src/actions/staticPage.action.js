@@ -55,13 +55,14 @@ console.log("getonestaticPage")
 }
 
 export class UploadAdapter {
-	constructor(mediaData) {
-		this.mediaData = mediaData;
+  constructor(mediaData) {
+    this.mediaData = mediaData;
 		this.upload();
 	}
   
 	// Starts the upload process.
 	upload() {
+  console.log("upload adaptor", this.mediaData)
 		return new Promise((resolve, reject) => {
 			axios
 				.post(`${API_BASE}medias`, this.mediaData, {
@@ -70,10 +71,10 @@ export class UploadAdapter {
 							// show upload process
 							Math.round((e.loaded / e.total) * 100) + " %"
 						);
-					}
+					} 
 				})
 				.then(response => {
-					console.log(response.data.response.url)
+					console.log(response)
 					resolve({default:response.data.response.url});
 				})
 				.catch(error => {

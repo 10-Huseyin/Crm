@@ -63,12 +63,15 @@ const StaticPageDetail = (props) => {
   
 function CustomUploadAdapterPlugin(editor) {
 	editor.plugins.get("FileRepository").createUploadAdapter = loader => {
-
+    console.log("adaptör calıstı", state)
     const mediaData = new FormData();
 		loader.file.then(pic => mediaData.set("mediaId", pic));
 		mediaData.set("title", state.name || "");
     mediaData.set("alt", state.alt || "");
+    const finalURL = new UploadAdapter(mediaData);
+    console.log("finalURL", finalURL)
     return new UploadAdapter(mediaData);
+    // return "https://via.placeholder.com/150";
 	};
 }
 
@@ -185,7 +188,7 @@ const config = {
     }, 2000);
   }
   //console.log(staticPageData)
-  console.log(state, message, error);
+  //console.log(state, message, error);
   return (
     <CRow>
       <CCol xs="12" md="12">
@@ -259,18 +262,18 @@ const config = {
 					data={state.content}
                     onReady={ editor => {
                         // You can store the "editor" and use when it is needed.
-                        console.log( 'Editor is ready to use!', editor );
+                        // console.log( 'Editor is ready to use!', editor );
                     } }
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
-                        //console.log( { event, editor, data } );
+                        console.log( { event, editor, data } );
                         setState({ ...state, content: data })
                     } }
                     onBlur={ ( event, editor ) => {
-                        console.log( 'Blur.', event, editor );
+                        // console.log( 'Blur.', event, editor );
                     } }
                     onFocus={ ( event, editor ) => {
-                        console.log( 'Focus.', event, editor );
+                        // console.log( 'Focus.', event, editor );
                     } }
                 />
                 </CFormGroup>
